@@ -1,7 +1,7 @@
 from __future__ import division
 import numpy as np
 
-# constants of physics
+# physical constants
 global pi, stefan, kappa_0, G, gamma, Delta_ab, mu, m_H, k_B, alpha, beta, M_sun, L_sun, AU, T_eq_earth, M_earth, R_earth, eta, t_sat, a0, b_cutoff, R_sun
 
 pi = np.pi
