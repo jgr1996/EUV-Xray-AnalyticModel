@@ -4,6 +4,11 @@ from matplotlib import pyplot as plt
 from scipy import integrate
 from constants import *
 
+"""
+See Owen & Wu (2017) for references to these integrals (in particular the appendix).
+All variables follow the system used in the paper.
+"""
+
 # /////////////////////////////  I1  AND I2 INTEGRANDS /////////////////////// #
 
 def I1(x):

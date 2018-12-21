@@ -3,35 +3,39 @@ import numpy as np
 from numba import jit
 
 ########################## INDIVIDUAL RK45 STEP ################################
-#@jit
+
 def RKCashKarp_Step(t, var_i, dydx_functions, dt, parameters):
+    """
+    This function uses a Runge-Kutta 4th and 5th order scheme to calculate the
+    derivatives of a given system of equations. Both the 5th order solution and
+    the error are returned.
+    """
 
-
-    # calculate the indiivual conribution to prediction
-    k1 = dt * dydx_functions(t           , var_i, parameters)
+    # calculate the individual conributions to prediction
+    k1 = dt * dydx_functions(t, var_i, parameters)
     var1 = var_i + 0.2*k1
-    if var1 < 0:
+    if var1 < 0: # a negative contribution should not be obtained
         return (None, None)
 
     k2 = dt * dydx_functions(t + 0.2 * dt, var1, parameters)
     var2 = var_i + (3/40)*k1 + (9/40)*k2
-    if var2 < 0:
+    if var2 < 0: # a negative contribution should not be obtained
         return (None, None)
 
     k3 = dt * dydx_functions(t + 0.3 * dt, var2, parameters)
     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
-    if var3 < 0:
+    if var3 < 0: # a negative contribution should not be obtained
         return (None, None)
 
     k4 = dt * dydx_functions(t + 0.6 * dt, var3, parameters)
     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
-    if var4 < 0:
+    if var4 < 0: # a negative contribution should not be obtained
         return (None, None)
 
     k5 = dt * dydx_functions(t +       dt, var4, parameters)
     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
          + (44275/110592)*k4 + (253/4096)*k5
-    if var5 < 0:
+    if var5 < 0: # a negative contribution should not be obtained
         return (None, None)
 
     k6 = dt * dydx_functions(t + (7/8)*dt, var5, parameters)
@@ -49,6 +53,12 @@ def RKCashKarp_Step(t, var_i, dydx_functions, dt, parameters):
 
 ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
 def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
+
+    """
+    This function controls the step size used in the RKCashKarp_Step function. If
+    a reasonable step size has been used, the solution, new time point and next time
+    step are returned.
+    """
 
     # calculate the derivatives
     dydx = dydx_functions(t, var_i, parameters)

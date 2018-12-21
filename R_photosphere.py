@@ -9,8 +9,8 @@ Author: Rogers, J. G
 Date: 07/11/2018
 
 This file carries out analytic calculations presented in Owen & Wu (2017) that
-are used to determine the photospheric radius of a planet undergoing photo-
-evaporation.
+are used to determine the photospheric radius of a planet undergoing EUV-Xray
+photo-evaporation.
 """
 
 # /////////////////////////// IMPORT TABULATED INTEGRALS ///////////////////// #
