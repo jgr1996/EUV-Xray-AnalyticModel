@@ -7,9 +7,26 @@ import matplotlib.pyplot as plt
 from constants import *
 import mass_fraction_evolver
 
+"""
+Author: Rogers, J. G
+Date: 01/12/2018
+
+This file simulates the evolution of random populations of small, close-in planetes.
+The main purpose of this code is the contrain the underlying distributions of
+exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
+"""
+
 
 
 def make_planet(initial_X_params, core_density_params, core_mass_params, period_params, stellar_mass_params):
+
+    """
+    This planet takes parameters for planet distributions in order to randomly
+    generate a planet. It returns the initial envelope mass-fraction, core
+    density, core mass, period and stellar mass. Note that it also considers the
+    transit probability and pipeline efficiency in order to make a synthetic
+    observation.
+    """
 
     # random initial mass fraction according to log-normal distribution
     (X_min, X_max) = initial_X_params
@@ -46,6 +63,12 @@ def make_planet(initial_X_params, core_density_params, core_mass_params, period_
 
 
 def run_population(N, period_bias=False, pipeline_recovery=False):
+
+    """
+    This function evolves an ensemble of N planets randomly generated using the
+    make_planet function through the mass_fraction_evolver file (in particular
+    the "RK45_driver" function).
+    """
 
     R_planet_pop = []
     period_pop = []

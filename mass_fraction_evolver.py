@@ -5,8 +5,22 @@ from constants import *
 import R_photosphere
 import RKF45
 
+"""
+Author: Rogers, J. G
+Date: 12/11/2018
+
+This file carries out analytic calculations presented in Owen & Wu (2017) that
+forward integrate the atmospheric mass fraction of a small, close-in planet.
+"""
+
+
 # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
 def calculate_tX(t, X, M_core, M_star, a, R_core):
+
+    """
+    This function calculated the mass-loss timescale of the atmosphere. See Owen
+    and Wu (2017) for details.
+    """
 
     # convert to SI units
     M_core_kg = M_core * M_earth
@@ -39,6 +53,11 @@ def calculate_tX(t, X, M_core, M_star, a, R_core):
 
 def dXdt_ODE(t, X, parameters):
 
+    """
+    This function presents the ODE for atmospheric mass-loss dX/dt = - X / tX
+    where X = M_atmosphere / M_core and tX is the mass-loss timeascale.
+    """
+
     M_core, M_star, a, R_core = parameters
 
     tX = calculate_tX(t, X, M_core, M_star, a, R_core)
@@ -52,8 +71,12 @@ def dXdt_ODE(t, X, parameters):
 def RK45_driver(t_start, t_stop, dt_try, accuracy,
                 initial_X, core_density, M_core, period, M_star):
 
-
-    # convert variables to be constrained to algorithm variables:
+    """
+    This function controls the integration of the mass-loss ODE. It calls upon
+    the "calculate_R_photosphere" function from the R_photosphere file as well
+    as the "step_control" function in the RKF45 file to calculate the evolution
+    of the mass fraction X.
+    """
 
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
@@ -110,7 +133,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 
     return R_core, t_array, X_array, R_ph_array
 
-#//////////////////////////////////// TEST 1 //////////////////////////////// #
+#////////////////////////////////// X vs t PLOT ////////////////////////////// #
 # def X_2(t, period, M_star, rho_core, M_core):
 #
 #     if t < 100:
@@ -150,7 +173,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 # plt.tick_params(which='minor', length=4)
 # plt.show()
 
-#//////////////////////////////////// TEST 2 //////////////////////////////// #
+#///////////////////////////////// X vs t_X plot ///////////////////////////// #
 
 # X_range = np.logspace(-3,0,100)
 # tX_range_1 = []
@@ -166,10 +189,4 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 # plt.loglog(X_range,tX_range_1)
 # plt.loglog(X_range,tX_range_2)
 
-#//////////////////////////////////// TEST 3 //////////////////////////////// #
-# R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-8,
-#                                  initial_X=0.1, core_density=5.5, M_core=5.0, period=10, M_star=1.0)
-# print X
-# print R_ph
-#
-# print 'planet radius is {0} earth radii'.format(R_ph[-1] + R_core)
+# //////////////////////////////////////////////////////////////////////////// #
