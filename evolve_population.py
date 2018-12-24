@@ -1,4 +1,5 @@
 from __future__ import division
+import os
 import numpy as np
 from numba import jit
 from numpy import random as rand
@@ -15,6 +16,10 @@ This file simulates the evolution of random populations of small, close-in plane
 The main purpose of this code is the contrain the underlying distributions of
 exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
 """
+
+
+# def draw_random_distribution_parameters():
+
 
 
 
@@ -62,7 +67,7 @@ def make_planet(initial_X_params, core_density_params, core_mass_params, period_
     return X_initial, core_density, core_mass, P, stellar_mass
 
 
-def run_population(N, period_bias=False, pipeline_recovery=False):
+def run_population(N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
 
     """
     This function evolves an ensemble of N planets randomly generated using the
@@ -80,7 +85,6 @@ def run_population(N, period_bias=False, pipeline_recovery=False):
                                                                       core_mass_params=(3),
                                                                       period_params=(1.9,7.6),
                                                                       stellar_mass_params=(1.3,0.3))
-
 
         # mass of star cannot be negative
         if M_star <= 0:
@@ -113,7 +117,7 @@ def run_population(N, period_bias=False, pipeline_recovery=False):
                 continue
 
 
-        print '///////////// {0} TRANSITS \'OBSERVED\' ////////////////'.format(transit_number)
+        print '//////// {0} TRANSITS \'OBSERVED\' for job {1}///////////'.format(transit_number, job_number)
         R_core, t, X, R_ph = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-8,
                                                                X_initial, core_density, M_core, period, M_star)
 
@@ -122,7 +126,14 @@ def run_population(N, period_bias=False, pipeline_recovery=False):
         R_planet_pop.append(R_ph[-1])
         period_pop.append(period)
 
-    return R_planet_pop, period_pop
+    newpath = './RESULTS/{0}'.format(output_directory_name)
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+
+    np.savetxt('{0}/R_array_{1}.csv'.format(newpath, job_number), R_planet_pop, delimiter=',')
+    np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
+
+    return None
 
 # R, P = run_population(10, period_bias=True, pipeline_recovery=True)
 # plt.style.use('classic')
