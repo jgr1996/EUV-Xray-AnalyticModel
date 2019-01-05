@@ -13,20 +13,47 @@ Author: Rogers, J. G
 Date: 01/12/2018
 
 This file simulates the evolution of random populations of small, close-in planetes.
-The main purpose of this code is the contrain the underlying distributions of
+The main purpose of this code is the constrain the underlying distributions of
 exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
 """
 
 
-# def draw_random_distribution_parameters():
-
-
-
-
-def make_planet(initial_X_params, core_density_params, core_mass_params, period_params, stellar_mass_params):
+def draw_random_distribution_parameters():
 
     """
-    This planet takes parameters for planet distributions in order to randomly
+    This function draws random distribution parameters for the "make_planet" function.
+    It relies on hyperparameters that are hard-coded.
+    """
+
+    # generate X distribution parameters
+    X_min = rand.normal(0.01, 0.001)
+    X_max = rand.normal(0.3, 0.05)
+
+    # generate core_density parameters
+    density_mean = 5.5
+    density_stdev = 0.0
+
+    # generate core mass according parameters
+    core_mass_dev = rand.normal(3.0, 0.5)
+
+    # generate period parameters and
+    power = rand.normal(1.9, 0.05)
+    period_cutoff = rand.normal(7.6,0.1)
+
+    # generate Kelvin-Helmholtz timescale parameters
+    KH_timescale_mean = 100.0
+    KH_timescale_stdev = 0.0
+
+
+    return ((X_min, X_max), (density_mean, density_stdev), (core_mass_dev),
+            (power, period_cutoff), (KH_timescale_mean, KH_timescale_stdev))
+
+
+def make_planet(initial_X_params, core_density_params, core_mass_params,
+                period_params, stellar_mass_params, KH_timescale_params):
+
+    """
+    This function takes parameters for planet distributions in order to randomly
     generate a planet. It returns the initial envelope mass-fraction, core
     density, core mass, period and stellar mass. Note that it also considers the
     transit probability and pipeline efficiency in order to make a synthetic
@@ -64,7 +91,10 @@ def make_planet(initial_X_params, core_density_params, core_mass_params, period_
     (stellar_mass_mean, stellar_mass_stdev) = stellar_mass_params
     stellar_mass = rand.normal(stellar_mass_mean, stellar_mass_stdev)
 
-    return X_initial, core_density, core_mass, P, stellar_mass
+    (KH_timescale_mean, KH_timescale_stdev) = KH_timescale_params
+    KH_timescale = rand.normal(KH_timescale_mean, KH_timescale_stdev)
+
+    return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale
 
 
 def run_population(N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
@@ -78,13 +108,17 @@ def run_population(N, output_directory_name, period_bias=False, pipeline_recover
     R_planet_pop = []
     period_pop = []
     transit_number = 0
+
+    distribution_parameters = draw_random_distribution_parameters()
+
     while transit_number <= N:
         # generate planet parameters
-        X_initial, core_density, M_core, period, M_star = make_planet(initial_X_params=(0.01,0.3),
-                                                                      core_density_params=(5.5,0.0),
-                                                                      core_mass_params=(3),
-                                                                      period_params=(1.9,7.6),
-                                                                      stellar_mass_params=(1.3,0.3))
+        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff = make_planet(initial_X_params=distribution_parameters[0],
+                                                                                           core_density_params=distribution_parameters[1],
+                                                                                           core_mass_params=distribution_parameters[2],
+                                                                                           period_params=distribution_parameters[3],
+                                                                                           stellar_mass_params=(1.3,0.3),
+                                                                                           KH_timescale_params=distribution_parameters[4])
 
         # mass of star cannot be negative
         if M_star <= 0:
@@ -119,7 +153,8 @@ def run_population(N, output_directory_name, period_bias=False, pipeline_recover
 
         print '//////// {0} TRANSITS \'OBSERVED\' for job {1}///////////'.format(transit_number, job_number)
         R_core, t, X, R_ph = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-8,
-                                                               X_initial, core_density, M_core, period, M_star)
+                                                               X_initial, core_density, M_core,
+                                                               period, M_star, KH_timescale_cutoff)
 
 
         transit_number = transit_number + 1

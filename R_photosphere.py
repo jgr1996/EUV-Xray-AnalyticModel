@@ -125,7 +125,7 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
 
 # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
 
-def calculate_R_photosphere(t, M_star, a, M_core, R_core, X):
+def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff):
     """
     Returns the photospheric radius of the planet (in meters):
 
@@ -142,8 +142,8 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X):
     T_eq = calculate_T_eq(M_star, a)
     c_s_squared = calculate_sound_speed_squared(T_eq)
 
-    if t < 100:
-        KH_timescale_seconds = 100*Myr
+    if t < KH_timescale_cutoff:
+        KH_timescale_seconds = KH_timescale_cutoff*Myr
     else:
         KH_timescale_seconds = t*Myr
 
