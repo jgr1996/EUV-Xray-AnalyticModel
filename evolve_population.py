@@ -97,7 +97,7 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale
 
 
-def run_population(N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
+def run_population(distribution_parameters, N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
 
     """
     This function evolves an ensemble of N planets randomly generated using the
@@ -109,9 +109,8 @@ def run_population(N, output_directory_name, period_bias=False, pipeline_recover
     period_pop = []
     transit_number = 0
 
-    distribution_parameters = draw_random_distribution_parameters()
 
-    while transit_number <= N:
+    while transit_number < N:
         # generate planet parameters
         X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff = make_planet(initial_X_params=distribution_parameters[0],
                                                                                            core_density_params=distribution_parameters[1],
@@ -157,9 +156,14 @@ def run_population(N, output_directory_name, period_bias=False, pipeline_recover
                                                                period, M_star, KH_timescale_cutoff)
 
 
-        transit_number = transit_number + 1
-        R_planet_pop.append(R_ph[-1])
+        # add random error to planetary radius from gaussian distribution
+        true_planet_radius = R_ph[-1]
+        observed_planet_radius = true_planet_radius
+                               + rand.normal(true_planet_radius, 0.1*true_planet_radius))
+
+        R_planet_pop.append(observed_planet_radius)
         period_pop.append(period)
+        transit_number = transit_number + 1
 
     newpath = './RESULTS/{0}'.format(output_directory_name)
     if not os.path.exists(newpath):
