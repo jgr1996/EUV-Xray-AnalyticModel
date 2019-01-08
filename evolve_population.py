@@ -26,15 +26,16 @@ def draw_random_distribution_parameters():
     """
 
     # generate X distribution parameters
-    X_min = rand.normal(0.01, 0.001)
-    X_max = rand.normal(0.3, 0.05)
+    X_mean = rand.normal(0.05, 0.01)
+    X_stdev = rand.normal(0.01, 0.01)
 
     # generate core_density parameters
     density_mean = 5.5
     density_stdev = 0.0
 
     # generate core mass according parameters
-    core_mass_dev = rand.normal(3.0, 0.5)
+    core_mass_mean = rand.normal(1.5, 0.15)
+    core_mass_stdev = rand.normal(0.15, 0.015)
 
     # generate period parameters and
     power = rand.normal(1.9, 0.05)
@@ -45,7 +46,7 @@ def draw_random_distribution_parameters():
     KH_timescale_stdev = 0.0
 
 
-    return ((X_min, X_max), (density_mean, density_stdev), (core_mass_dev),
+    return ((X_mean, X_stdev), (density_mean, density_stdev), (core_mass_mean, core_mass_stdev),
             (power, period_cutoff), (KH_timescale_mean, KH_timescale_stdev))
 
 
@@ -61,10 +62,8 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     """
 
     # random initial mass fraction according to log-normal distribution
-    (X_min, X_max) = initial_X_params
-    U_X = rand.random()
-    k_X = np.log(X_max/X_min)
-    X_initial = X_min * np.exp(k_X*U_X)
+    (X_mean, X_stdev) = initial_X_params
+    X_initial = rand.normal(X_mean, X_stdev)
 
 
     # random core_density according to gaussian
@@ -72,8 +71,8 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     core_density = rand.normal(density_mean, density_stdev)
 
     # random core mass according to Rayleigh
-    (core_mass_dev) = core_mass_params
-    core_mass = rand.rayleigh(core_mass_dev)
+    (core_mass_mean, core_mass_stdev) = core_mass_params
+    core_mass = rand.normal(core_mass_mean, core_mass_stdev)
 
     # random period according to CKS data fit
     (power, period_cutoff) = period_params
@@ -158,8 +157,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
 
         # add random error to planetary radius from gaussian distribution
         true_planet_radius = R_ph[-1]
-        observed_planet_radius = true_planet_radius
-                               + rand.normal(true_planet_radius, 0.1*true_planet_radius))
+        observed_planet_radius = true_planet_radius + rand.normal(true_planet_radius, 0.1*true_planet_radius)
 
         R_planet_pop.append(observed_planet_radius)
         period_pop.append(period)
@@ -172,7 +170,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     np.savetxt('{0}/R_array_{1}.csv'.format(newpath, job_number), R_planet_pop, delimiter=',')
     np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
 
-    return None
+    return R_planet_pop, period_pop
 
 # R, P = run_population(10, period_bias=True, pipeline_recovery=True)
 # plt.style.use('classic')
