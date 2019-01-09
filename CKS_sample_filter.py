@@ -2,9 +2,14 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-
 import pandas
 
+"""
+This file takes the CKS data (available at https://california-planet-search.github.io/cks-website/)
+and applies the filters applied in Fulton et al. (2017) to form the CKS III sample of Kepler planets.
+Upon running the script the file is saved as 'CKS_filtered.csv'. Functions are also suppled to allow
+1D and 2D histograms/KDEs. 
+"""
 
 full_CKS = pandas.read_csv("CKS.csv")
 full_CKS = np.array(full_CKS)

@@ -5,41 +5,22 @@ import time
 import multiprocessing
 import numpy as np
 from joblib import Parallel, delayed
-from evolve_population import *
+import likelihood_function
+import evolve_population
 
 
 
 if __name__ == '__main__':
 
-    # get number of cores
-    number_of_cores = int(multiprocessing.cpu_count())
-
     # use time as label for output directory
     current_time_string = datetime.datetime.fromtimestamp(time.time()).strftime('%d.%m.%Y_%H.%M.%S')
 
-    observations_per_core = int(number_of_observations / number_of_cores)
-    job_list = np.arange(number_of_cores)
+    # initial guess (X, core_density, M_core, Period, t_KH)
+    theta = ((0.1, 0.5), (5.5, 0.0), (2.0, 0.4), (1.9, 7.6), (100, 0.0))
 
-    distribution_parameters = draw_random_distribution_parameters()
+    # get CKS data radius bins
+    data_bins, data_histogram = likelihood_function.make_CKS_histograms()
+    N = np.sum(data_histogram)
 
-    results = Parallel(n_jobs=-1, verbose=10)(delayed(run_population)(distribution_parameters,
-                                                                      observations_per_core,
-                                                                      current_time_string,
-                                                                      period_bias=True,
-                                                                      pipeline_recovery=True,
-                                                                      job_number=i) for i in job_list)
-
-    R = []
-    P = []
-    for i in job_list:
-        R_i = np.loadtxt("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i), delimiter=',')
-        P_i = np.loadtxt("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i), delimiter=',')
-
-        R = np.append(R, R_i)
-        P = np.append(P, P_i)
-
-        os.remove("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i))
-        os.remove("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i))
-
-    np.savetxt('./RESULTS/{0}/R_array.csv'.format(current_time_string), R, delimiter=',')
-    np.savetxt('./RESULTS/{0}/P_array.csv'.format(current_time_string), P, delimiter=',')
+    L = likelihood_function.likelihood_R_space(theta, N, current_time_string, data_histogram)
+    print L

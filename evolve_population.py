@@ -4,6 +4,8 @@ import numpy as np
 from numba import jit
 from numpy import random as rand
 from scipy import stats
+import multiprocessing
+from joblib import Parallel, delayed
 import matplotlib.pyplot as plt
 from constants import *
 import mass_fraction_evolver
@@ -121,6 +123,10 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
         # mass of star cannot be negative
         if M_star <= 0:
             continue
+        if M_core <= 0:
+            continue
+        if X_initial < 0:
+            continue
 
 
         # calculate probability of transit using P = b(R_pl + R_*) / a
@@ -170,7 +176,55 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     np.savetxt('{0}/R_array_{1}.csv'.format(newpath, job_number), R_planet_pop, delimiter=',')
     np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
 
-    return R_planet_pop, period_pop
+    return None
+
+
+
+def run_single_population(N, distribution_parameters, current_time_string):
+
+    """
+    This function takes a set of distribution parameters and runs an synthetic
+    observation for N planets. This is of particular use when splitting the
+    total population over several cores.
+    """
+
+
+    # get number of cores
+    number_of_cores = int(multiprocessing.cpu_count())
+
+    observations_per_core = int(N / number_of_cores)
+    job_list = np.arange(number_of_cores)
+
+    Parallel(n_jobs=-1, verbose=10)(delayed(run_population)(distribution_parameters,
+                                                            observations_per_core,
+                                                            current_time_string,
+                                                            period_bias=True,
+                                                            pipeline_recovery=True,
+                                                            job_number=i) for i in job_list)
+
+    # ensure there are equal numbers of planets as in CKS population
+    top_up_observations = N - observations_per_core*number_of_cores
+    run_population(distribution_parameters,
+                   top_up_observations,
+                   current_time_string,
+                   period_bias=True,
+                   pipeline_recovery=True,
+                   job_number=job_list[-1] + 1)
+
+    R = []
+    P = []
+    job_list = np.append(job_list, job_list[-1] + 1)
+    for i in job_list:
+        R_i = np.loadtxt("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i), delimiter=',')
+        P_i = np.loadtxt("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i), delimiter=',')
+
+        R = np.append(R, R_i)
+        P = np.append(P, P_i)
+
+        os.remove("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i))
+        os.remove("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i))
+
+    return R, P
 
 # R, P = run_population(10, period_bias=True, pipeline_recovery=True)
 # plt.style.use('classic')
