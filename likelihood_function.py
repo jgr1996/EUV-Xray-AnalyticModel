@@ -33,9 +33,6 @@ def likelihood_R_space(theta, N, current_time_string, data_histogram):
     R, P = evolve_population.run_single_population(N, theta, current_time_string)
     model_bins, model_histogram = make_model_histogram(R,P)
 
-    print 'model_histogram ',model_histogram
-    print 'data_histogram ',data_histogram
-
     model_hist_temp = model_histogram + np.ones(len(model_histogram))
     data_hist_temp = data_histogram + np.ones(len(data_histogram))
 

@@ -8,7 +8,7 @@ import pandas
 This file takes the CKS data (available at https://california-planet-search.github.io/cks-website/)
 and applies the filters applied in Fulton et al. (2017) to form the CKS III sample of Kepler planets.
 Upon running the script the file is saved as 'CKS_filtered.csv'. Functions are also suppled to allow
-1D and 2D histograms/KDEs. 
+1D and 2D histograms/KDEs.
 """
 
 full_CKS = pandas.read_csv("CKS.csv")
@@ -115,3 +115,24 @@ def plot_R_histogram():
     plt.tick_params(which='major', length=8)
     plt.tick_params(which='minor', length=4)
     plt.show()
+
+def plot_P_histogram():
+
+    R = list(useful_CKS[1,:])
+    P = list(useful_CKS[2,:])
+
+    plt.style.use('classic')
+    P_bins = np.logspace(0,2,40)
+    plt.hist(P, density=True, bins=P_bins, histtype='step', color='black', linewidth=2)
+    plt.xscale('log')
+    plt.rcParams["font.family"] = "Courier New"
+    hfont = {'fontname':'Courier New'}
+    plt.title("CKS Data", fontsize=22, **hfont)
+    plt.xlabel(r'Orbital Period [days]', fontsize=16, **hfont)
+    plt.ylabel(r'dN/dlog P', fontsize=16, **hfont)
+    plt.xticks([1,10,100],[1,10,100], fontsize=16, fontname = "Courier New")
+    plt.yticks(fontsize=16, fontname = "Courier New")
+    plt.tick_params(which='major', length=8)
+    plt.tick_params(which='minor', length=4)
+    plt.show()
+plot_P_histogram()

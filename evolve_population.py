@@ -19,6 +19,7 @@ The main purpose of this code is the constrain the underlying distributions of
 exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
 """
 
+CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
 def draw_random_distribution_parameters():
 
@@ -53,7 +54,7 @@ def draw_random_distribution_parameters():
 
 
 def make_planet(initial_X_params, core_density_params, core_mass_params,
-                period_params, stellar_mass_params, KH_timescale_params):
+                period_params, KH_timescale_params):
 
     """
     This function takes parameters for planet distributions in order to randomly
@@ -69,8 +70,9 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
 
 
     # random core_density according to gaussian
-    (density_mean, density_stdev) = core_density_params
-    core_density = rand.normal(density_mean, density_stdev)
+    #(density_mean, density_stdev) = core_density_params
+    #core_density = rand.normal(density_mean, density_stdev)
+    core_density = 5.5
 
     # random core mass according to Rayleigh
     (core_mass_mean, core_mass_stdev) = core_mass_params
@@ -79,7 +81,7 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     # random period according to CKS data fit
     (power, period_cutoff) = period_params
     U_P = rand.random()
-    if U_P <= 0.14:  #0.17
+    if U_P <= 0.14:  #0.14
         U_P = rand.random()
         c = period_cutoff**power / (power)
         P = (power * U_P * c)**(1/power)
@@ -88,12 +90,12 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
         k_P = np.log(100/period_cutoff)
         P = period_cutoff * np.exp(k_P * U_P)
 
-    # random stellar mass according to gaussian
-    (stellar_mass_mean, stellar_mass_stdev) = stellar_mass_params
-    stellar_mass = rand.normal(stellar_mass_mean, stellar_mass_stdev)
+    # random stellar mass from CKS data
+    stellar_mass = rand.choice(CKS_array[0,:])
 
-    (KH_timescale_mean, KH_timescale_stdev) = KH_timescale_params
-    KH_timescale = rand.normal(KH_timescale_mean, KH_timescale_stdev)
+    #(KH_timescale_mean, KH_timescale_stdev) = KH_timescale_params
+    #KH_timescale = rand.normal(KH_timescale_mean, KH_timescale_stdev)
+    KH_timescale = 100
 
     return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale
 
@@ -110,15 +112,19 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     period_pop = []
     transit_number = 0
 
+    #initial_X_params = (distribution_parameters[0],distribution_parameters[1])
+    #core_density_params = (distribution_parameters[2],distribution_parameters[3])
+    core_mass_params = (distribution_parameters[0],distribution_parameters[1])
+    #period_params = (distribution_parameters[4],distribution_parameters[5])
+    #KH_timescale_params = (distribution_parameters[8],distribution_parameters[9])
 
     while transit_number < N:
         # generate planet parameters
-        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff = make_planet(initial_X_params=distribution_parameters[0],
-                                                                                           core_density_params=distribution_parameters[1],
-                                                                                           core_mass_params=distribution_parameters[2],
-                                                                                           period_params=distribution_parameters[3],
-                                                                                           stellar_mass_params=(1.3,0.3),
-                                                                                           KH_timescale_params=distribution_parameters[4])
+        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff = make_planet(initial_X_params=(0.1,0.04),
+                                                                                           core_density_params=None,
+                                                                                           core_mass_params=core_mass_params,
+                                                                                           period_params=(1.9, 7.6),
+                                                                                           KH_timescale_params=None)
 
         # mass of star cannot be negative
         if M_star <= 0:
@@ -243,12 +249,13 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # P_range = []
 # stellar_mass_range = []
 #
-# for i in range(100000):
-#     X_initial, core_density, core_mass, P, stellar_mass = make_planet(initial_X_params=(0.01,0.3),
-#                                                                               core_density_params=(5.5,0),
-#                                                                               core_mass_params=(3),
-#                                                                               period_params=(1.9,7.6),
-#                                                                               stellar_mass_params=(1.3,0.3))
+# for i in range(10000):
+#     X_initial, core_density, core_mass, P, stellar_mass, KH_timescale = make_planet(initial_X_params=(0.1,0.01),
+#                                                                                     core_density_params=None,
+#                                                                                     core_mass_params=(3, 0.5),
+#                                                                                     period_params=(1.9,7.6),
+#                                                                                     KH_timescale_params=None)
+#
 #     X_range.append(X_initial)
 #     core_density_range.append(core_density)
 #     core_mass_range.append(core_mass)
@@ -270,10 +277,13 @@ def run_single_population(N, distribution_parameters, current_time_string):
 #
 # plt.figure(4)
 # plt.hist(P_range, bins=np.logspace(0,2))
-# plt.plot([7.6,7.6],[0,7000])
+# #plt.plot([7.6,7.6],[0,7000])
 # plt.xlabel('Period')
 # plt.xscale('log')
 #
+# plt.figure(5)
+# plt.hist(stellar_mass_range, bins=50)
+# plt.xlabel('stellar mass')
 #
 #
 # plt.show()
