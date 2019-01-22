@@ -51,16 +51,16 @@ for i in range(full_CKS.shape[0]):
 rows_to_delete = list(set(rows_to_delete))
 filtered_CKS = np.delete(full_CKS, rows_to_delete, 0)
 
-# new array of [stellar mass, planet radius, planet period]
-useful_CKS = np.array([filtered_CKS[:,97], filtered_CKS[:,109], filtered_CKS[:,6]])
+# new array of [stellar radius, stellar mass, planet radius, planet period]
+useful_CKS = np.array([filtered_CKS[:,94], filtered_CKS[:,97], filtered_CKS[:,109], filtered_CKS[:,6]])
 np.savetxt('CKS_filtered.csv', useful_CKS, delimiter=',')
 print useful_CKS.shape
 
 
 def plot_Period_Radius():
 
-    R = list(useful_CKS[1,:])
-    P = list(useful_CKS[2,:])
+    R = list(useful_CKS[2,:])
+    P = list(useful_CKS[3,:])
 
 
     plt.style.use('classic')
@@ -97,8 +97,8 @@ def plot_Period_Radius():
 
 def plot_R_histogram():
 
-    R = list(useful_CKS[1,:])
-    P = list(useful_CKS[2,:])
+    R = list(useful_CKS[2,:])
+    P = list(useful_CKS[3,:])
 
     plt.style.use('classic')
     R_bins = np.logspace(-0.301,0.6, 20)
@@ -118,8 +118,8 @@ def plot_R_histogram():
 
 def plot_P_histogram():
 
-    R = list(useful_CKS[1,:])
-    P = list(useful_CKS[2,:])
+    R = list(useful_CKS[2,:])
+    P = list(useful_CKS[3,:])
 
     plt.style.use('classic')
     P_bins = np.logspace(0,2,40)

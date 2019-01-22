@@ -1,0 +1,7 @@
+#PBS -l walltime=24:00:00
+#PBS -l select=2:ncpus=16:mem=4gb
+
+module load python
+
+cd $HOME/PROJECTS/Owen_Wu_Analytic
+python main_MCMC

@@ -91,13 +91,14 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
         P = period_cutoff * np.exp(k_P * U_P)
 
     # random stellar mass from CKS data
-    stellar_mass = rand.choice(CKS_array[0,:])
+    CKS_index = rand.randint(0,946)
+    stellar_mass = CKS_array[1,CKS_index]
 
     #(KH_timescale_mean, KH_timescale_stdev) = KH_timescale_params
     #KH_timescale = rand.normal(KH_timescale_mean, KH_timescale_stdev)
     KH_timescale = 100
 
-    return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale
+    return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index
 
 
 def run_population(distribution_parameters, N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
@@ -112,19 +113,19 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     period_pop = []
     transit_number = 0
 
-    #initial_X_params = (distribution_parameters[0],distribution_parameters[1])
+    initial_X_params = (distribution_parameters[0],distribution_parameters[1])
     #core_density_params = (distribution_parameters[2],distribution_parameters[3])
-    core_mass_params = (distribution_parameters[0],distribution_parameters[1])
+    core_mass_params = (distribution_parameters[2],distribution_parameters[3])
     #period_params = (distribution_parameters[4],distribution_parameters[5])
     #KH_timescale_params = (distribution_parameters[8],distribution_parameters[9])
 
     while transit_number < N:
         # generate planet parameters
-        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff = make_planet(initial_X_params=(0.1,0.04),
-                                                                                           core_density_params=None,
-                                                                                           core_mass_params=core_mass_params,
-                                                                                           period_params=(1.9, 7.6),
-                                                                                           KH_timescale_params=None)
+        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff, CKS_index = make_planet(initial_X_params=initial_X_params,
+                                                                                                     core_density_params=None,
+                                                                                                     core_mass_params=core_mass_params,
+                                                                                                     period_params=(1.9, 7.6),
+                                                                                                     KH_timescale_params=None)
 
         # mass of star cannot be negative
         if M_star <= 0:
@@ -140,7 +141,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
             core_density_SI= core_density * 1000
             R_core_meters = (3 * M_core * M_earth / (4 * pi * core_density_SI))**(1/3)
             a_meters = ((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)
-            R_star_meters = R_sun * (M_star)**(3/7)
+            R_star_meters = R_sun * CKS_array[0, CKS_index]
             prob_of_transit = b_cutoff * (R_star_meters + R_core_meters) / a_meters
 
             # for a random inclination, reject planet if not transiting
@@ -161,7 +162,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
                 continue
 
 
-        print '//////// {0} TRANSITS \'OBSERVED\' for job {1}///////////'.format(transit_number, job_number)
+        # print '//////// {0} TRANSITS \'OBSERVED\' for job {1}///////////'.format(transit_number, job_number)
         R_core, t, X, R_ph = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-8,
                                                                X_initial, core_density, M_core,
                                                                period, M_star, KH_timescale_cutoff)

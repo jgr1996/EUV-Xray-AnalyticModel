@@ -23,13 +23,13 @@ if __name__ == '__main__':
 
     # initial guess [X_mean, X_stdev, M_core_mean, M_core_stdev, period_power, period_cutoff]
     # theta = [0.1, 0.05, 2.0, 0.4, 1.9, 7.6]
-    theta = [2.0, 0.4]
+    theta = [0.1, 0.05, 2.0, 0.4]
     ndim = len(theta)
-    nwalkers = 4
+    nwalkers = 8
 
     theta_guesses = []
     for i in range(nwalkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-3*x) for x in theta])
+        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
 
 
     sampler = emcee.EnsembleSampler(nwalkers,
@@ -40,10 +40,19 @@ if __name__ == '__main__':
     # sampler.run_mcmc(theta_guesses, 2)
     # results = sampler.chain
     # print results
-
-    for result in sampler.sample(theta_guesses, iterations=2, storechain=False):
+    iteration = 0
+    for result in sampler.sample(theta_guesses, iterations=1000, storechain=False):
         position = result[0]
-        np.savetxt('./RESULTS/{}/chain.csv'.format(current_time_string), position, delimiter=',')
+        np.savetxt('./RESULTS/{0}/position_{1}.csv'.format(current_time_string, iteration), position, delimiter=',')
+        iteration = iteration + 1
+
+
+    chain = []
+    for i in range(iteration)
+        position_i = np.loadtxt("position_{}.csv".format(i), delimiter=',')
+        chain.append(position_i)
+
+    np.savetxt("chain_final.csv", chain, delimiter=",")
 
 
     # theta1 = [0.1, 0.05, 2.0, 0.4, 1.9, 7.6]
