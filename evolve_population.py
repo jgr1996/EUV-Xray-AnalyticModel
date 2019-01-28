@@ -1,7 +1,6 @@
 from __future__ import division
 import os
 import numpy as np
-from numba import jit
 from numpy import random as rand
 from scipy import stats
 import multiprocessing
@@ -180,6 +179,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     if not os.path.exists(newpath):
         os.makedirs(newpath)
 
+
     np.savetxt('{0}/R_array_{1}.csv'.format(newpath, job_number), R_planet_pop, delimiter=',')
     np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
 
@@ -198,16 +198,17 @@ def run_single_population(N, distribution_parameters, current_time_string):
 
     # get number of cores
     number_of_cores = int(multiprocessing.cpu_count())
+    print number_of_cores
 
     observations_per_core = int(N / number_of_cores)
     job_list = np.arange(number_of_cores)
 
-    Parallel(n_jobs=-1, verbose=10)(delayed(run_population)(distribution_parameters,
-                                                            observations_per_core,
-                                                            current_time_string,
-                                                            period_bias=True,
-                                                            pipeline_recovery=True,
-                                                            job_number=i) for i in job_list)
+    Parallel(n_jobs=32)(delayed(run_population)(distribution_parameters,
+                                                observations_per_core,
+                                                current_time_string,
+                                                period_bias=True,
+                                                pipeline_recovery=True,
+                                                job_number=i) for i in job_list)
 
     # ensure there are equal numbers of planets as in CKS population
     top_up_observations = N - observations_per_core*number_of_cores

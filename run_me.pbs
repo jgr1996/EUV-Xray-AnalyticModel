@@ -1,7 +1,8 @@
-#PBS -l walltime=24:00:00
-#PBS -l select=2:ncpus=16:mem=4gb
+#PBS -l walltime=72:00:00
+#PBS -l select=1:ncpus=32:mem=4gb
 
-module load python
+module load anaconda3/personal
+source activate py2
 
-cd $HOME/PROJECTS/Owen_Wu_Analytic
-python main_MCMC
+cd $HOME/Projects/Owen_Wu_Analytic
+python main_MCMC.py > output.txt

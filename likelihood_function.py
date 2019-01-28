@@ -34,6 +34,15 @@ def likelihood_R_space(theta, N, current_time_string, data_histogram):
     [X_mean, X_stdev, M_core_mean, M_core_stdev] = theta
     if any(n <= 0 for n in theta):
         return -np.inf
+    if X_mean >= 0.4:
+        return -np.inf
+    if X_stdev >= 0.4:
+        return -np.inf
+    if M_core_mean >= 6.0:
+        return -np.inf
+    if M_core_stdev >= 2.5:
+        return -np.inf
+
 
     R, P = evolve_population.run_single_population(N, theta, current_time_string)
     model_bins, model_histogram = make_model_histogram(R,P)
@@ -54,4 +63,4 @@ def likelihood_R_space(theta, N, current_time_string, data_histogram):
     # ///////////////////// VERSION 2 ///////////////////////// #
     L = stats.ks_2samp(model_histogram, data_histogram)
 
-    return L[0]
+    return -L[0]

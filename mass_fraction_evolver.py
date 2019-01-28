@@ -101,7 +101,6 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
     # setup loop
     while t<= t_stop:
         #perform an adaptive RK45 step
-        print X_array[-1]
         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy,
                                                      parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff))
 

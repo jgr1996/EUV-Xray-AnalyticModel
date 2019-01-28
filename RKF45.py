@@ -1,6 +1,5 @@
 from __future__ import division
 import numpy as np
-from numba import jit
 
 ########################## INDIVIDUAL RK45 STEP ################################
 

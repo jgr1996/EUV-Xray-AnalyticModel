@@ -135,4 +135,4 @@ def plot_P_histogram():
     plt.tick_params(which='major', length=8)
     plt.tick_params(which='minor', length=4)
     plt.show()
-plot_P_histogram()
+print np.max(useful_CKS[1,:])

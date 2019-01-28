@@ -37,9 +37,7 @@ if __name__ == '__main__':
                                     likelihood_function.likelihood_R_space,
                                     args=(N, current_time_string, data_histogram))
 
-    # sampler.run_mcmc(theta_guesses, 2)
-    # results = sampler.chain
-    # print results
+
     iteration = 0
     for result in sampler.sample(theta_guesses, iterations=1000, storechain=False):
         position = result[0]
@@ -47,19 +45,9 @@ if __name__ == '__main__':
         iteration = iteration + 1
 
 
-    chain = []
-    for i in range(iteration)
-        position_i = np.loadtxt("position_{}.csv".format(i), delimiter=',')
-        chain.append(position_i)
-
-    np.savetxt("chain_final.csv", chain, delimiter=",")
-
-
-    # theta1 = [0.1, 0.05, 2.0, 0.4, 1.9, 7.6]
-    # theta2 = [0.1, 0.05, 6.0, 0.1, 1.9, 7.6]
+    # chain = []
+    # for i in range(iteration):
+    #     position_i = np.loadtxt("./RESULTS/{0}/position_{1}.csv".format(current_time_string, i), delimiter=',')
+    #     chain.append(position_i)
     #
-    # L1 = likelihood_function.likelihood_R_space(theta1, N, current_time_string, data_histogram)
-    # L2 = likelihood_function.likelihood_R_space(theta2, N, current_time_string, data_histogram)
-    #
-    # print 'L1 =', L1
-    # print 'L2 =', L2
+    # np.savetxt("chain_final.csv", chain, delimiter=",")
