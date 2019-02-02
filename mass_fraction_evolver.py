@@ -15,7 +15,7 @@ forward integrate the atmospheric mass fraction of a small, close-in planet.
 
 
 # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
-def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff):
+def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
 
     """
     This function calculated the mass-loss timescale of the atmosphere. See Owen
@@ -39,7 +39,7 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff):
 
     # Calulate photospheric radius
     R_ph = R_photosphere.calculate_R_photosphere(t, M_star, a, M_core, R_core,
-                                                 X, KH_timescale_cutoff)
+                                                 X, KH_timescale_cutoff, R_guess)
 
     # Calculate mass loss rate due to photoevaporation
     M_env_dot = eta * R_ph**3 * L_HE / (4 * a_meters * a_meters * G * M_core_kg)
@@ -58,9 +58,9 @@ def dXdt_ODE(t, X, parameters):
     where X = M_atmosphere / M_core and tX is the mass-loss timeascale.
     """
 
-    M_core, M_star, a, R_core, KH_timescale_cutoff = parameters
+    M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
 
-    tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff)
+    tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
 
     dXdt = - X / tX
 
@@ -87,7 +87,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 
     #calculate initial photospheric radius
     R_ph_init = R_photosphere.calculate_R_photosphere(t_start, M_star, a, M_core,
-                                                      R_core, initial_X, KH_timescale_cutoff)
+                                                      R_core, initial_X, KH_timescale_cutoff,
+                                                      R_guess=None)
 
     # define arrays for storing t steps and variables
     X_array = np.array([initial_X])
@@ -102,15 +103,14 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
     while t<= t_stop:
         #perform an adaptive RK45 step
         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy,
-                                                     parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff))
+                                                     parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
 
 
         # calculate new R_ph
         R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
-                                                         R_core, X_new, KH_timescale_cutoff)
+                                                         R_core, X_new, KH_timescale_cutoff, None)
 
-
-
+        # if X becomes very small, we can assume all atmosphere is eroded
         if X_new <= 1e-4:
                 # update new variables
                 X_array = np.append(X_array, 0.0)
@@ -150,12 +150,12 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 # X_2_range = [X_2(t=i,period=10,M_star=1.0,rho_core=5.5,M_core=5.0) for i in t_range]
 # X_3over2_range = [i/10 for i in X_2_range]
 #
-# X_range = np.logspace(-3.3,-0.2, 20)
+# X_range = np.logspace(-3.3,0.0, 20)
 # plt.style.use('classic')
 # for i in X_range:
 #     print 'X = ',i
-#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-8,
-#                                      initial_X=i, core_density=5.5, M_core=5.0, period=10, M_star=1.0)
+#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-4,
+#                                      initial_X=i, core_density=5.5, M_core=1.0, period=3, M_star=1.0, KH_timescale_cutoff=100)
 #
 #     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
 #

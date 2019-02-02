@@ -1,6 +1,6 @@
 from __future__ import division
 import numpy as np
-from scipy.optimize import brentq
+from scipy.optimize import brentq, fsolve
 import math
 from constants import *
 
@@ -94,7 +94,7 @@ def R_rcb_equation(R_rcb, T_eq, c_s_squared, KH_timescale_seconds,
 # /////////////////////////////// SOLVE FOR R_rcb //////////////////////////// #
 
 def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
-                            M_core_kg, R_core_meters, X):
+                            M_core_kg, R_core_meters, X, R_guess):
     """
     Calculates solution of R_rcb_equation using Newton-Raphson/secant method. Then
     finds Rho_rcb using the solution R_rcb:
@@ -109,9 +109,12 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
     """
 
 
-
-    R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
-                   M_core_kg, R_core_meters, X))
+    if R_guess == None:
+        R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
+                       M_core_kg, R_core_meters, X))
+    else:
+        R_rcb = brentq(R_rcb_equation, 0.001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
+                       M_core_kg, R_core_meters, X))
 
 
     Rho_rcb = (mu * m_H / k_B) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) *  \
@@ -125,7 +128,7 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
 
 # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
 
-def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff):
+def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):
     """
     Returns the photospheric radius of the planet (in meters):
 
@@ -153,7 +156,7 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff
 
     # solve simultaneous equations for radiative-convective boundary radius and density
     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
-                                             M_core_kg, R_core_meters, X)
+                                             M_core_kg, R_core_meters, X, R_guess)
 
     # calculate gravitational constant (assumed constant)
     g = G * M_core_kg / (R_rcb*R_rcb)

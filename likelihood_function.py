@@ -60,7 +60,24 @@ def likelihood_R_space(theta, N, current_time_string, data_histogram):
     # return L
 
 
-    # ///////////////////// VERSION 2 ///////////////////////// #
-    L = stats.ks_2samp(model_histogram, data_histogram)
+    # # ///////////////////// VERSION 2 ///////////////////////// #
+    # L = stats.ks_2samp(model_histogram, data_histogram)
+    # return L[1]
 
-    return -L[0]
+    # ///////////////////// VERSION 3 ///////////////////////// #
+
+    L = np.absolute(model_histogram - data_histogram)
+    return -np.sum(L)
+
+
+
+# R_bins = np.logspace(-1.0,1.0, 30)
+# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# plt.hist(CKS_array[2,:], bins=R_bins)
+#
+# N = len(CKS_array[2,:])
+# data_bins, data_histogram = make_CKS_histograms()
+# L, R_model = likelihood_R_space([0.1, 0.05, 3.0, 0.5], N, "test_output", data_histogram)
+# plt.hist(R_model, bins=R_bins)
+# plt.show()
+# print L

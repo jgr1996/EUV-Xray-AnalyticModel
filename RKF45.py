@@ -1,9 +1,9 @@
 from __future__ import division
 import numpy as np
 
-########################## INDIVIDUAL RK45 STEP ################################
+####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
 
-def RKCashKarp_Step(t, var_i, dydx_functions, dt, parameters):
+def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
     """
     This function uses a Runge-Kutta 4th and 5th order scheme to calculate the
     derivatives of a given system of equations. Both the 5th order solution and
@@ -50,6 +50,37 @@ def RKCashKarp_Step(t, var_i, dydx_functions, dt, parameters):
     return (RK5_sol, err)
 
 
+def RKFehlberg12(t, var_i, dydx_functions, dt, parameters):
+    """
+    This function uses a Runge-Kutta 2nd and 1st order scheme to calculate the
+    derivatives of a given system of equations. Both the 2nd order solution and
+    the error are returned.
+    """
+
+    k1 = dt * dydx_functions(t, var_i, parameters)
+    var1 = var_i + 0.5*k1
+    if var1 < 0: # a negative contribution should not be obtained
+        return (None, None)
+
+    k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)
+    var2 = var_i + (1/256)*k1 + (255/256)*k2
+    if var2 < 0: # a negative contribution should not be obtained
+        return (None, None)
+
+    k3 = dt * dydx_functions(t + dt, var2, parameters)
+
+    # calculate the 1st order solution
+    RK1_sol = var_i + (1/256)*k1 + (255/256)*k2
+    # calculate the 2nd order solution
+    RK2_sol = var_i + (1/512)*k1 + (255/256)*k2 + (1/512)*k3
+
+    # estimate the error, given by the difference between the 2nd and 1st order solutions
+    err = RK2_sol - RK1_sol
+
+    return (RK2_sol, err)
+
+
+
 ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
 def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
 
@@ -69,7 +100,8 @@ def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
     dt = dt_try
     while True:
         # take an RK45 step
-        (var_new, var_err) = RKCashKarp_Step(t, var_i, dydx_functions, dt, parameters)
+        (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)
+        # (var_new, var_err) = RKFehlberg12(t, var_i, dydx_functions, dt, parameters)
         if (var_new, var_err) == (None, None):
             dt = 0.01*dt
             continue

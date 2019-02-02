@@ -102,7 +102,7 @@ def plot_R_histogram():
 
     plt.style.use('classic')
     R_bins = np.logspace(-0.301,0.6, 20)
-    plt.hist(R, density=True, bins=R_bins, histtype='step', color='black', linewidth=2)
+    plt.hist(R, bins=R_bins, histtype='step', color='black', linewidth=2)
     plt.xscale('log')
     plt.xlim([0.5,6])
     plt.rcParams["font.family"] = "Courier New"
@@ -123,7 +123,7 @@ def plot_P_histogram():
 
     plt.style.use('classic')
     P_bins = np.logspace(0,2,40)
-    plt.hist(P, density=True, bins=P_bins, histtype='step', color='black', linewidth=2)
+    plt.hist(P, bins=P_bins, histtype='step', color='black', linewidth=2)
     plt.xscale('log')
     plt.rcParams["font.family"] = "Courier New"
     hfont = {'fontname':'Courier New'}
@@ -135,4 +135,3 @@ def plot_P_histogram():
     plt.tick_params(which='major', length=8)
     plt.tick_params(which='minor', length=4)
     plt.show()
-print np.max(useful_CKS[1,:])
