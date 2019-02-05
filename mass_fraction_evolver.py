@@ -80,7 +80,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
-    R_core = ((3 * M_core * M_earth / (4 * pi * core_density_SI))**(1/3)) / R_earth
+    R_core = 1.03 * (M_core)**0.25
 
     # orbital period to semi-major axis measured in AU
     a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU

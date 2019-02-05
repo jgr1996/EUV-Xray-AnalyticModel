@@ -36,8 +36,11 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
 
     # random initial mass fraction according to log-normal distribution
     (X_mean, X_stdev) = initial_X_params
-    X_initial = rand.normal(X_mean, X_stdev)
-
+    X_initial = rand.lognormal(np.log(X_mean), X_stdev)
+    # (X_min, X_max) = initial_X_params
+    # U_X = rand.random()
+    # k_X = np.log(X_max/X_min)
+    # X_initial = X_min * np.exp(k_X*U_X)
 
     # random core_density according to gaussian
     #(density_mean, density_stdev) = core_density_params
@@ -46,12 +49,13 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
 
     # random core mass according to Rayleigh
     (core_mass_mean, core_mass_stdev) = core_mass_params
-    core_mass = rand.normal(core_mass_mean, core_mass_stdev)
-    #
-    # #random period according to CKS data fit
+    core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
+    # core_mass = rand.rayleigh(core_mass_mean)
+
+    #random period according to CKS data fit
     # (power, period_cutoff) = period_params
     # U_P = rand.random()
-    # if U_P <= 0.14:  #0.14
+    # if U_P <= 0.2:  #0.14
     #     U_P = rand.random()
     #     c = period_cutoff**power / (power)
     #     P = (power * U_P * c)**(1/power)
@@ -167,7 +171,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
 
         # add random error to planetary radius from gaussian distribution
         true_planet_radius = R_ph[-1]
-        observed_planet_radius = true_planet_radius + rand.normal(true_planet_radius, 0.1*true_planet_radius)
+        observed_planet_radius = true_planet_radius + rand.normal(0.0, 0.1*true_planet_radius)
 
         R_planet_pop.append(observed_planet_radius)
         period_pop.append(period)
@@ -196,7 +200,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
     observations_per_core = int(N / number_of_cores)
     job_list = np.arange(number_of_cores)
 
-    Parallel(n_jobs=32)(delayed(run_population)(distribution_parameters,
+    Parallel(n_jobs=48)(delayed(run_population)(distribution_parameters,
                                                 observations_per_core,
                                                 current_time_string,
                                                 period_bias=True,
@@ -229,61 +233,6 @@ def run_single_population(N, distribution_parameters, current_time_string):
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
-# def period_distribution_test(N, period_bias=False):
-#
-#     period_pop = []
-#     transit_number = 0
-#
-#     while transit_number < N:
-#         # generate planet parameters
-#         X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff, CKS_index = make_planet(initial_X_params=(0.1,0.01),
-#                                                                                                       core_density_params=None,
-#                                                                                                       core_mass_params=(3, 0.5),
-#                                                                                                       period_params=(1.9, 7.6),
-#                                                                                                       KH_timescale_params=None)
-#
-#         # mass of star cannot be negative
-#         if M_star <= 0:
-#             continue
-#         if M_core <= 0:
-#             continue
-#         if X_initial < 0:
-#             continue
-#
-#
-#         # calculate probability of transit using P = b(R_pl + R_*) / a
-#         if period_bias == True:
-#
-#             a_meters = ((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)
-#             R_star_meters = R_sun * CKS_array[0, CKS_index]
-#             prob_of_transit = b_cutoff * R_star_meters / a_meters
-#
-#             # for a random inclination, reject planet if not transiting
-#             random_number_transit = rand.random()
-#             if random_number_transit > prob_of_transit:
-#                 continue
-#
-#
-#             # random signal to noise, m
-#             m = rand.randint(0,1000)
-#             # Gamma CDF function for probability of injection recovery - (a, scale, loc) taken from Fulton et al. 2017
-#             prob_of_injection_recovery = stats.gamma.cdf(m, a=17.56, loc=1.0, scale=0.49)
-#
-#             # determine whether injection is recovered
-#             random_number_inj_recovery = rand.random()
-#             if random_number_inj_recovery > prob_of_injection_recovery:
-#                 continue
-#
-#             period_pop.append(period)
-#             transit_number = transit_number + 1
-#             print transit_number
-#
-#         else:
-#             period_pop.append(period)
-#             transit_number = transit_number + 1
-#             print transit_number
-#
-#     return period_pop
 
 # R, P = run_population(10, period_bias=True, pipeline_recovery=True)
 # plt.style.use('classic')
@@ -303,9 +252,9 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # stellar_mass_range = []
 #
 # for i in range(10000):
-#     X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index = make_planet(initial_X_params=(0.1,0.01),
+#     X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index = make_planet(initial_X_params=(1, 0.37),
 #                                                                                                core_density_params=None,
-#                                                                                                core_mass_params=(3, 0.5),
+#                                                                                                core_mass_params=(2.04, 0.29),
 #                                                                                                period_params=(1.9,7.6),
 #                                                                                                KH_timescale_params=None)
 #
@@ -316,17 +265,19 @@ def run_single_population(N, distribution_parameters, current_time_string):
 #     stellar_mass_range.append(stellar_mass)
 
 # plt.figure(1)
-# plt.hist(X_range, bins=np.logspace(-2,0))
+# plt.hist(X_range, bins=np.logspace(-3,1))
 # plt.xlabel('X')
 # plt.xscale('log')
 #
 # plt.figure(2)
 # plt.hist(core_density_range, bins=50)
 # plt.xlabel('core density g/cm^3')
-
+#
 # plt.figure(3)
-# plt.hist(core_mass_range, bins=50)
+# plt.hist(core_mass_range, bins=np.logspace(0,2))
 # plt.xlabel('core mass')
+# plt.xscale('log')
+
 
 # plt.figure(4)
 # plt.hist(P_range, bins=np.logspace(0,2))
@@ -358,7 +309,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 
 # //////////////////////////////////////////////////////////////////////////// #
 
-# current_time_string = "test3"
+# current_time_string = "test1"
 # newpath = './RESULTS/{0}'.format(current_time_string)
 # if not os.path.exists(newpath):
 #     os.makedirs(newpath)
@@ -369,6 +320,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # # get CKS data radius bins
 # N = np.sum(hist)
 #
-# distribution_parameters = [0.05, 0.1, 1.5, 1.0]
+# distribution_parameters = [0.026, 0.37, 2.5, 1.0]
 # R, P = run_single_population(N, distribution_parameters, current_time_string)
 # np.savetxt('{0}/R.csv'.format(newpath), R, delimiter=',')
+# np.savetxt('{0}/P.csv'.format(newpath), P, delimiter=',')

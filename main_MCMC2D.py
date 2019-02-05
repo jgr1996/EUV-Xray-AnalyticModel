@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
 
     # get CKS data radius bins
-    data_histogram = likelihood_function.make_CKS_histograms()
+    data_histogram = likelihood_function.make_CKS_histograms(nD=True)
     N = np.sum(data_histogram)
 
     # initial guess [X_mean, X_stdev, M_core_mean, M_core_stdev, period_power, period_cutoff]
@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
-                                    likelihood_function.likelihood_R_space,
+                                    likelihood_function.likelihood_P_R_space,
                                     args=(N, current_time_string, data_histogram))
 
 
