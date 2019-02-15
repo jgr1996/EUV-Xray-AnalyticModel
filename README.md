@@ -2,6 +2,13 @@
 
 This program is a Bayesian hierarchical model for constraining the underlying planetary distribution of close-in exoplanets. This is achieved by exploiting the photoevaporation valley uncovered from the California Kepler Survey (CKS) (Fulton et al. 2017) and the analytic model proposed by Owen and Wu (2017).
 
+# Versions
+
+- Version 1.0 (stable)
+  * This is parallelised using an the python library 'joblib'
+- Version 2.0 (under construction)
+  * This is parallelised using MPI  
+
 # Files
 
 - main_MCMC.py

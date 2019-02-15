@@ -2,7 +2,7 @@ from __future__ import division
 import numpy as np
 
 # physical constants
-global pi, stefan, kappa_0, G, gamma, Delta_ab, mu, m_H, k_B, alpha, beta, M_sun, L_sun, AU, T_eq_earth, M_earth, R_earth, eta, t_sat, a0, b_cutoff, R_sun
+global pi, stefan, kappa_0, G, gamma, Delta_ab, mu, m_H, k_B, alpha, beta, M_sun, L_sun, AU, T_eq_earth, M_earth, R_earth, eta_0, t_sat, a0, b_cutoff, R_sun
 
 pi = np.pi
 stefan = 5.67e-8
@@ -21,7 +21,7 @@ AU = 1.496e11
 T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
 M_earth = 5.927e24
 R_earth = 6.378e6
-eta = 0.1
+eta_0 = 0.17
 Myr = 1e6 * 365 * 24 * 60 * 60
 t_sat = 100 * Myr
 a0 = 0.5

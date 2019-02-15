@@ -176,5 +176,5 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff
     return R_photosphere
 
 #test script
-#R_rcb, R_photosphere = calculate_R_photosphere(t=3000, M_star=1, a=0.1, M_core=5.0, R_core=1.5, X=0.01)
-# print X
+# R_photosphere = calculate_R_photosphere(t=3000, M_star=1, a=0.1, M_core=5.0, R_core=2.0, X=0.05, KH_timescale_cutoff=3000, R_guess=None)
+# print R_photosphere/R_earth

@@ -109,9 +109,9 @@ def plot_R_histogram():
     hfont = {'fontname':'Courier New'}
     plt.title("CKS Data", fontsize=22, **hfont)
     plt.xlabel(r'Planet Radius [R$_\oplus]$', fontsize=16, **hfont)
-    plt.ylabel(r'dN/dlog R', fontsize=16, **hfont)
+    plt.ylabel(r'N', fontsize=16, **hfont)
     plt.xticks([0.5,1,2,3,4,5,6],[0.5,1,2,3,4,5,6], fontsize=16, fontname = "Courier New")
-    plt.yticks(fontsize=16, fontname = "Courier New")
+    plt.yticks([20,40,60,80,100,120], [20,40,60,80,100,120], fontsize=16, fontname = "Courier New")
     plt.tick_params(which='major', length=8)
     plt.tick_params(which='minor', length=4)
     plt.show()
@@ -135,3 +135,5 @@ def plot_P_histogram():
     plt.tick_params(which='major', length=8)
     plt.tick_params(which='minor', length=4)
     plt.show()
+
+plot_R_histogram()

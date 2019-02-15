@@ -26,6 +26,7 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
     M_core_kg = M_core * M_earth
     a_meters = a * AU
     t_seconds = t * Myr
+    R_core_meters = R_core * R_earth
 
     # Calculate envelope mass (kg)
     M_env_kg = X * M_core_kg
@@ -41,6 +42,8 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
     R_ph = R_photosphere.calculate_R_photosphere(t, M_star, a, M_core, R_core,
                                                  X, KH_timescale_cutoff, R_guess)
 
+    escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
+    eta = eta_0 * (escape_velocity / 23 )**(-0.42)
     # Calculate mass loss rate due to photoevaporation
     M_env_dot = eta * R_ph**3 * L_HE / (4 * a_meters * a_meters * G * M_core_kg)
 
@@ -80,7 +83,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
-    R_core = 1.03 * (M_core)**0.25
+    R_core = 1.03 * ((M_core)**0.25)
 
     # orbital period to semi-major axis measured in AU
     a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
@@ -154,8 +157,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 # plt.style.use('classic')
 # for i in X_range:
 #     print 'X = ',i
-#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-4,
-#                                      initial_X=i, core_density=5.5, M_core=1.0, period=3, M_star=1.0, KH_timescale_cutoff=100)
+#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-5,
+#                                      initial_X=i, core_density=5.5, M_core=5.0, period=10, M_star=1.0, KH_timescale_cutoff=100)
 #
 #     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
 #
@@ -190,3 +193,10 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
 # plt.loglog(X_range,tX_range_2)
 
 # //////////////////////////////////////////////////////////////////////////// #
+
+
+# R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-5,
+#                                  initial_X=0.0122, core_density=5.5, M_core=0.2, period=1.0, M_star=1.058, KH_timescale_cutoff=100)
+#
+# print "{0} --> {1}".format(X[0], X[-1])
+# print R_core

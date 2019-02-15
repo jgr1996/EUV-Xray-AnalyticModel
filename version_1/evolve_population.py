@@ -21,8 +21,6 @@ exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
 CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
 
-
-
 def make_planet(initial_X_params, core_density_params, core_mass_params,
                 period_params, KH_timescale_params):
 
@@ -52,10 +50,10 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
     # core_mass = rand.rayleigh(core_mass_mean)
 
-    #random period according to CKS data fit
+    # #random period according to CKS data fit
     # (power, period_cutoff) = period_params
     # U_P = rand.random()
-    # if U_P <= 0.2:  #0.14
+    # if U_P <= 0.14:  #0.14
     #     U_P = rand.random()
     #     c = period_cutoff**power / (power)
     #     P = (power * U_P * c)**(1/power)
@@ -120,25 +118,28 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
                                                                                                       period_params=(1.9, 7.6),
                                                                                                       KH_timescale_params=None)
 
-        # mass of star/planet and envelope mass fraction cannot be negative
-        if M_star <= 0:
-            continue
+        # mass of planet and envelope mass fraction cannot be negative
         if M_core <= 0:
             continue
         if X_initial < 0:
             continue
 
         # model does not cover self-gravitating planets
-        if X_initial >= 1.0:
+        if X_initial >= 0.9:
+            continue
+        if M_core >= 12.0:
             continue
         # model does not consider dwarf planets
-        if M_core <=0.1:
+        if M_core <=0.3:
             continue
         # model breaks down for very small periods
         if period <= 0.5:
             continue
+        # CKS data does not include P > 100
+        if period > 100.0:
+            continue
 
-        # calculate probability of transit using P = b(R_pl + R_*) / a
+        # # calculate probability of transit using P = b(R_pl + R_*) / a
         # if period_bias == True:
         #
         #     a_meters = ((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)
@@ -171,11 +172,14 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
 
         # add random error to planetary radius from gaussian distribution
         true_planet_radius = R_ph[-1]
-        observed_planet_radius = true_planet_radius + rand.normal(0.0, 0.1*true_planet_radius)
+        observed_planet_radius = true_planet_radius #+ rand.normal(0.0, 0.1*true_planet_radius)
+
+        # print "{0} ---> {1}".format(X[0], X[-1])
 
         R_planet_pop.append(observed_planet_radius)
         period_pop.append(period)
         transit_number = transit_number + 1
+
 
     newpath = './RESULTS/{0}'.format(output_directory_name)
 
@@ -183,7 +187,7 @@ def run_population(distribution_parameters, N, output_directory_name, period_bia
     np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
 
     return None
-
+    # return R_planet_pop, period_pop
 
 
 def run_single_population(N, distribution_parameters, current_time_string):
@@ -200,7 +204,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
     observations_per_core = int(N / number_of_cores)
     job_list = np.arange(number_of_cores)
 
-    Parallel(n_jobs=48)(delayed(run_population)(distribution_parameters,
+    Parallel(n_jobs=24)(delayed(run_population)(distribution_parameters,
                                                 observations_per_core,
                                                 current_time_string,
                                                 period_bias=True,
@@ -215,6 +219,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
                    period_bias=True,
                    pipeline_recovery=True,
                    job_number=job_list[-1] + 1)
+
 
     R = []
     P = []
@@ -251,10 +256,10 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # P_range = []
 # stellar_mass_range = []
 #
-# for i in range(10000):
+# for i in range(100000):
 #     X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index = make_planet(initial_X_params=(1, 0.37),
 #                                                                                                core_density_params=None,
-#                                                                                                core_mass_params=(2.04, 0.29),
+#                                                                                                core_mass_params=(7.0, 0.29),
 #                                                                                                period_params=(1.9,7.6),
 #                                                                                                KH_timescale_params=None)
 #
@@ -263,7 +268,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 #     core_mass_range.append(core_mass)
 #     P_range.append(P)
 #     stellar_mass_range.append(stellar_mass)
-
+#
 # plt.figure(1)
 # plt.hist(X_range, bins=np.logspace(-3,1))
 # plt.xlabel('X')
@@ -272,17 +277,22 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # plt.figure(2)
 # plt.hist(core_density_range, bins=50)
 # plt.xlabel('core density g/cm^3')
-#
+
 # plt.figure(3)
-# plt.hist(core_mass_range, bins=np.logspace(0,2))
+# plt.hist(core_mass_range, bins=np.logspace(-1,2))
 # plt.xlabel('core mass')
 # plt.xscale('log')
 
 
 # plt.figure(4)
-# plt.hist(P_range, bins=np.logspace(0,2))
+# plt.hist(P_range, bins=np.logspace(0,2,30), histtype='step', color='black', linewidth=2)
 # plt.xlabel('Period')
 # plt.xscale('log')
+#
+# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# P_data = CKS_array[3,:]
+# plt.hist(P_data, bins=np.logspace(0,2,30), color='r', histtype='step')
+
 
 # plt.figure(5)
 # plt.hist(stellar_mass_range, bins=50)
@@ -309,7 +319,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 
 # //////////////////////////////////////////////////////////////////////////// #
 
-# current_time_string = "test1"
+# current_time_string = "test"
 # newpath = './RESULTS/{0}'.format(current_time_string)
 # if not os.path.exists(newpath):
 #     os.makedirs(newpath)
@@ -320,7 +330,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 # # get CKS data radius bins
 # N = np.sum(hist)
 #
-# distribution_parameters = [0.026, 0.37, 2.5, 1.0]
-# R, P = run_single_population(N, distribution_parameters, current_time_string)
+# distribution_parameters = [0.06, 0.42, 7.72, 1.86]
+# R, P = run_single_population(5*N, distribution_parameters, current_time_string)
 # np.savetxt('{0}/R.csv'.format(newpath), R, delimiter=',')
 # np.savetxt('{0}/P.csv'.format(newpath), P, delimiter=',')
