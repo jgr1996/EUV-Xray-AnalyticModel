@@ -7,7 +7,6 @@ import emcee
 import numpy as np
 from numpy import random as rand
 from joblib import Parallel, delayed
-from emcee.utils import MPIPool
 import likelihood_function
 import evolve_population
 
@@ -33,12 +32,12 @@ if __name__ == '__main__':
     # theta = [3.0, 0.5]
     ndim = len(theta)
     n_walkers = 100
-    n_iterations = 1000
+    n_iterations = 10000
 
-    theta_guesses = []
-    for i in range(n_walkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
-    # theta_guesses = np.loadtxt("./RESULTS/13.02.2019_19.12.31/position_520.csv", delimiter=",")
+    # theta_guesses = []
+    # for i in range(n_walkers):
+    #     theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
+    theta_guesses = np.loadtxt("./RESULTS/14.02.2019_20.26.52/position_947.csv", delimiter=",")
 
     file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
     file.write("----------------- MCMC Simulation ------------------\n")
@@ -61,5 +60,5 @@ if __name__ == '__main__':
     iteration = 0
     for result in sampler.sample(theta_guesses, iterations=n_iterations, storechain=False):
         position = result[0]
-        np.savetxt('./RESULTS/{0}/position_{1}.csv'.format(current_time_string, iteration), position, delimiter=',')
+        np.savetxt('./RESULTS/{0}/position_{1}.csv'.format(current_time_string, int(948+iteration)), position, delimiter=',')
         iteration = iteration + 1

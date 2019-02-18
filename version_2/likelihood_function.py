@@ -3,12 +3,10 @@ import os
 import sys
 import datetime
 import time
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
-from scipy.misc import factorial
+from mpi4py import MPI
 import evolve_population
-import ndtest
 
 
 def make_model_histogram(R, P, nD=False):
@@ -64,49 +62,46 @@ def empirical_dist(hist):
 
 # //////////////////////////////////////////////////////////////////////////// #
 
-def likelihood_R_space(theta, N, current_time_string, data_histogram):
+def likelihood_R_space(theta, N, data_histogram):
+
+    comm = MPI.COMM_WORLD   # get MPI communicator object
+    rank = comm.rank        # rank of this process
+
+    if rank == 0:
+        [X_mean, X_stdev, M_core_mean, M_core_stdev] = theta
+        if any(n <= 0 for n in theta):
+            return -np.inf
+        if X_mean >= 0.4:
+            return -np.inf
+        if X_stdev >= 0.5:
+            return -np.inf
+        if M_core_mean >= 12.0:
+            return -np.inf
+        if M_core_mean <= 0.5:
+            return -np.inf
+        if M_core_stdev >= 2.5:
+            return -np.inf
 
 
-    # [M_core_mean, M_core_stdev] = theta
-    # if any(n <= 0 for n in theta):
-    #     return -np.inf
+    R, P = evolve_population.CKS_synthetic_observation(N, theta)
 
-    [X_mean, X_stdev, M_core_mean, M_core_stdev] = theta
-    if any(n <= 0 for n in theta):
-        return -np.inf
-    if X_mean >= 0.4:
-        return -np.inf
-    if X_stdev >= 0.5:
-        return -np.inf
-    if M_core_mean >= 12.0:
-        return -np.inf
-    if M_core_mean <= 0.5:
-        return -np.inf
-    if M_core_stdev >= 2.5:
-        return -np.inf
+    if rank == 0:
+        model_histogram = make_model_histogram(R,P)
 
+        # ///////////////////// VERSION 1 ///////////////////////// #
+        model_hist_temp = model_histogram + np.ones(len(model_histogram))
+        data_hist_temp = data_histogram + np.ones(len(data_histogram))
 
+        L = data_hist_temp * np.log(model_hist_temp) \
+          - model_hist_temp \
+          - data_hist_temp * np.log(data_hist_temp) - data_hist_temp
 
-    R, P = evolve_population.run_single_population(N, theta, current_time_string)
-    # R, P = evolve_population.run_population(theta,
-    #                                         N,
-    #                                         current_time_string,
-    #                                         period_bias=False,
-    #                                         pipeline_recovery=False)
+        L = np.sum(L)
 
-    model_histogram = make_model_histogram(R,P)
+        return L
 
-    # ///////////////////// VERSION 1 ///////////////////////// #
-    model_hist_temp = model_histogram + np.ones(len(model_histogram))
-    data_hist_temp = data_histogram + np.ones(len(data_histogram))
-
-    L = data_hist_temp * np.log(model_hist_temp) \
-      - model_hist_temp \
-      - data_hist_temp * np.log(data_hist_temp) - data_hist_temp
-
-    L = np.sum(L)
-
-    return L
+    else:
+        return 0.0
 
 
     # ///////////////////// VERSION 2 ///////////////////////// #
@@ -147,23 +142,12 @@ def likelihood_P_R_space(theta, N, current_time_string, data_histogram):
     L = ndtest.ks2d2s(model_histogram, data_histogram)
     return L
 
-
-
-
-
-
-# R_bins = np.logspace(-1.0,1.0, 30)
-# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-# plt.hist(CKS_array[2,:], bins=R_bins)
+# ///////////////////////////////// TEST ///////////////////////////////////// #
+# data_histogram = make_CKS_histograms()
+# L = likelihood_R_space([0.06, 0.42, 7.72, 1.86], 500, data_histogram)
 #
-# N = len(CKS_array[2,:])
-# data_bins, data_histogram = make_CKS_histograms()
-# L, R_model = likelihood_R_space([0.1, 0.05, 3.0, 0.5], N, "test_output", data_histogram)
-# plt.hist(R_model, bins=R_bins)
-# plt.show()
-# print L
-
-
-# CKS_hist = make_CKS_histograms()
-# print CKS_hist
-# empirical_dist(CKS_hist)
+# comm = MPI.COMM_WORLD   # get MPI communicator object
+# rank = comm.rank        # rank of this process
+#
+# if rank == 0:
+#     print L

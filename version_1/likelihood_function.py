@@ -67,10 +67,6 @@ def empirical_dist(hist):
 def likelihood_R_space(theta, N, current_time_string, data_histogram):
 
 
-    # [M_core_mean, M_core_stdev] = theta
-    # if any(n <= 0 for n in theta):
-    #     return -np.inf
-
     [X_mean, X_stdev, M_core_mean, M_core_stdev] = theta
     if any(n <= 0 for n in theta):
         return -np.inf
@@ -88,11 +84,6 @@ def likelihood_R_space(theta, N, current_time_string, data_histogram):
 
 
     R, P = evolve_population.run_single_population(N, theta, current_time_string)
-    # R, P = evolve_population.run_population(theta,
-    #                                         N,
-    #                                         current_time_string,
-    #                                         period_bias=False,
-    #                                         pipeline_recovery=False)
 
     model_histogram = make_model_histogram(R,P)
 

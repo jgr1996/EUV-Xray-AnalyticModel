@@ -2,9 +2,9 @@ from __future__ import division
 import os
 import numpy as np
 from numpy import random as rand
+import time
 from scipy import stats
-import multiprocessing
-from joblib import Parallel, delayed
+from mpi4py import MPI
 import matplotlib.pyplot as plt
 from constants import *
 import mass_fraction_evolver
@@ -18,7 +18,14 @@ The main purpose of this code is the constrain the underlying distributions of
 exoplanets by evolving an initial ensemble through EUV/Xray photoevaporation.
 """
 
-CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+
+def enum(*sequential, **named):
+    """
+    Handy way to fake an enumerated type in Python
+    http://stackoverflow.com/questions/36932/how-can-i-represent-an-enum-in-python
+    """
+    enums = dict(zip(sequential, range(len(sequential))), **named)
+    return type('Enum', (), enums)
 
 
 def make_planet(initial_X_params, core_density_params, core_mass_params,
@@ -35,10 +42,6 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     # random initial mass fraction according to log-normal distribution
     (X_mean, X_stdev) = initial_X_params
     X_initial = rand.lognormal(np.log(X_mean), X_stdev)
-    # (X_min, X_max) = initial_X_params
-    # U_X = rand.random()
-    # k_X = np.log(X_max/X_min)
-    # X_initial = X_min * np.exp(k_X*U_X)
 
     # random core_density according to gaussian
     #(density_mean, density_stdev) = core_density_params
@@ -48,7 +51,6 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
     # random core mass according to Rayleigh
     (core_mass_mean, core_mass_stdev) = core_mass_params
     core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
-    # core_mass = rand.rayleigh(core_mass_mean)
 
     # #random period according to CKS data fit
     # (power, period_cutoff) = period_params
@@ -78,177 +80,150 @@ def make_planet(initial_X_params, core_density_params, core_mass_params,
         P = (power * U_P * c)**(1/power)
 
 
-
-
-
     # random stellar mass from CKS data
-    CKS_index = rand.randint(0,946)
-    stellar_mass = CKS_array[1,CKS_index]
+    # CKS_index = rand.randint(0,946)
+    # stellar_mass = CKS_array[1,CKS_index]
 
     #(KH_timescale_mean, KH_timescale_stdev) = KH_timescale_params
     #KH_timescale = rand.normal(KH_timescale_mean, KH_timescale_stdev)
     KH_timescale = 100
 
-    return X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index
+    return X_initial, core_density, core_mass, P, KH_timescale
 
 
-def run_population(distribution_parameters, N, output_directory_name, period_bias=False, pipeline_recovery=False, job_number=0):
 
-    """
-    This function evolves an ensemble of N planets randomly generated using the
-    make_planet function through the mass_fraction_evolver file (in particular
-    the "RK45_driver" function).
-    """
-
-    R_planet_pop = []
-    period_pop = []
-    transit_number = 0
-
-    initial_X_params = (distribution_parameters[0],distribution_parameters[1])
-    #core_density_params = (distribution_parameters[2],distribution_parameters[3])
-    core_mass_params = (distribution_parameters[2],distribution_parameters[3])
-    #period_params = (distribution_parameters[4],distribution_parameters[5])
-    #KH_timescale_params = (distribution_parameters[8],distribution_parameters[9])
-
-    while transit_number < N:
-        # generate planet parameters
-        X_initial, core_density, M_core, period, M_star, KH_timescale_cutoff, CKS_index = make_planet(initial_X_params=initial_X_params,
-                                                                                                      core_density_params=None,
-                                                                                                      core_mass_params=core_mass_params,
-                                                                                                      period_params=(1.9, 7.6),
-                                                                                                      KH_timescale_params=None)
-
-        # mass of planet and envelope mass fraction cannot be negative
-        if M_core <= 0:
-            continue
-        if X_initial < 0:
-            continue
-
-        # model does not cover self-gravitating planets
-        if X_initial >= 0.9:
-            continue
-        if M_core >= 12.0:
-            continue
-        # model does not consider dwarf planets
-        if M_core <=0.3:
-            continue
-        # model breaks down for very small periods
-        if period <= 0.5:
-            continue
-        # CKS data does not include P > 100
-        if period > 100.0:
-            continue
-
-        # # calculate probability of transit using P = b(R_pl + R_*) / a
-        # if period_bias == True:
-        #
-        #     a_meters = ((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)
-        #     R_star_meters = R_sun * CKS_array[0, CKS_index]
-        #     prob_of_transit = b_cutoff * R_star_meters / a_meters
-        #
-        #     # for a random inclination, reject planet if not transiting
-        #     random_number_transit = rand.random()
-        #     if random_number_transit > prob_of_transit:
-        #         continue
-        #
-        # # now consider injection recovery using pipeline efficiency
-        # if pipeline_recovery == True:
-        #     # random signal to noise, m
-        #     m = rand.randint(0,1000)
-        #     # Gamma CDF function for probability of injection recovery - (a, scale, loc) taken from Fulton et al. 2017
-        #     prob_of_injection_recovery = stats.gamma.cdf(m, a=17.56, loc=1.0, scale=0.49)
-        #
-        #     # determine whether injection is recovered
-        #     random_number_inj_recovery = rand.random()
-        #     if random_number_inj_recovery > prob_of_injection_recovery:
-        #         continue
-
-
-        # print '//////// {0} TRANSITS \'OBSERVED\' for job {1}///////////'.format(transit_number, job_number)
-        R_core, t, X, R_ph = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5,
-                                                               X_initial, core_density, M_core,
-                                                               period, M_star, KH_timescale_cutoff)
-
-
-        # add random error to planetary radius from gaussian distribution
-        true_planet_radius = R_ph[-1]
-        observed_planet_radius = true_planet_radius #+ rand.normal(0.0, 0.1*true_planet_radius)
-
-        # print "{0} ---> {1}".format(X[0], X[-1])
-
-        R_planet_pop.append(observed_planet_radius)
-        period_pop.append(period)
-        transit_number = transit_number + 1
-
-
-    newpath = './RESULTS/{0}'.format(output_directory_name)
-
-    np.savetxt('{0}/R_array_{1}.csv'.format(newpath, job_number), R_planet_pop, delimiter=',')
-    np.savetxt('{0}/P_array_{1}.csv'.format(newpath, job_number), period_pop, delimiter=',')
-
-    return None
-    # return R_planet_pop, period_pop
-
-
-def run_single_population(N, distribution_parameters, current_time_string):
-
-    """
-    This function takes a set of distribution parameters and runs an synthetic
-    observation for N planets. This is of particular use when splitting the
-    total population over several cores.
-    """
-
-    # get number of cores
-    number_of_cores = int(multiprocessing.cpu_count())
-
-    observations_per_core = int(N / number_of_cores)
-    job_list = np.arange(number_of_cores)
-
-    Parallel(n_jobs=24)(delayed(run_population)(distribution_parameters,
-                                                observations_per_core,
-                                                current_time_string,
-                                                period_bias=True,
-                                                pipeline_recovery=True,
-                                                job_number=i) for i in job_list)
-
-    # ensure there are equal numbers of planets as in CKS population
-    top_up_observations = N - observations_per_core*number_of_cores
-    run_population(distribution_parameters,
-                   top_up_observations,
-                   current_time_string,
-                   period_bias=True,
-                   pipeline_recovery=True,
-                   job_number=job_list[-1] + 1)
-
+def CKS_synthetic_observation(N, distribution_parameters):
 
     R = []
     P = []
-    job_list = np.append(job_list, job_list[-1] + 1)
-    for i in job_list:
-        R_i = np.loadtxt("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i), delimiter=',')
-        P_i = np.loadtxt("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i), delimiter=',')
 
-        R = np.append(R, R_i)
-        P = np.append(P, P_i)
+    # Define MPI message tags
+    tags = enum('READY', 'DONE', 'EXIT', 'START')
 
-        os.remove("./RESULTS/{0}/R_array_{1}.csv".format(current_time_string, i))
-        os.remove("./RESULTS/{0}/P_array_{1}.csv".format(current_time_string, i))
+    # Initializations and preliminaries
+    comm = MPI.COMM_WORLD   # get MPI communicator object
+    size = comm.size        # total number of processes
+    rank = comm.rank        # rank of this process
+    status = MPI.Status()   # get MPI status object
 
-    return R, P
+    if rank == 0:
+        # start = time.time()
+
+        # Master process executes code below
+
+        CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+
+        X_initial_list = []
+        core_density_list = []
+        M_core_list = []
+        period_list = []
+        M_star_list = []
+        KH_timescale_cutoff_list = []
+
+        initial_X_params = (distribution_parameters[0],distribution_parameters[1])
+        #core_density_params = (distribution_parameters[2],distribution_parameters[3])
+        core_mass_params = (distribution_parameters[2],distribution_parameters[3])
+        #period_params = (distribution_parameters[4],distribution_parameters[5])
+        #KH_timescale_params = (distribution_parameters[8],distribution_parameters[9])
+
+
+        transit_number = 0
+        while transit_number < N:
+            X_initial, core_density, M_core, period, KH_timescale_cutoff = make_planet(initial_X_params=initial_X_params,
+                                                                                       core_density_params=None,
+                                                                                       core_mass_params=core_mass_params,
+                                                                                       period_params=(1.9, 7.6),
+                                                                                       KH_timescale_params=None)
+
+            # mass of planet and envelope mass fraction cannot be negative
+            if M_core <= 0.0:
+                continue
+            if X_initial < 0.0:
+                continue
+            # model does not cover self-gravitating planets
+            if X_initial >= 0.9:
+                continue
+            if M_core >= 12.0:
+                continue
+            # model does not consider dwarf planets
+            if M_core <=0.3:
+                continue
+            # model breaks down for very small periods
+            if period <= 0.5:
+                continue
+            # CKS data does not include P > 100
+            if period > 100.0:
+                continue
+
+
+            X_initial_list.append(X_initial)
+            core_density_list.append(core_density)
+            M_core_list.append(M_core)
+            period_list.append(period)
+            M_star_list.append(CKS_array[1,transit_number%N])
+            KH_timescale_cutoff_list.append(KH_timescale_cutoff)
+            transit_number = transit_number + 1
+
+        # end0 = time.time()
+        # print 'serial = ', end0 - start
+        tasks = range(N)
+        task_index = 0
+        num_workers = size - 1
+        closed_workers = 0
+        while closed_workers < num_workers:
+            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=status)
+            source = status.Get_source()
+            tag = status.Get_tag()
+            if tag == tags.READY:
+                # Worker is ready, so send it a task
+                if task_index < len(tasks):
+                    params = [k[task_index] for k in [X_initial_list, core_density_list, M_core_list, period_list, M_star_list, KH_timescale_cutoff_list]]
+                    comm.send(params, dest=source, tag=tags.START)
+                    task_index += 1
+                else:
+                    comm.send(None, dest=source, tag=tags.EXIT)
+            elif tag == tags.DONE:
+                results = data
+                R.append(float(results[0]))
+                P.append(float(results[1]))
+            elif tag == tags.EXIT:
+                closed_workers += 1
+
+        # end1 = time.time()
+        # print 'total time elapsed = ',end1 - start
+        return R, P
+
+
+    else:
+        # Worker processes execute code below
+        name = MPI.Get_processor_name()
+        while True:
+            comm.send(None, dest=0, tag=tags.READY)
+            params = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+            tag = status.Get_tag()
+
+            if tag == tags.START:
+                R_ph, P = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
+                comm.send((R_ph,P), dest=0, tag=tags.DONE)
+            elif tag == tags.EXIT:
+                break
+
+        comm.send(None, dest=0, tag=tags.EXIT)
+
+    return None, None
+
+# R, P = CKS_synthetic_observation(500, [0.06, 0.42, 7.72, 1.86])
+#
+# comm = MPI.COMM_WORLD   # get MPI communicator object
+# size = comm.size        # total number of processes
+# rank = comm.rank        # rank of this process
+# status = MPI.Status()   # get MPI status object
+
+# if rank == 0:
+#     print "R is {}".format(R)
+#     print "P is {}".format(P)
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
-
-
-# R, P = run_population(10, period_bias=True, pipeline_recovery=True)
-# plt.style.use('classic')
-# plt.scatter(P, R)
-# plt.xlim([1,100])
-# plt.ylim([1,10])
-# plt.xscale('log')
-# plt.yscale('log')
-# plt.xlabel('Period [days]')
-# plt.ylabel(r'Planet Radius $[R_\oplus]$')
-# plt.show()
 
 # X_range = []
 # core_density_range = []
@@ -300,24 +275,7 @@ def run_single_population(N, distribution_parameters, current_time_string):
 
 # plt.show()
 
-# N = 10000
-# P = period_distribution_test(N, period_bias=False)
-# P_bins = np.logspace(0,2,100)
-# plt.hist(P, bins=P_bins)
-#
-# P_bins1 = np.logspace(0,0.881,50)
-# P_bins2 = np.logspace(0.881,2,50)
-#
-#
-# plt.plot(P_bins1, [15*i**(1.233) for i in P_bins1], color='black')
-# plt.plot(P_bins2, [750*i**(-2/3) for i in P_bins2], color='black')
-#
-#
-# plt.xlabel('Period')
-# plt.xscale('log')
-# plt.show()
-
-# //////////////////////////////////////////////////////////////////////////// #
+# //////////////////////////// RUN SINGLE POPULATION ///////////////////////// #
 
 # current_time_string = "test"
 # newpath = './RESULTS/{0}'.format(current_time_string)

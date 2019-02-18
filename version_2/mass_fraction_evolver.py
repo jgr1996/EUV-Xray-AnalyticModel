@@ -71,8 +71,7 @@ def dXdt_ODE(t, X, parameters):
 
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
-def RK45_driver(t_start, t_stop, dt_try, accuracy,
-                initial_X, core_density, M_core, period, M_star, KH_timescale_cutoff):
+def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 
     """
     This function controls the integration of the mass-loss ODE. It calls upon
@@ -80,6 +79,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
     as the "step_control" function in the RKF45 file to calculate the evolution
     of the mass fraction X.
     """
+
+    initial_X, core_density, M_core, period, M_star, KH_timescale_cutoff = params
 
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
@@ -121,7 +122,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
                 t_array = np.append(t_array, t_stop+1e-7)
                 # update new R_ph
                 R_ph_array = np.append(R_ph_array, R_core)
-                return (R_core, t_array, X_array, R_ph_array)
+                return R_ph_array[-1], period
         else:
             # update new variables
             X_array = np.append(X_array, X_new)
@@ -134,7 +135,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
         t = t_array[-1]
         dt = dt_next
 
-    return R_core, t_array, X_array, R_ph_array
+    return R_ph_array[-1], period
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
 # def X_2(t, period, M_star, rho_core, M_core):
