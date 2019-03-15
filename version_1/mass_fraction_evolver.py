@@ -137,44 +137,45 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
     return R_core, t_array, X_array, R_ph_array
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
-# def X_2(t, period, M_star, rho_core, M_core):
-#
-#     if t < 100:
-#         KH_timescale = 100
-#     else:
-#         KH_timescale = t
-#
-#     X_2 = 0.0027 * (period / 10)**0.08 * (M_star)**-0.15 * (KH_timescale / 100)**0.37 * \
-#           (rho_core / 5.5)**-0.82 * (M_core / 5)**0.17
-#
-#     return X_2
-#
-# t_range = np.arange(1,3300)
-# X_2_range = [X_2(t=i,period=10,M_star=1.0,rho_core=5.5,M_core=5.0) for i in t_range]
-# X_3over2_range = [i/10 for i in X_2_range]
-#
-# X_range = np.logspace(-3.3,0.0, 20)
-# plt.style.use('classic')
-# for i in X_range:
-#     print 'X = ',i
-#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-5,
-#                                      initial_X=i, core_density=5.5, M_core=5.0, period=10, M_star=1.0, KH_timescale_cutoff=100)
-#
-#     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
-#
-# plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
-# plt.loglog([i*1e6 for i in t_range], X_3over2_range, linewidth=1.7, linestyle='--', color='green')
-# hfont = {'fontname':'Courier New'}
-# plt.ylabel(r'Envelope Mass Fraction (X)', fontsize=16, **hfont)
-# plt.xlabel(r'Time [yrs]', fontsize=16, **hfont)
-# plt.ylim([1e-4,1])
-# plt.text(3.5e9, 1e-2, s=r'$2 R_c$', color='blue', fontsize=15, **hfont)
-# plt.text(3.5e9, 1.3e-3, s=r'$1.5 R_c$', color='green', fontsize=15, **hfont)
-# plt.xticks(fontsize=16, fontname = "Courier New")
-# plt.yticks(fontsize=16, fontname = "Courier New")
-# plt.tick_params(which='major', length=8)
-# plt.tick_params(which='minor', length=4)
-# plt.show()
+def X_2(t, period, M_star, rho_core, M_core):
+
+    if t < 100:
+        KH_timescale = 100
+    else:
+        KH_timescale = t
+
+    X_2 = 0.0027 * (period / 10)**0.08 * (M_star)**-0.15 * (KH_timescale / 100)**0.37 * \
+          (rho_core / 5.5)**-0.82 * (M_core / 5)**0.17
+
+    return X_2
+
+t_range = np.arange(1,3300)
+X_2_range = [X_2(t=i,period=10,M_star=1.0,rho_core=5.5,M_core=5.0) for i in t_range]
+X_3over2_range = [i/10 for i in X_2_range]
+
+X_range = np.logspace(-3.3,0.0, 20)
+plt.style.use('classic')
+for i in X_range:
+    print 'X = ',i
+    R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-8,
+                                     initial_X=i, core_density=5.5, M_core=5.0, period=15, M_star=1.0, KH_timescale_cutoff=100)
+
+    plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
+
+plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
+plt.loglog([i*1e6 for i in t_range], X_3over2_range, linewidth=1.7, linestyle='--', color='green')
+hfont = {'fontname':'Courier New'}
+plt.ylabel(r'Envelope Mass Fraction (X)', fontsize=19, **hfont)
+plt.xlabel(r'Time [yrs]', fontsize=19, **hfont)
+plt.ylim([1e-4,1])
+plt.text(3.5e9, 1e-2, s=r'$2 R_c$', color='blue', fontsize=19, **hfont)
+plt.text(3.5e9, 1.3e-3, s=r'$1.5 R_c$', color='green', fontsize=19, **hfont)
+plt.xticks(fontsize=16, fontname = "Courier New")
+plt.yticks(fontsize=16, fontname = "Courier New")
+plt.tick_params(which='major', length=8)
+plt.tick_params(which='minor', length=4)
+plt.savefig('../Figures/Xvst.pdf', format='eps', dpi=1000, bboxinches='tight')
+plt.show(bboxinches='tight')
 
 #///////////////////////////////// X vs t_X plot ///////////////////////////// #
 

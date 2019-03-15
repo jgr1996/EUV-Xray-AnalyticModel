@@ -6,7 +6,6 @@ import emcee
 import numpy as np
 from numpy import random as rand
 from mpi4py import MPI
-import multiprocessing
 import likelihood_function
 import evolve_population
 
@@ -16,22 +15,21 @@ if __name__ == '__main__':
 
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
-    # rand.seed(12345)
+    rand.seed(12345)
 
     # initial guess [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean]
-    theta = [0.10, 0.43, 7.79, 1.55, 5.5]
+    theta = [0.06, 0.42, 7.72, 1.86, 5.0]
     ndim = len(theta)
     n_walkers = 100
     n_iterations = 10000
 
     theta_guesses = []
     for i in range(n_walkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-1*x) for x in theta])
+        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
 
     # get CKS data radius bins
-    # data_histogram = likelihood_function.make_CKS_histograms()
-    # N = np.sum(data_histogram)
-    N = 12000
+    data_histogram = likelihood_function.make_CKS_histograms(nD=True)
+    N = int(np.sum(data_histogram))
 
     if rank == 0:
         # use time as label for output directory
@@ -48,16 +46,16 @@ if __name__ == '__main__':
         file.write("Initial guess localised to: {}\n".format(theta))
         file.write("Number of Walkers: {}\n".format(n_walkers))
         file.write("Number of iterations: {}\n".format(n_iterations))
-        file.write("Number of cores: {}\n".format(multiprocessing.cpu_count()))
+        file.write("Number of cores: 24\n")
         file.write("----------------------------------------------------\n")
         file.write("Notes: Please Work...\n")
         file.close()
 
-    CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood_PR_space,
-                                    args=(N, CKS_array))
+                                    args=(N, data_histogram))
 
 
     iteration = 0

@@ -5,6 +5,7 @@ from numpy import random as rand
 import time
 from scipy import stats
 from scipy import interpolate
+from scipy import special
 from mpi4py import MPI
 import matplotlib.pyplot as plt
 from constants import *
@@ -29,7 +30,17 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 
-def make_planet(initial_X_params, core_mass_params, period_params):
+def bernstein_poly(x, order, coefficients):
+
+    coefficients = np.array(coefficients)
+    poly_array = np.array([special.binom(order, i)*(x**i)*((1-x)**(order-i)) for i in range(order+1)])
+    B = np.dot(coefficients, poly_array)
+
+    return B
+
+
+
+def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
 
     """
     This function takes parameters for planet distributions in order to randomly
@@ -40,12 +51,14 @@ def make_planet(initial_X_params, core_mass_params, period_params):
     """
 
     # random initial mass fraction according to log-normal distribution
-    (X_mean, X_stdev) = initial_X_params
-    X_initial = rand.lognormal(np.log(X_mean), X_stdev)
+    X_normalisation = 0.4 / bernstein_poly(1.0, 5, initial_X_coeffs)
+    U_X = rand.uniform()
+    X_initial = bernstein_poly(U_X, 5, initial_X_coeffs) * X_normalisation
 
     # random core mass according to Rayleigh
-    (core_mass_mean, core_mass_stdev) = core_mass_params
-    core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
+    M_normalisation = 12.0 / bernstein_poly(1.0, 5, core_mass_coeffs)
+    U_M = rand.uniform()
+    core_mass = bernstein_poly(U_M, 5, core_mass_coeffs) * M_normalisation
 
     # random period according to CKS data fit
     (power, period_cutoff) = period_params
@@ -73,14 +86,13 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
     # Define MPI message tags
     tags = enum('READY', 'DONE', 'EXIT', 'START')
+    rand.seed(12345)
 
     # Initializations and preliminaries
     comm = MPI.COMM_WORLD   # get MPI communicator object
     size = comm.size        # total number of processes
     rank = comm.rank        # rank of this process
     status = MPI.Status()   # get MPI status object
-
-    rand.seed(12345)
 
     if rank == 0:
         # start = time.time()
@@ -96,20 +108,19 @@ def CKS_synthetic_observation(N, distribution_parameters):
         M_star_list = []
         KH_timescale_cutoff_list = []
 
-        initial_X_params = (distribution_parameters[0],distribution_parameters[1])
-        core_mass_params = (distribution_parameters[2],distribution_parameters[3])
-        density_mean = distribution_parameters[4]
+        initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
+        core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
+        density_mean = distribution_parameters[-1]
         KH_timescale = 100
-
 
         transit_number = 0
         while transit_number < N:
-            X_initial, M_core, period= make_planet(initial_X_params=initial_X_params,
-                                                   core_mass_params=core_mass_params,
+            X_initial, M_core, period= make_planet(initial_X_coeffs=initial_X_coeffs,
+                                                   core_mass_coeffs=core_mass_coeffs,
                                                    period_params=(1.9, 7.6))
 
             # mass of planet and envelope mass fraction cannot be negative
-            if M_core <= 0.0:
+            if M_core <= 1.0:
                 continue
             if X_initial < 0.0:
                 continue
@@ -117,9 +128,6 @@ def CKS_synthetic_observation(N, distribution_parameters):
             if X_initial >= 0.9:
                 continue
             if M_core >= 12.0:
-                continue
-            # model does not consider dwarf planets
-            if M_core <=0.3:
                 continue
             # model breaks down for very small periods
             if period <= 0.5:
@@ -202,7 +210,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # for i in N_range:
 #
 #     start = time.time()
-#     R, P = CKS_synthetic_observation(i, [0.10621999, 0.46508592, 8.17852667, 1.71757235, 5.84019612])
+#     R, P = CKS_synthetic_observation(i, [0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 2.19])
 #     finish = time.time()
 #
 #     if rank == 0:
@@ -223,10 +231,10 @@ def CKS_synthetic_observation(N, distribution_parameters):
 #         R_data = CKS_array[2,:]
 #
 #         logL = 0
-#         for i in range(len(P_data)):
-#             logL_i = KDE_interp(P_data[i],R_data[i])[0,0]
+#         for j in range(len(P_data)):
+#             logL_i = KDE_interp(P_data[j],R_data[j])[0,0]
 #             if logL_i <= 0.0:
-#                 logL = logL + np.log(Z.min())
+#                 logL = logL - 300
 #             else:
 #                 logL = logL + np.log(abs(logL_i))
 #
@@ -237,8 +245,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
 #         if not os.path.exists(newpath):
 #             os.makedirs(newpath)
 #
-#         np.savetxt("{0}/KDE_{1}.csv".format(newpath, i), Z, delimiter=',')
-
+#         np.savetxt("{0}/KDE_lowdens.csv".format(newpath, i), Z, delimiter=',')
+#
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
 

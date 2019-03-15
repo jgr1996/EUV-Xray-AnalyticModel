@@ -127,24 +127,11 @@ def likelihood_PR_space(theta, N, data_array):
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
     if rank == 0:
-        [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean] = theta
-        if any(n <= 0 for n in theta):
+
+        if any(n < 0.0 for n in theta):
             return -np.inf
 
-        if X_mean >= 0.4:
-            return -np.inf
-        if X_stdev >= 0.7:
-            return -np.inf
-        if M_core_mean >= 12.0:
-            return -np.inf
-        if M_core_mean <= 0.5:
-            return -np.inf
-        if M_core_stdev >= 2.5:
-            return -np.inf
-
-        if density_mean <= 1.5:
-            return -np.inf
-        if density_mean >= 12.0:
+        if theta[-1] >= 12.0:
             return -np.inf
 
     R, P = evolve_population.CKS_synthetic_observation(N, theta)
@@ -155,7 +142,6 @@ def likelihood_PR_space(theta, N, data_array):
         X, Y = np.meshgrid(x, y)
         positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
         data = np.vstack([np.log(P),np.log(R)])
-        print np.argwhere(np.isnan(data))
         kernel = stats.gaussian_kde(data)
         Z = np.reshape(kernel(positions).T, X.shape)
         Z_norm = 1 / np.sum(Z)
@@ -176,19 +162,45 @@ def likelihood_PR_space(theta, N, data_array):
 
         return logL
 
+    # if rank == 0:
+    #     x = np.logspace(-1,2,150)
+    #     y = np.logspace(-1,1.5,150)
+    #     X, Y = np.meshgrid(x, y)
+    #     positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
+    #
+    #     data = np.vstack([np.log(P),np.log(R)])
+    #     kernel = stats.gaussian_kde(data)
+    #     Z = np.reshape(kernel(positions).T, X.shape)
+    #     Z_norm = 1 / np.sum(Z)
+    #     Z_model = Z_norm * Z
+    #
+    #     P_data = data_array[3,:]
+    #     R_data = data_array[2,:]
+    #     CKS_data = np.vstack([np.log(P_data),np.log(R_data)])
+    #     kernel = stats.gaussian_kde(CKS_data)
+    #     Z = np.reshape(kernel(positions).T, X.shape)
+    #     Z_norm = 1 / np.sum(Z)
+    #     Z_data = Z_norm * Z
+    #
+    #     KL_stat = stats.entropy(Z_model.flatten(), Z_data.flatten())
+    #
+    #     return -1.0 * float(KL_stat)
+
+
+
     else:
         return 0.0
 
 
 # ///////////////////////////////// TEST ///////////////////////////////////// #
-# data_histogram = make_CKS_histograms()
-# L = likelihood_R_space([0.06, 0.42, 7.72, 1.86], 500, data_histogram)
-#
+
 # comm = MPI.COMM_WORLD   # get MPI communicator object
 # rank = comm.rank        # rank of this process
+# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# for i in range(5):
+#     L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
+#                             1000,
+#                             CKS_array)
 #
-# if rank == 0:
-#     print
-
-# H = make_CKS_histograms(nD=True)
-# print sum(H)
+#     if rank == 0:
+#         print L
