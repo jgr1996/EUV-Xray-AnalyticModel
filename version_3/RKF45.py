@@ -11,33 +11,51 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
     """
 
     # calculate the individual conributions to prediction
-    k1 = dt * dydx_functions(t, var_i, parameters)
+    k1 = dydx_functions(t, var_i, parameters)
+    if k1 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k1 = k1*dt
     var1 = var_i + 0.2*k1
     if var1 < 0: # a negative contribution should not be obtained
         return (None, None)
 
-    k2 = dt * dydx_functions(t + 0.2 * dt, var1, parameters)
+    k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
+    if k2 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k2 = k2*dt
     var2 = var_i + (3/40)*k1 + (9/40)*k2
     if var2 < 0: # a negative contribution should not be obtained
         return (None, None)
 
-    k3 = dt * dydx_functions(t + 0.3 * dt, var2, parameters)
+    k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
+    if k3 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k3 = k3*dt
     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
     if var3 < 0: # a negative contribution should not be obtained
         return (None, None)
 
-    k4 = dt * dydx_functions(t + 0.6 * dt, var3, parameters)
+    k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
+    if k4 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k4 = k4*dt
     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
     if var4 < 0: # a negative contribution should not be obtained
         return (None, None)
 
-    k5 = dt * dydx_functions(t +       dt, var4, parameters)
+    k5 = dydx_functions(t +       dt, var4, parameters)
+    if k5 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k5 = k5*dt
     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
          + (44275/110592)*k4 + (253/4096)*k5
     if var5 < 0: # a negative contribution should not be obtained
         return (None, None)
 
-    k6 = dt * dydx_functions(t + (7/8)*dt, var5, parameters)
+    k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
+    if k6 == None:
+        return ("BRENTQ ERROR", "BRENTQ ERROR")
+    k6 = k6*dt
 
     # calculate the 5th order solution
     RK5_sol = var_i + (37/378)*k1 + (250/621)*k3 + (125/594)*k4 + (512/1771)*k6
@@ -105,6 +123,8 @@ def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
         if (var_new, var_err) == (None, None):
             dt = 0.01*dt
             continue
+        if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
+            return (None, None, None)
         # find the maximum error of all ODEs, also scale to required tolerance
         err_max = abs(var_err/yscal) / accuracy
 

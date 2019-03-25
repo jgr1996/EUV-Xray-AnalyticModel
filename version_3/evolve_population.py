@@ -110,7 +110,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
         initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
         core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
-        density_mean = distribution_parameters[-1]
+        density_mean = 5.0
         KH_timescale = 100
 
         transit_number = 0
@@ -168,6 +168,10 @@ def CKS_synthetic_observation(N, distribution_parameters):
                 results = data
                 if np.isnan(results).any():
                     continue
+                if results[0] < 1.0: # can't observe planet smaller than earth!
+                    continue
+                if results[0] == None: # this will be due to a Brentq error
+                    continue
                 else:
                     R.append(float(results[0]))
                     P.append(float(results[1]))
@@ -206,11 +210,11 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # status = MPI.Status()   # get MPI status object
 #
 #
-# N_range = [12000]
+# N_range = [10000]
 # for i in N_range:
 #
 #     start = time.time()
-#     R, P = CKS_synthetic_observation(i, [0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 2.19])
+#     R, P = CKS_synthetic_observation(i, [0.03, 0.21, 0.47, 0.25, 0.42, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0])
 #     finish = time.time()
 #
 #     if rank == 0:
@@ -227,25 +231,35 @@ def CKS_synthetic_observation(N, distribution_parameters):
 #         KDE_interp = interpolate.RectBivariateSpline(x,y,Z)
 #
 #         CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-#         P_data = CKS_array[3,:]
-#         R_data = CKS_array[2,:]
 #
-#         logL = 0
-#         for j in range(len(P_data)):
-#             logL_i = KDE_interp(P_data[j],R_data[j])[0,0]
-#             if logL_i <= 0.0:
-#                 logL = logL - 300
-#             else:
-#                 logL = logL + np.log(abs(logL_i))
+#         if rank == 0:
+#             x = np.logspace(-1,2,150)
+#             y = np.logspace(-1,1.5,150)
+#             X, Y = np.meshgrid(x, y)
+#             positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
 #
-#         print logL
+#             data = np.vstack([np.log(P),np.log(R)])
+#             kernel = stats.gaussian_kde(data)
+#             Z = np.reshape(kernel(positions).T, X.shape)
+#             Z_norm = 1 / np.sum(Z)
+#             Z_model = Z_norm * Z
+#
+#             P_data = CKS_array[3,:]
+#             R_data = CKS_array[2,:]
+#             CKS_data = np.vstack([np.log(P_data),np.log(R_data)])
+#             kernel = stats.gaussian_kde(CKS_data)
+#             Z = np.reshape(kernel(positions).T, X.shape)
+#             Z_norm = 1 / np.sum(Z)
+#             Z_data = Z_norm * Z
+#
+#             KL_stat = stats.entropy(Z_model.flatten(), Z_data.flatten())
 #
 #
 #         newpath = './RESULTS/convergence_test'
 #         if not os.path.exists(newpath):
 #             os.makedirs(newpath)
 #
-#         np.savetxt("{0}/KDE_lowdens.csv".format(newpath, i), Z, delimiter=',')
+#         np.savetxt("{0}/KDE_lowdens_2.csv".format(newpath, i), Z_model, delimiter=',')
 #
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #

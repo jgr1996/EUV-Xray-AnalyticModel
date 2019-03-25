@@ -9,7 +9,7 @@ Author: Rogers, J. G
 Date: 07/11/2018
 
 This file carries out analytic calculations presented in Owen & Wu (2017) that
-are used to determine the photospheric radius of a planet undergoing EUV-Xray
+are used to determine the photospheric radius of a planet undergoing EUV/Xray
 photo-evaporation.
 """
 
@@ -113,7 +113,14 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
                        M_core_kg, R_core_meters, X))
     else:
-        R_rcb = brentq(R_rcb_equation, 0.001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
+        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        if np.sign(sign_test1) == np.sign(sign_test2):
+            print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
+            print "PARAMS"
+            print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
+            return None, None
+        R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
                        M_core_kg, R_core_meters, X))
 
 
@@ -157,6 +164,11 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff
     # solve simultaneous equations for radiative-convective boundary radius and density
     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
                                              M_core_kg, R_core_meters, X, R_guess)
+
+
+
+    if (R_rcb, Rho_rcb) == (None, None):
+        return None
 
     # calculate gravitational constant (assumed constant)
     g = G * M_core_kg / (R_rcb*R_rcb)

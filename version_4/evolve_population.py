@@ -168,6 +168,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
                 results = data
                 if np.isnan(results).any():
                     continue
+                if results[0] < 1.0: # can't observe planet smaller than earth!
+                    continue
                 else:
                     R.append(float(results[0]))
                     P.append(float(results[1]))
@@ -189,8 +191,6 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
             if tag == tags.START:
                 R_ph, P = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
-                if np.isnan(R_ph):
-                    print 'R is NaN for ',params
                 comm.send((R_ph,P), dest=0, tag=tags.DONE)
             elif tag == tags.EXIT:
                 break

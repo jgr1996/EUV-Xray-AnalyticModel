@@ -43,6 +43,9 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
     R_ph = R_photosphere.calculate_R_photosphere(t, M_star, a, M_core, R_core,
                                                  X, KH_timescale_cutoff, R_guess)
 
+    if R_ph == None:
+        return None
+
     escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
     eta = eta_0 * (escape_velocity / 23 )**(-0.42)
     # Calculate mass loss rate due to photoevaporation
@@ -65,6 +68,9 @@ def dXdt_ODE(t, X, parameters):
     M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
 
     tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
+
+    if tX == None:
+        return None
 
     dXdt = - X / tX
 
@@ -112,7 +118,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy,
                                                      parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
 
-
+        if (t_new, X_new, dt_next) == (None, None, None):
+            return None, None
         # calculate new R_ph
         R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
                                                          R_core, X_new, KH_timescale_cutoff, None)

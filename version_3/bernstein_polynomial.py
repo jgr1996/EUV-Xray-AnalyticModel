@@ -24,10 +24,10 @@ x_range = np.arange(0.0, 1.01, 0.01)
 #     plt.plot(x_range, [B(j, order, coefficients) for j in x_range], label='i = {}'.format(i))
 # plt.legend()
 
-M_coeffs = [0.04, 0.09, 0.41, 0.55, 0.40, 1.36]
+M_coeffs = [0.1, 0.2, 0.4, 0.3, 1.0, 1.36]
 M_norm = 12 / B(1.0, order, M_coeffs)
 
-X_coeffs = [0.03, 0.21, 0.47, 0.25, 0.41, 0.95]
+X_coeffs = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95]
 X_norm = 0.4 / B(1.0, order, X_coeffs)
 
 

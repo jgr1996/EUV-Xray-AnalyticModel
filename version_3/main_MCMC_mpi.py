@@ -18,7 +18,7 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.08, 0.3, 0.6, 0.3, 0.2, 0.5, 0.3, 0.2, 0.3, 0.4, 0.6, 1.0, 6.0]
+    theta = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95, 0.1, 0.2, 0.4, 0.3, 1.0, 1.36]
 
 
     ndim = len(theta)
@@ -27,10 +27,10 @@ if __name__ == '__main__':
 
     theta_guesses = []
     for i in range(n_walkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-1*x) for x in theta])
+        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
     # theta_guesses = np.loadtxt("./RESULTS/09.03.2019_04.20.20/position_80.csv", delimiter=',')
 
-    N = 20000
+    N = 5000
 
     if rank == 0:
         # use time as label for output directory
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
         file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
         file.write("----------------- MCMC Simulation ------------------\n")
-        file.write("Parameters estimated: [Initial X Bernstein Polynomial Coefficients, Core Mass Bernstein Polynomials Coefficients, Mean Core Density]\n")
+        file.write("Parameters estimated: [Initial X Bernstein Polynomial Coefficients, Core Mass Bernstein Polynomials Coefficients]\n")
         file.write("Initial guess localised to: {}\n".format(theta))
         file.write("Number of Walkers: {}\n".format(n_walkers))
         file.write("Number of iterations: {}\n".format(n_iterations))

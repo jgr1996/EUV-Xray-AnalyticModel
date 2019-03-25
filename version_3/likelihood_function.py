@@ -131,36 +131,15 @@ def likelihood_PR_space(theta, N, data_array):
         if any(n < 0.0 for n in theta):
             return -np.inf
 
-        if theta[-1] >= 12.0:
-            return -np.inf
+        # if theta[-1] >= 12.0:
+        #     return -np.inf
 
+    if rank == 0:
+        start = time.time()
     R, P = evolve_population.CKS_synthetic_observation(N, theta)
-
-    # if rank == 0:
-    #     x = np.logspace(-1,2,150)
-    #     y = np.logspace(-1,1.5,150)
-    #     X, Y = np.meshgrid(x, y)
-    #     positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
-    #     data = np.vstack([np.log(P),np.log(R)])
-    #     kernel = stats.gaussian_kde(data)
-    #     Z = np.reshape(kernel(positions).T, X.shape)
-    #     Z_norm = 1 / np.sum(Z)
-    #     Z = Z_norm * Z
-    #
-    #     KDE_interp = interpolate.RectBivariateSpline(x,y,Z)
-    #
-    #     P_data = data_array[3,:]
-    #     R_data = data_array[2,:]
-    #
-    #     logL = 0
-    #     for i in range(len(P_data)):
-    #         logL_i = KDE_interp(P_data[i],R_data[i])[0,0]
-    #         if logL_i <= 0.0:
-    #             logL = logL - 300
-    #         else:
-    #             logL = logL + np.log(abs(logL_i))
-    #
-    #     return logL
+    if rank == 0:
+        end = time.time()
+        print "{0} planets in {1}".format(len(R), end-start)
 
     if rank == 0:
         x = np.logspace(-1,2,150)

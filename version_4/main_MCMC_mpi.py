@@ -18,7 +18,7 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.08, 0.3, 0.6, 0.3, 0.2, 0.5, 0.3, 0.2, 0.3, 0.4, 0.6, 1.0, 6.0]
+    theta = [0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 6.0]
 
 
     ndim = len(theta)
@@ -30,7 +30,7 @@ if __name__ == '__main__':
         theta_guesses.append([x + rand.uniform(0, 1e-1*x) for x in theta])
     # theta_guesses = np.loadtxt("./RESULTS/09.03.2019_04.20.20/position_80.csv", delimiter=',')
 
-    N = 20000
+    N = 5000
 
     if rank == 0:
         # use time as label for output directory
