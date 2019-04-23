@@ -83,7 +83,7 @@ def likelihood_R_space(theta, N, data_histogram):
             return -np.inf
         if M_core_mean >= 12.0:
             return -np.inf
-        if M_core_mean <= 0.5:
+        if M_core_mean <= 1.0:
             return -np.inf
         if M_core_stdev >= 2.5:
             return -np.inf
@@ -101,10 +101,6 @@ def likelihood_R_space(theta, N, data_histogram):
         # ///////////////////// VERSION 1 ///////////////////////// #
         model_hist_temp = model_histogram + np.ones(len(model_histogram))
         data_hist_temp = data_histogram + np.ones(len(data_histogram))
-        #
-        # L = data_hist_temp * np.log(model_hist_temp) \
-        #   - model_hist_temp \
-        #   - data_hist_temp * np.log(data_hist_temp) - data_hist_temp
 
         L = (data_hist_temp - model_hist_temp) \
           + data_hist_temp * np.log(model_hist_temp / data_hist_temp)
@@ -127,8 +123,24 @@ def likelihood_PR_space(theta, N, data_array):
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
     if rank == 0:
+        [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean] = theta
+        if any(n <= 0 for n in theta):
+            return -np.inf
 
-        if any(n < 0.0 for n in theta):
+        if X_mean >= 0.4:
+            return -np.inf
+        if X_stdev >= 0.7:
+            return -np.inf
+        if M_core_mean >= 12.0:
+            return -np.inf
+        if M_core_mean <= 0.3:
+            return -np.inf
+        if M_core_stdev >= 2.5:
+            return -np.inf
+
+        if density_mean <= 2.5:
+            return -np.inf
+        if density_mean >= 12.0:
             return -np.inf
 
     R, P, M, X, R_core = evolve_population.CKS_synthetic_observation(N, theta)
@@ -168,16 +180,15 @@ def likelihood_PR_space(theta, N, data_array):
         return 0.0
 
 
-
 # ///////////////////////////////// TEST ///////////////////////////////////// #
-
+# data_histogram = make_CKS_histograms()
+# L = likelihood_R_space([0.06, 0.42, 7.72, 1.86], 500, data_histogram)
+#
 # comm = MPI.COMM_WORLD   # get MPI communicator object
 # rank = comm.rank        # rank of this process
-# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-# for i in range(5):
-#     L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
-#                             1000,
-#                             CKS_array)
 #
-#     if rank == 0:
-#         print L
+# if rank == 0:
+#     print
+
+# H = make_CKS_histograms(nD=True)
+# print sum(H)

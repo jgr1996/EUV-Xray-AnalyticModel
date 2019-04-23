@@ -5,7 +5,6 @@ from numpy import random as rand
 import time
 from scipy import stats
 from scipy import interpolate
-from scipy import special
 from mpi4py import MPI
 import matplotlib.pyplot as plt
 from constants import *
@@ -30,17 +29,7 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 
-def bernstein_poly(x, order, coefficients):
-
-    coefficients = np.array(coefficients)
-    poly_array = np.array([special.binom(order, i)*(x**i)*((1-x)**(order-i)) for i in range(order+1)])
-    B = np.dot(coefficients, poly_array)
-
-    return B
-
-
-
-def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
+def make_planet(initial_X_params, core_mass_params, period_params):
 
     """
     This function takes parameters for planet distributions in order to randomly
@@ -51,14 +40,12 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
     """
 
     # random initial mass fraction according to log-normal distribution
-    X_normalisation = 0.4 / bernstein_poly(1.0, 5, initial_X_coeffs)
-    U_X = rand.uniform()
-    X_initial = bernstein_poly(U_X, 5, initial_X_coeffs) * X_normalisation
+    (X_mean, X_stdev) = initial_X_params
+    X_initial = rand.lognormal(np.log(X_mean), X_stdev)
 
     # random core mass according to Rayleigh
-    M_normalisation = 12.0 / bernstein_poly(1.0, 5, core_mass_coeffs)
-    U_M = rand.uniform()
-    core_mass = bernstein_poly(U_M, 5, core_mass_coeffs) * M_normalisation
+    (core_mass_mean, core_mass_stdev) = core_mass_params
+    core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
 
     # random period according to CKS data fit
     (power, period_cutoff) = period_params
@@ -77,6 +64,20 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
 
     return X_initial, core_mass, P
 
+# ////////////////////////// SNR INJECTION RECOVERY CHECK //////////////////// #
+
+def snr_recovery(R_planet, period, R_star):
+
+    m = 3e5 * ((R_planet*R_earth) / (R_star * R_sun))**2 * np.sqrt(1/period)
+    P_recovery = stats.gamma.cdf(m,17.56,scale=0.49)
+    U = rand.random()
+
+    if P_recovery >= U:
+        return True
+    else:
+        return False
+
+# //////////////////////////////////////////////////////////////////////////// #
 
 
 def CKS_synthetic_observation(N, distribution_parameters):
@@ -86,6 +87,12 @@ def CKS_synthetic_observation(N, distribution_parameters):
     M = []
     X = []
     R_core = []
+
+    R_rejected = []
+    P_rejected = []
+    M_rejected = []
+    X_rejected = []
+    R_core_rejected = []
 
     # Define MPI message tags
     tags = enum('READY', 'DONE', 'EXIT', 'START')
@@ -97,7 +104,10 @@ def CKS_synthetic_observation(N, distribution_parameters):
     rank = comm.rank        # rank of this process
     status = MPI.Status()   # get MPI status object
 
+
+
     if rank == 0:
+        # start = time.time()
 
         # Master process executes code below
 
@@ -111,12 +121,13 @@ def CKS_synthetic_observation(N, distribution_parameters):
         R_star_list = []
         KH_timescale_cutoff_list = []
 
-        initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
-        core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
-        density_mean = distribution_parameters[-1]
+        initial_X_params = (distribution_parameters[0],distribution_parameters[1])
+        core_mass_params = (distribution_parameters[2],distribution_parameters[3])
+        density_mean = distribution_parameters[4]
         KH_timescale = 100
 
         start_time = time.time()
+
         transit_number = 0
         while transit_number < N:
 
@@ -124,8 +135,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
                 print "5 minutes exceeded, returning whatever has been done so far"
                 return R, P, M, X, R_core
 
-            X_initial, M_core, period= make_planet(initial_X_coeffs=initial_X_coeffs,
-                                                   core_mass_coeffs=core_mass_coeffs,
+            X_initial, M_core, period= make_planet(initial_X_params=initial_X_params,
+                                                   core_mass_params=core_mass_params,
                                                    period_params=(1.9, 7.6))
 
             # envelope mass fraction cannot be negative
@@ -157,6 +168,9 @@ def CKS_synthetic_observation(N, distribution_parameters):
             KH_timescale_cutoff_list.append(KH_timescale)
             transit_number = transit_number + 1
 
+
+        # end0 = time.time()
+        # print 'serial = ', end0 - start
         tasks = range(N)
         task_index = 0
         num_workers = size - 1
@@ -184,7 +198,12 @@ def CKS_synthetic_observation(N, distribution_parameters):
                     continue
                 if np.isnan(results).any():
                     continue
-                if results[0] < 0.1: # can't observe planet smaller than earth!
+                if results[0] < 0.1 or snr_recovery(results[0], results[1], results[5]) == False: # can't observe planet smaller than earth!
+                    R_rejected.append(float(results[0]))
+                    P_rejected.append(float(results[1]))
+                    M_rejected.append(float(results[2]))
+                    X_rejected.append(float(results[3]))
+                    R_core_rejected.append(float(results[4]))
                     continue
                 else:
                     R.append(float(results[0]))
@@ -195,10 +214,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
             elif tag == tags.EXIT:
                 closed_workers += 1
 
-
-        # end1 = time.time()
-        # print 'total time elapsed = ',end1 - start
-        return R, P, M, X, R_core
+        return R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
 
 
     else:
@@ -211,50 +227,58 @@ def CKS_synthetic_observation(N, distribution_parameters):
             tag = status.Get_tag()
 
             if tag == tags.START:
-                R_ph, P, M, X, R_core = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
-                comm.send((R_ph, P, M, X, R_core), dest=0, tag=tags.DONE)
+                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
+                comm.send((R_ph, P, M, X, R_core, R_star), dest=0, tag=tags.DONE)
             elif tag == tags.EXIT:
                 break
 
         comm.send(None, dest=0, tag=tags.EXIT)
 
-    return None, None, None, None, None
+    return None, None, None, None, None, None, None, None, None, None
 
 
-comm = MPI.COMM_WORLD   # get MPI communicator object
-size = comm.size        # total number of processes
-rank = comm.rank        # rank of this process
-status = MPI.Status()   # get MPI status object
+# comm = MPI.COMM_WORLD   # get MPI communicator object
+# size = comm.size        # total number of processes
+# rank = comm.rank        # rank of this process
+# status = MPI.Status()   # get MPI status object
+#
+#
+# N_range = [5000]
+# params = [0.14,0.10,0.87,0.75,8.46] # CHECK FILE NUMBER BEFORE RUNNING!!!
+#
+# for i in N_range:
+#
+#     start = time.time()
+#     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = CKS_synthetic_observation(i, params)
+#     finish = time.time()
+#
+#     if rank == 0:
+#
+#         results_accepted = np.array([R, P, M, X, R_core])
+#         results_rejected = np.array([R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected])
+#
+#         print "We have detected {0} out of a total of {1}".format(len(R), N_range[0])
+#         x = np.logspace(-1,2,150)
+#         y = np.logspace(-1,1.5,150)
+#         X, Y = np.meshgrid(x, y)
+#         positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
+#         data = np.vstack([np.log(P),np.log(R)])
+#         kernel = stats.gaussian_kde(data)
+#         Z = np.reshape(kernel(positions).T, X.shape)
+#         Z_norm = 1 / np.sum(Z)
+#         Z = Z_norm * Z
+#
+#         newpath = './RESULTS/parameter_comparisons/log_normal'
+#         if not os.path.exists(newpath):
+#             os.makedirs(newpath)
+#
+#         file = 1
+#         np.savetxt("{0}/paramaters_{1}.csv".format(newpath,file), params, delimiter=',')
+#         np.savetxt("{0}/results_accepted_{1}.csv".format(newpath,file), results_accepted, delimiter=',')
+#         np.savetxt("{0}/results_rejected_{1}.csv".format(newpath,file), results_rejected, delimiter=',')
+#         np.savetxt("{0}/KDE_{1}.csv".format(newpath,file), Z, delimiter=',')
 
 
-N_range = [5000]
-for i in N_range:
-
-    start = time.time()
-    R, P, M, X, R_core = CKS_synthetic_observation(i, [0.02,0.19,0.68,0.2,0.43,0.13,0.19,0.39,0.34,0.31,0.28,2.87,6.68])
-    finish = time.time()
-
-    if rank == 0:
-
-        results = np.array([R, P, M, X, R_core])
-
-        print len(R)
-        x = np.logspace(-1,2,150)
-        y = np.logspace(-1,1.5,150)
-        X, Y = np.meshgrid(x, y)
-        positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
-        data = np.vstack([np.log(P),np.log(R)])
-        kernel = stats.gaussian_kde(data)
-        Z = np.reshape(kernel(positions).T, X.shape)
-        Z_norm = 1 / np.sum(Z)
-        Z = Z_norm * Z
-
-        newpath = './RESULTS/18.04.2019_03.31.23/posterior_investigating'
-        if not os.path.exists(newpath):
-            os.makedirs(newpath)
-
-        np.savetxt("{0}/results_0.csv".format(newpath), results, delimiter=',')
-        np.savetxt("{0}/KDE_0.csv".format(newpath), Z, delimiter=',')
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
 

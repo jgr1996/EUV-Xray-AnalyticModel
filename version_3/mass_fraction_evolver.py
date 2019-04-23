@@ -2,6 +2,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy import random as rand
+from scipy import stats
 from constants import *
 import R_photosphere
 import RKF45
@@ -76,6 +77,19 @@ def dXdt_ODE(t, X, parameters):
 
     return dXdt
 
+# ////////////////////////// SNR INJECTION RECOVERY CHECK //////////////////// #
+
+def snr_recovery(R_planet, period, R_star):
+
+    m = 3e5 * ((R_planet*R_earth) / (R_star * R_sun))**2 * np.sqrt(1/period)
+    P_recovery = stats.gamma.cdf(m,17.56,scale=0.49)
+    U = rand.random()
+
+    if P_recovery >= U:
+        return True
+    else:
+        return False
+
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
 def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
@@ -87,7 +101,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
     of the mass fraction X.
     """
 
-    initial_X, core_density, M_core, period, M_star, KH_timescale_cutoff = params
+    initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params
 
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
@@ -119,14 +133,14 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
                                                      parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
 
         if (t_new, X_new, dt_next) == (None, None, None):
-            return None, None
+            return None, None, None, None, None
         # calculate new R_ph
         R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
                                                          R_core, X_new, KH_timescale_cutoff, None)
 
 
         # if X becomes very small, we can assume all atmosphere is eroded
-        if X_new <= 1e-4:
+        if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:
                 # update new variables
                 X_array = np.append(X_array, 0.0)
                 # update new time
@@ -135,7 +149,11 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
                 R_ph_array = np.append(R_ph_array, R_core)
 
                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
-                return observed_radius, period
+
+                if snr_recovery(observed_radius, period, R_star) == True:
+                    return observed_radius, period, M_core, initial_X, R_core
+                else:
+                    return None, None, None, None, None
         else:
             # update new variables
             X_array = np.append(X_array, X_new)
@@ -148,8 +166,12 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
         t = t_array[-1]
         dt = dt_next
 
-    observed_radius = R_ph_array[-1] + rand.uniform(0.0, 0.2*R_ph_array[-1])
-    return observed_radius, period
+    observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+
+    if snr_recovery(observed_radius, period, R_star) == True:
+        return observed_radius, period, M_core, initial_X, R_core
+    else:
+        return None, None, None, None, None
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
 # def X_2(t, period, M_star, rho_core, M_core):

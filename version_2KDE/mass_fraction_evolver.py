@@ -1,6 +1,8 @@
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
+from numpy import random as rand
+from scipy import stats
 from constants import *
 import R_photosphere
 import RKF45
@@ -42,6 +44,9 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
     R_ph = R_photosphere.calculate_R_photosphere(t, M_star, a, M_core, R_core,
                                                  X, KH_timescale_cutoff, R_guess)
 
+    if R_ph == None:
+        return None
+
     escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
     eta = eta_0 * (escape_velocity / 23 )**(-0.42)
     # Calculate mass loss rate due to photoevaporation
@@ -65,14 +70,17 @@ def dXdt_ODE(t, X, parameters):
 
     tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
 
+    if tX == None:
+        return None
+
     dXdt = - X / tX
 
     return dXdt
 
+
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
-def RK45_driver(t_start, t_stop, dt_try, accuracy,
-                initial_X, core_density, M_core, period, M_star, KH_timescale_cutoff):
+def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 
     """
     This function controls the integration of the mass-loss ODE. It calls upon
@@ -81,9 +89,13 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
     of the mass fraction X.
     """
 
+    initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params
+
     # core density to core radius (measure in Earth radii)
     core_density_SI= core_density * 1000
-    R_core = 1.03 * ((M_core)**0.25)
+
+    density_norm = 1.7589 * core_density**(-0.3329)
+    R_core = density_norm * ((M_core)**0.25)
 
     # orbital period to semi-major axis measured in AU
     a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
@@ -108,20 +120,24 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy,
                                                      parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
 
-
+        if (t_new, X_new, dt_next) == (None, None, None):
+            return None, None, None, None, None, None
         # calculate new R_ph
         R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
                                                          R_core, X_new, KH_timescale_cutoff, None)
 
+
         # if X becomes very small, we can assume all atmosphere is eroded
-        if X_new <= 1e-4:
+        if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:
                 # update new variables
                 X_array = np.append(X_array, 0.0)
                 # update new time
                 t_array = np.append(t_array, t_stop+1e-7)
                 # update new R_ph
                 R_ph_array = np.append(R_ph_array, R_core)
-                return (R_core, t_array, X_array, R_ph_array)
+
+                observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+                return observed_radius, period, M_core, initial_X, R_core, R_star
         else:
             # update new variables
             X_array = np.append(X_array, X_new)
@@ -134,46 +150,48 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy,
         t = t_array[-1]
         dt = dt_next
 
-    return R_core, t_array, X_array, R_ph_array
+    observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+    return observed_radius, period, M_core, initial_X, R_core, R_star
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
-def X_2(t, period, M_star, rho_core, M_core):
-
-    if t < 100:
-        KH_timescale = 100
-    else:
-        KH_timescale = t
-
-    X_2 = 0.0027 * (period / 10)**0.08 * (M_star)**-0.15 * (KH_timescale / 100)**0.37 * \
-          (rho_core / 5.5)**-0.82 * (M_core / 5)**0.17
-
-    return X_2
-
-t_range = np.arange(1,3300)
-X_2_range = [X_2(t=i,period=10,M_star=1.0,rho_core=5.5,M_core=5.0) for i in t_range]
-
-X_range = np.logspace(-3.3,0.0, 20)
-plt.style.use('classic')
-for i in X_range:
-    print 'X = ',i
-    R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-8,
-                                     initial_X=i, core_density=5.5, M_core=5.0, period=15, M_star=1.0, KH_timescale_cutoff=100)
-
-    plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
-
-plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
-hfont = {'fontname':'Courier New'}
-plt.ylabel(r'Envelope Mass Fraction (X)', fontsize=19, **hfont)
-plt.xlabel(r'Time [yrs]', fontsize=19, **hfont)
-plt.title("EUV/X-Ray Model", fontsize=22, **hfont)
-plt.ylim([1e-4,1])
-plt.text(3.5e9, 1e-2, s=r'$2 R_c$', color='blue', fontsize=19, **hfont)
-plt.xticks(fontsize=16, fontname = "Courier New")
-plt.yticks(fontsize=16, fontname = "Courier New")
-plt.tick_params(which='major', length=8)
-plt.tick_params(which='minor', length=4)
-plt.savefig('../Figures/X_vs_t.pdf', format='pdf', dpi=1000, bboxinches='tight')
-plt.show()
+# def X_2(t, period, M_star, rho_core, M_core):
+#
+#     if t < 100:
+#         KH_timescale = 100
+#     else:
+#         KH_timescale = t
+#
+#     X_2 = 0.0027 * (period / 10)**0.08 * (M_star)**-0.15 * (KH_timescale / 100)**0.37 * \
+#           (rho_core / 5.5)**-0.82 * (M_core / 5)**0.17
+#
+#     return X_2
+#
+# t_range = np.arange(1,3300)
+# X_2_range = [X_2(t=i,period=10,M_star=1.0,rho_core=5.5,M_core=5.0) for i in t_range]
+# X_3over2_range = [i/10 for i in X_2_range]
+#
+# X_range = np.logspace(-3.3,0.0, 20)
+# plt.style.use('classic')
+# for i in X_range:
+#     print 'X = ',i
+#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-5,
+#                                      initial_X=i, core_density=5.5, M_core=5.0, period=10, M_star=1.0, KH_timescale_cutoff=100)
+#
+#     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
+#
+# plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
+# plt.loglog([i*1e6 for i in t_range], X_3over2_range, linewidth=1.7, linestyle='--', color='green')
+# hfont = {'fontname':'Courier New'}
+# plt.ylabel(r'Envelope Mass Fraction (X)', fontsize=16, **hfont)
+# plt.xlabel(r'Time [yrs]', fontsize=16, **hfont)
+# plt.ylim([1e-4,1])
+# plt.text(3.5e9, 1e-2, s=r'$2 R_c$', color='blue', fontsize=15, **hfont)
+# plt.text(3.5e9, 1.3e-3, s=r'$1.5 R_c$', color='green', fontsize=15, **hfont)
+# plt.xticks(fontsize=16, fontname = "Courier New")
+# plt.yticks(fontsize=16, fontname = "Courier New")
+# plt.tick_params(which='major', length=8)
+# plt.tick_params(which='minor', length=4)
+# plt.show()
 
 #///////////////////////////////// X vs t_X plot ///////////////////////////// #
 
@@ -199,3 +217,5 @@ plt.show()
 #
 # print "{0} --> {1}".format(X[0], X[-1])
 # print R_core
+
+# print snr_recovery(1.0, 1.0, 1.0)

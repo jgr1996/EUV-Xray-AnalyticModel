@@ -17,15 +17,15 @@ if __name__ == '__main__':
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
-    # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95, 0.1, 0.2, 0.4, 0.3, 1.0, 1.36, 5.0]
+    # initial guess [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean]
+    theta = [0.35, 0.15, 0.96, 2.3, 7.6]
     ndim = len(theta)
-    n_walkers = 100
+    n_walkers = 500
     n_iterations = 10000
 
     theta_guesses = []
     for i in range(n_walkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
+        theta_guesses.append([x + rand.uniform(0, 1e-1*x) for x in theta])
 
     N = 2000
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
         file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
         file.write("----------------- MCMC Simulation ------------------\n")
-        file.write("Parameters estimated: [Initial X Bernstein Polynomial Coefficients, Core Mass Bernstein Polynomials Coefficients, Core Density]\n")
+        file.write("Parameters estimated: [X_mean, X_stdev, M_mean, M_stdev, core_density]\n")
         file.write("Initial guess localised to: {}\n".format(theta))
         file.write("Number of Walkers: {}\n".format(n_walkers))
         file.write("Number of iterations: {}\n".format(n_iterations))
