@@ -12,9 +12,6 @@ This program is a Bayesian hierarchical model for constraining the underlying pl
 - Version 3.0 (under construction)
   * MPI parallelisation with arbitrary core mass and initial envelope mass functions using 6th order Bernstein polynomials
   * Likelihood function is constructed by calculating KDE of model for a set of parameters and evaluating likelihoods summing CKS values
-- Version 4.0 (under construction)
-  * MPI parallelisation with arbitrary core mass and initial envelope mass functions using 6th order Bernstein polynomials
-  * This is an Approximate Bayesian Calculation (ABC) using a Kullback-Leibler (KL) divergence as statistic for likelihood proxy.
 
 # Files
 
