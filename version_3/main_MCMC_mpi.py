@@ -54,7 +54,7 @@ if __name__ == '__main__':
     step_size = emcee.moves.StretchMove(a=1.0)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
-                                    likelihood_function.likelihood_PR_space,
+                                    likelihood_function.likelihood,
                                     args=(N, CKS_array),
                                     moves = step_size)
 
