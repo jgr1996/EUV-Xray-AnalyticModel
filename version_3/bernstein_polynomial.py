@@ -23,7 +23,7 @@ x_range = np.arange(0.0, 1.0001, 0.0001)
 #     coefficients[i] = 1.0
 #     plt.plot(x_range, [B(j, order, coefficients) for j in x_range], label='i = {}'.format(i))
 # plt.legend()
-M_coeffs = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+M_coeffs = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
 M_min, M_max = 0.5, 10.0
 M_poly_min, M_poly_max = B(0, order, M_coeffs), B(1, order, M_coeffs)
 M_poly_norm = M_poly_max - M_poly_min

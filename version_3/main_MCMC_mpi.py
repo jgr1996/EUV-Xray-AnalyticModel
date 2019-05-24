@@ -18,7 +18,7 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 6.68]
+    theta = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 6.68]
     ndim = len(theta)
     n_walkers = 100
     n_iterations = 10000
@@ -62,6 +62,13 @@ if __name__ == '__main__':
     iteration = 0
     for result in sampler.sample(theta_guesses, iterations=n_iterations, store=False):
         if rank == 0:
-            np.savetxt('./RESULTS/{0}/position_{1}.csv'.format(current_time_string, iteration), result.coords, delimiter=',')
 
-        iteration = iteration + 1
+            # save current chain status
+            np.savetxt('./RESULTS/{0}/position_{1}.csv'.format(current_time_string, iteration), result.coords, delimiter=',')
+            iteration = iteration + 1
+
+            # calculate autocorreclation time every 100 iterations
+            if sampler.iteration % 100:
+                continue
+            tau = sampler.get_autocorr_time(tol=0)
+            print "The autocorreclation time is {0} for iteration {1}".format(tau, sampler.iteration)
