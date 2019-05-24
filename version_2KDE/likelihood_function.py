@@ -143,7 +143,7 @@ def likelihood_PR_space(theta, N, data_array):
         if density_mean >= 12.0:
             return -np.inf
 
-    R, P, M, X, R_core = evolve_population.CKS_synthetic_observation(N, theta)
+    R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
 
     if rank == 0:
 

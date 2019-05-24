@@ -64,35 +64,12 @@ def make_planet(initial_X_params, core_mass_params, period_params):
 
     return X_initial, core_mass, P
 
-# ////////////////////////// SNR INJECTION RECOVERY CHECK //////////////////// #
-
-def snr_recovery(R_planet, period, R_star):
-
-    m = 3e5 * ((R_planet*R_earth) / (R_star * R_sun))**2 * np.sqrt(1/period)
-    P_recovery = stats.gamma.cdf(m,17.56,scale=0.49)
-    U = rand.random()
-
-    if P_recovery >= U:
-        return True
-    else:
-        return False
-
-# //////////////////////////////////////////////////////////////////////////// #
 
 
 def CKS_synthetic_observation(N, distribution_parameters):
 
     R = []
     P = []
-    M = []
-    X = []
-    R_core = []
-
-    R_rejected = []
-    P_rejected = []
-    M_rejected = []
-    X_rejected = []
-    R_core_rejected = []
 
     # Define MPI message tags
     tags = enum('READY', 'DONE', 'EXIT', 'START')
@@ -107,6 +84,10 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
 
     if rank == 0:
+        # start = time.time()
+
+        # Master process executes code below
+
         CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
         X_initial_list = []
@@ -114,7 +95,6 @@ def CKS_synthetic_observation(N, distribution_parameters):
         M_core_list = []
         period_list = []
         M_star_list = []
-        R_star_list = []
         KH_timescale_cutoff_list = []
 
         initial_X_params = (distribution_parameters[0],distribution_parameters[1])
@@ -122,19 +102,16 @@ def CKS_synthetic_observation(N, distribution_parameters):
         density_mean = distribution_parameters[4]
         KH_timescale = 100
 
-        start_time = time.time()
+
         transit_number = 0
         while transit_number < N:
-
-            if time.time() - start_time >= 300:
-                print "5 minutes exceeded, returning whatever has been done so far"
-                return R, P, M, X, R_core
-
             X_initial, M_core, period= make_planet(initial_X_params=initial_X_params,
                                                    core_mass_params=core_mass_params,
                                                    period_params=(1.9, 7.6))
 
-            # envelope mass fraction cannot be negative
+            # mass of planet and envelope mass fraction cannot be negative
+            if M_core <= 0.0:
+                continue
             if X_initial < 0.0:
                 continue
             # model does not cover self-gravitating planets
@@ -143,7 +120,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
             if M_core >= 12.0:
                 continue
             # model does not consider dwarf planets
-            if M_core <= 0.5:
+            if M_core <=0.3:
                 continue
             # model breaks down for very small periods
             if period <= 0.5:
@@ -159,74 +136,65 @@ def CKS_synthetic_observation(N, distribution_parameters):
             period_list.append(period)
             CKS_index = transit_number%(946)
             M_star_list.append(CKS_array[1,CKS_index])
-            R_star_list.append(CKS_array[0,CKS_index])
             KH_timescale_cutoff_list.append(KH_timescale)
             transit_number = transit_number + 1
 
+        # end0 = time.time()
+        # print 'serial = ', end0 - start
         tasks = range(N)
         task_index = 0
         num_workers = size - 1
         closed_workers = 0
-        start_time = time.time()
         while closed_workers < num_workers:
-
-            if time.time() - start_time >= 300:
-                comm.send(None, dest=source, tag=tags.EXIT)
-
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=status)
             source = status.Get_source()
             tag = status.Get_tag()
             if tag == tags.READY:
                 # Worker is ready, so send it a task
                 if task_index < len(tasks):
-                    params = [k[task_index] for k in [X_initial_list, core_density_list, M_core_list, period_list, M_star_list, R_star_list, KH_timescale_cutoff_list]]
+                    params = [k[task_index] for k in [X_initial_list, core_density_list, M_core_list, period_list, M_star_list, KH_timescale_cutoff_list]]
                     comm.send(params, dest=source, tag=tags.START)
                     task_index += 1
                 else:
                     comm.send(None, dest=source, tag=tags.EXIT)
             elif tag == tags.DONE:
                 results = data
-                if results[0] == None: # this will be due to a Brentq error or no injection recovery
+                if results[0] == None: # this will be due to a Brentq error
                     continue
                 if np.isnan(results).any():
                     continue
-                if results[0] < 0.1 or snr_recovery(results[0], results[1], results[5]) == False: # can't observe planet smaller than earth!
-                    R_rejected.append(float(results[0]))
-                    P_rejected.append(float(results[1]))
-                    M_rejected.append(float(results[2]))
-                    X_rejected.append(float(results[3]))
-                    R_core_rejected.append(float(results[4]))
+                if results[0] < 1.0: # can't observe planet smaller than earth!
                     continue
                 else:
                     R.append(float(results[0]))
                     P.append(float(results[1]))
-                    M.append(float(results[2]))
-                    X.append(float(results[3]))
-                    R_core.append(float(results[4]))
             elif tag == tags.EXIT:
                 closed_workers += 1
 
-        return R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
+        # end1 = time.time()
+        # print 'total time elapsed = ',end1 - start
+        return R, P
 
 
     else:
         # Worker processes execute code below
         name = MPI.Get_processor_name()
         while True:
-
             comm.send(None, dest=0, tag=tags.READY)
             params = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
             tag = status.Get_tag()
 
             if tag == tags.START:
-                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
-                comm.send((R_ph, P, M, X, R_core, R_star), dest=0, tag=tags.DONE)
+                R_ph, P = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
+                if np.isnan(R_ph):
+                    print 'R is NaN for ',params
+                comm.send((R_ph,P), dest=0, tag=tags.DONE)
             elif tag == tags.EXIT:
                 break
 
         comm.send(None, dest=0, tag=tags.EXIT)
 
-    return None, None, None, None, None, None, None, None, None, None
+    return None, None
 
 
 # comm = MPI.COMM_WORLD   # get MPI communicator object
@@ -235,22 +203,14 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # status = MPI.Status()   # get MPI status object
 #
 #
-# N_range = [5000]
-# params = [3.437072644231077834e-01,1.181037467641082583e-01,8.329704671247530001e+00,1.667576117103975797e+00,1.711254205639421766e+00]
-#  # CHECK FILE NUMBER BEFORE RUNNING!!!
-#
+# N_range = [12000]
 # for i in N_range:
 #
 #     start = time.time()
-#     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = CKS_synthetic_observation(i, params)
+#     R, P = CKS_synthetic_observation(i, [0.10621999, 0.46508592, 8.17852667, 1.71757235, 5.84019612])
 #     finish = time.time()
 #
 #     if rank == 0:
-#
-#         results_accepted = np.array([R, P, M, X, R_core])
-#         results_rejected = np.array([R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected])
-#
-#         print "We have detected {0} out of a total of {1}".format(len(R), N_range[0])
 #         x = np.logspace(-1,2,150)
 #         y = np.logspace(-1,1.5,150)
 #         X, Y = np.meshgrid(x, y)
@@ -261,16 +221,28 @@ def CKS_synthetic_observation(N, distribution_parameters):
 #         Z_norm = 1 / np.sum(Z)
 #         Z = Z_norm * Z
 #
-#         newpath = './RESULTS/parameter_comparisons/log_normal'
+#         KDE_interp = interpolate.RectBivariateSpline(x,y,Z)
+#
+#         CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+#         P_data = CKS_array[3,:]
+#         R_data = CKS_array[2,:]
+#
+#         logL = 0
+#         for i in range(len(P_data)):
+#             logL_i = KDE_interp(P_data[i],R_data[i])[0,0]
+#             if logL_i <= 0.0:
+#                 logL = logL + np.log(Z.min())
+#             else:
+#                 logL = logL + np.log(abs(logL_i))
+#
+#         print logL
+#
+#
+#         newpath = './RESULTS/convergence_test'
 #         if not os.path.exists(newpath):
 #             os.makedirs(newpath)
 #
-#         file = 3
-#         np.savetxt("{0}/paramaters_{1}.csv".format(newpath,file), params, delimiter=',')
-#         np.savetxt("{0}/results_accepted_{1}.csv".format(newpath,file), results_accepted, delimiter=',')
-#         np.savetxt("{0}/results_rejected_{1}.csv".format(newpath,file), results_rejected, delimiter=',')
-#         np.savetxt("{0}/KDE_{1}.csv".format(newpath,file), Z, delimiter=',')
-
+#         np.savetxt("{0}/KDE_{1}.csv".format(newpath, i), Z, delimiter=',')
 
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #

@@ -127,46 +127,54 @@ def likelihood_PR_space(theta, N, data_array):
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
     if rank == 0:
-
-        if any(n < 0.0 for n in theta):
+        [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean] = theta
+        if any(n <= 0 for n in theta):
             return -np.inf
 
-    R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
+        if X_mean >= 0.4:
+            return -np.inf
+        if X_stdev >= 0.7:
+            return -np.inf
+        if M_core_mean >= 12.0:
+            return -np.inf
+        if M_core_mean <= 0.5:
+            return -np.inf
+        if M_core_stdev >= 2.5:
+            return -np.inf
+
+        if density_mean <= 1.5:
+            return -np.inf
+        if density_mean >= 12.0:
+            return -np.inf
+
+    R, P = evolve_population.CKS_synthetic_observation(N, theta)
 
     if rank == 0:
-
-        if len(R) <= 0.5 * N:
-            return -np.inf
-
         x = np.logspace(-1,2,150)
         y = np.logspace(-1,1.5,150)
         X, Y = np.meshgrid(x, y)
         positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
+
         data = np.vstack([np.log(P),np.log(R)])
         kernel = stats.gaussian_kde(data)
         Z = np.reshape(kernel(positions).T, X.shape)
         Z_norm = 1 / np.sum(Z)
-        Z = Z_norm * Z
-
-        KDE_interp = interpolate.RectBivariateSpline(y,x,Z)
+        Z_model = Z_norm * Z
 
         P_data = data_array[3,:]
         R_data = data_array[2,:]
+        CKS_data = np.vstack([np.log(P_data),np.log(R_data)])
+        kernel = stats.gaussian_kde(CKS_data)
+        Z = np.reshape(kernel(positions).T, X.shape)
+        Z_norm = 1 / np.sum(Z)
+        Z_data = Z_norm * Z
 
-        logL = 0
-        for i in range(len(P_data)):
-            # MUST SWAP ORDER OF P AND R!!!
-            logL_i = KDE_interp(R_data[i], P_data[i])[0,0]
-            if logL_i <= 0.0:
-                logL = logL - 300
-            else:
-                logL = logL + np.log(abs(logL_i))
+        KL_stat = stats.entropy(Z_model.flatten(), Z_data.flatten())
 
-        return logL
+        return -1.0 * float(KL_stat)
 
     else:
         return 0.0
-
 
 
 # ///////////////////////////////// TEST ///////////////////////////////////// #

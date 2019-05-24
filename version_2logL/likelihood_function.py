@@ -22,7 +22,7 @@ def make_model_histogram(R, P, N, nD=False):
         P_bins = np.logspace(0.0,2.0, 50)
         H, xbins, ybins = np.histogram2d(P, R, bins=[P_bins, R_bins])
         H = H.flatten()
-        H = [float(i) for i in H]
+        H = np.array([float(i) for i in H])
         return (904/N)*H
 
 
@@ -40,7 +40,7 @@ def make_CKS_histograms(nD=False):
         P_bins = np.logspace(0.0,2.0, 50)
         H, xbins, ybins = np.histogram2d(CKS_array[3,:], CKS_array[2,:], bins=[P_bins, R_bins])
         H = H.flatten()
-        H = [float(i) for i in H]
+        H = np.array([float(i) for i in H])
         return H
 
 # //////////////////////////////////////////////////////////////////////////// #
@@ -127,57 +127,62 @@ def likelihood_PR_space(theta, N, data_array):
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
     if rank == 0:
-
-        if any(n < 0.0 for n in theta):
+        [X_mean, X_stdev, M_core_mean, M_core_stdev, density_mean] = theta
+        if any(n <= 0 for n in theta):
             return -np.inf
 
-    R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
+        if X_mean >= 0.4:
+            return -np.inf
+        if X_stdev >= 0.7:
+            return -np.inf
+        if M_core_mean >= 12.0:
+            return -np.inf
+        if M_core_mean <= 0.5:
+            return -np.inf
+        if M_core_stdev >= 2.5:
+            return -np.inf
+
+        if density_mean <= 1.5:
+            return -np.inf
+        if density_mean >= 12.0:
+            return -np.inf
+
+    R, P, M, X, R_core = evolve_population.CKS_synthetic_observation(N, theta)
 
     if rank == 0:
 
-        if len(R) <= 0.5 * N:
+        if len(R) == 0:
             return -np.inf
 
-        x = np.logspace(-1,2,150)
-        y = np.logspace(-1,1.5,150)
-        X, Y = np.meshgrid(x, y)
-        positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
-        data = np.vstack([np.log(P),np.log(R)])
-        kernel = stats.gaussian_kde(data)
-        Z = np.reshape(kernel(positions).T, X.shape)
-        Z_norm = 1 / np.sum(Z)
-        Z = Z_norm * Z
-
-        KDE_interp = interpolate.RectBivariateSpline(y,x,Z)
+        model_histogram = make_model_histogram(R,P,len(R), nD=True)
 
         P_data = data_array[3,:]
         R_data = data_array[2,:]
+        data_histogram = make_CKS_histograms(nD=True)
 
-        logL = 0
-        for i in range(len(P_data)):
-            # MUST SWAP ORDER OF P AND R!!!
-            logL_i = KDE_interp(R_data[i], P_data[i])[0,0]
-            if logL_i <= 0.0:
-                logL = logL - 300
-            else:
-                logL = logL + np.log(abs(logL_i))
+        model_hist_temp = model_histogram + np.ones(len(model_histogram))
+        data_hist_temp = data_histogram + np.ones(len(data_histogram))
 
-        return logL
+        L = (data_hist_temp - model_hist_temp) \
+          + data_hist_temp * np.log(model_hist_temp / data_hist_temp)
+
+        L = np.sum(L)
+
+        return L
 
     else:
         return 0.0
 
 
-
 # ///////////////////////////////// TEST ///////////////////////////////////// #
-
+# data_histogram = make_CKS_histograms()
+# L = likelihood_R_space([0.06, 0.42, 7.72, 1.86], 500, data_histogram)
+#
 # comm = MPI.COMM_WORLD   # get MPI communicator object
 # rank = comm.rank        # rank of this process
-# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-# for i in range(5):
-#     L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
-#                             1000,
-#                             CKS_array)
 #
-#     if rank == 0:
-#         print L
+# if rank == 0:
+#     print
+
+# H = make_CKS_histograms(nD=True)
+# print sum(H)

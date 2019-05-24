@@ -77,18 +77,6 @@ def dXdt_ODE(t, X, parameters):
 
     return dXdt
 
-# ////////////////////////// SNR INJECTION RECOVERY CHECK //////////////////// #
-
-def snr_recovery(R_planet, period, R_star):
-
-    m = 3e5 * ((R_planet*R_earth) / (R_star * R_sun))**2 * np.sqrt(1/period)
-    P_recovery = stats.gamma.cdf(m,17.56,scale=0.49)
-    U = rand.random()
-
-    if P_recovery >= U:
-        return True
-    else:
-        return False
 
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
@@ -133,7 +121,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
                                                      parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
 
         if (t_new, X_new, dt_next) == (None, None, None):
-            return None, None, None, None, None
+            return None, None, None, None, None, None
         # calculate new R_ph
         R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
                                                          R_core, X_new, KH_timescale_cutoff, None)
@@ -149,11 +137,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
                 R_ph_array = np.append(R_ph_array, R_core)
 
                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
-
-                if snr_recovery(observed_radius, period, R_star) == True:
-                    return observed_radius, period, M_core, initial_X, R_core
-                else:
-                    return None, None, None, None, None
+                return observed_radius, period, M_core, initial_X, R_core, R_star
         else:
             # update new variables
             X_array = np.append(X_array, X_new)
@@ -167,11 +151,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
         dt = dt_next
 
     observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
-
-    if snr_recovery(observed_radius, period, R_star) == True:
-        return observed_radius, period, M_core, initial_X, R_core
-    else:
-        return None, None, None, None, None
+    return observed_radius, period, M_core, initial_X, R_core, R_star
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
 # def X_2(t, period, M_star, rho_core, M_core):
@@ -194,8 +174,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 # plt.style.use('classic')
 # for i in X_range:
 #     print 'X = ',i
-#     R_core, t, X, R_ph = RK45_driver(t_start=1, t_stop=3000, dt_try=0.01, accuracy=1e-5,
-#                                      initial_X=i, core_density=5.5, M_core=5.0, period=10, M_star=1.0, KH_timescale_cutoff=100)
+#     params = [i, 5.5, 5.0, 10, 1.0, 1.0, 100]
+#     observed_radius, period, M_core, X, R_core, R_star, t = RK45_driver(1, 3000, 0.01, 1e-6, params)
 #
 #     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
 #
@@ -214,20 +194,40 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 # plt.show()
 
 #///////////////////////////////// X vs t_X plot ///////////////////////////// #
-
-# X_range = np.logspace(-3,0,100)
+# plt.rcParams["font.family"] = "Courier New"
+# hfont = {'fontname':'Courier New'}
+# params = {
+#    'xtick.labelsize': 12,
+#    'ytick.labelsize': 12,}
+# plt.rcParams.update(params)
+# # plt.tick_params("both", length=6, which="major", width="1", direction="in")
+# # plt.tick_params("both", length=3, which="minor", width="1", direction="in")
+# plt.style.use('classic')
+#
+#
+# X_range = np.logspace(-4,-0.5,100)
 # tX_range_1 = []
 # tX_range_2 = []
 #
 # for i in X_range:
-#     tX1 = calculate_tX(t=1, X=i, M_core=5.0, M_star=1.0, a=0.1, R_core=1.7)
-#     tX2 = calculate_tX(t=1, X=i, M_core=5.0, M_star=1.0, a=0.1, R_core=1.8)
+#     tX1 = calculate_tX(t=1, X=i, M_core=5, M_star=1, a=0.1, R_core=1.6, KH_timescale_cutoff=100, R_guess=None)
 #
 #     tX_range_1.append(tX1)
-#     tX_range_2.append(tX2)
 #
-# plt.loglog(X_range,tX_range_1)
-# plt.loglog(X_range,tX_range_2)
+# plt.loglog(X_range,tX_range_1,color='black')
+# plt.xscale('log')
+# plt.xlim([5e-4,1])
+# plt.xticks([0.001,0.01,0.1,1],[0.001,0.01,0.1,1],fontsize=16, fontname = "Courier New")
+# plt.yticks([1,10,100], [1,10,100], fontsize=19, fontname = "Courier New")
+# plt.xlabel(r"Envelope Mass Fraction",fontsize=19, **hfont)
+# plt.ylabel(r'Mass-loss Timescale [Myrs]',fontsize=19, **hfont)
+# plt.tick_params(which='major', length=8)
+# plt.tick_params(which='minor', length=4)
+#
+# plt.tight_layout()
+# plt.savefig('../Figures/MassLossTimescale.pdf', format='pdf', dpi=2000)
+#
+# plt.show()
 
 # //////////////////////////////////////////////////////////////////////////// #
 
@@ -237,3 +237,5 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 #
 # print "{0} --> {1}".format(X[0], X[-1])
 # print R_core
+
+# print snr_recovery(1.0, 1.0, 1.0)
