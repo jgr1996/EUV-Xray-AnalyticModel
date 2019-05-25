@@ -252,47 +252,47 @@ def CKS_synthetic_observation(N, distribution_parameters):
     return None, None, None, None, None, None, None, None, None, None
 
 
-comm = MPI.COMM_WORLD   # get MPI communicator object
-size = comm.size        # total number of processes
-rank = comm.rank        # rank of this process
-status = MPI.Status()   # get MPI status object
-
-
-N_range = [5000]
-params = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.2, 0.3, 0.8, 1.0, 6.5]
- # CHECK FILE NUMBER BEFORE RUNNING!!!
-
-for i in N_range:
-
-    start = time.time()
-    R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = CKS_synthetic_observation(i, params)
-    finish = time.time()
-
-    if rank == 0:
-
-        results_accepted = np.array([R, P, M, X, R_core])
-        results_rejected = np.array([R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected])
-
-        print "We have detected {0} out of a total of {1}".format(len(R), N_range[0])
-        x = np.logspace(-1,2,150)
-        y = np.logspace(-1,1.5,150)
-        X, Y = np.meshgrid(x, y)
-        positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
-        data = np.vstack([np.log(P),np.log(R)])
-        kernel = stats.gaussian_kde(data)
-        Z = np.reshape(kernel(positions).T, X.shape)
-        Z_norm = 1 / np.sum(Z)
-        Z = Z_norm * Z
-
-        newpath = './RESULTS/likelihood_test/'
-        if not os.path.exists(newpath):
-            os.makedirs(newpath)
-
-        file = 0
-        np.savetxt("{0}/paramaters_{1}.csv".format(newpath,file), params, delimiter=',')
-        np.savetxt("{0}/results_accepted_{1}.csv".format(newpath,file), results_accepted, delimiter=',')
-        np.savetxt("{0}/results_rejected_{1}.csv".format(newpath,file), results_rejected, delimiter=',')
-        np.savetxt("{0}/KDE_{1}.csv".format(newpath,file), Z, delimiter=',')
+# comm = MPI.COMM_WORLD   # get MPI communicator object
+# size = comm.size        # total number of processes
+# rank = comm.rank        # rank of this process
+# status = MPI.Status()   # get MPI status object
+#
+#
+# N_range = [5000]
+# params = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.2, 0.3, 0.8, 1.0, 6.5]
+#  # CHECK FILE NUMBER BEFORE RUNNING!!!
+#
+# for i in N_range:
+#
+#     start = time.time()
+#     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = CKS_synthetic_observation(i, params)
+#     finish = time.time()
+#
+#     if rank == 0:
+#
+#         results_accepted = np.array([R, P, M, X, R_core])
+#         results_rejected = np.array([R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected])
+#
+#         print "We have detected {0} out of a total of {1}".format(len(R), N_range[0])
+#         x = np.logspace(-1,2,150)
+#         y = np.logspace(-1,1.5,150)
+#         X, Y = np.meshgrid(x, y)
+#         positions = np.vstack([np.log(X.ravel()), np.log(Y.ravel())])
+#         data = np.vstack([np.log(P),np.log(R)])
+#         kernel = stats.gaussian_kde(data)
+#         Z = np.reshape(kernel(positions).T, X.shape)
+#         Z_norm = 1 / np.sum(Z)
+#         Z = Z_norm * Z
+#
+#         newpath = './RESULTS/likelihood_test/'
+#         if not os.path.exists(newpath):
+#             os.makedirs(newpath)
+#
+#         file = 0
+#         np.savetxt("{0}/paramaters_{1}.csv".format(newpath,file), params, delimiter=',')
+#         np.savetxt("{0}/results_accepted_{1}.csv".format(newpath,file), results_accepted, delimiter=',')
+#         np.savetxt("{0}/results_rejected_{1}.csv".format(newpath,file), results_rejected, delimiter=',')
+#         np.savetxt("{0}/KDE_{1}.csv".format(newpath,file), Z, delimiter=',')
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
 

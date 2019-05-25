@@ -18,7 +18,7 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 6.68]
+    theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
     ndim = len(theta)
     n_walkers = 100
     n_iterations = 10000
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
-    step_size = emcee.moves.StretchMove(a=1.0)
+    step_size = emcee.moves.StretchMove(a=3.0)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood,
