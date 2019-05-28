@@ -15,10 +15,9 @@ def likelihood(theta, N, data_array):
 
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
-    if rank == 0:
 
-        if any(n < 0.0 for n in theta):
-            return -np.inf
+    if any(n < 0.0 for n in theta):
+        return -np.inf
 
     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
 
@@ -53,8 +52,6 @@ def likelihood(theta, N, data_array):
 
         return logL
 
-    else:
-        return 0.0
 
 
 

@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
-    step_size = emcee.moves.StretchMove(a=3.0)
+    step_size = emcee.moves.StretchMove(a=2.5)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood,
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 
     iteration = 0
-    for result in sampler.sample(theta_guesses, iterations=n_iterations, store=False):
+    for result in sampler.sample(theta_guesses, iterations=n_iterations, store=True):
         if rank == 0:
 
             # save current chain status
