@@ -1,0 +1,13 @@
+#PBS -N EUVPhotoEvap_v3
+#PBS -l walltime=2:00:00:00
+#PBS -m bea
+#PBS -l nodes=10:ppn=32
+#PBS -M james.rogers14@imperial.ac.uk
+#PBS -A dp100
+
+module load intel/mpi/18
+module load python/intel/2.7
+source activate py2
+
+cd $HOME/Projects/Owen_Wu_Analytic/version_3
+mpiexec python main_MCMC_mpi.py > output.txt

@@ -1,5 +1,5 @@
-#PBS -l walltime=48:00:00
-#PBS -l select=10:ncpus=24:mem=8gb
+#PBS -l walltime=12:00:00
+#PBS -l select=10:ncpus=12:mem=8gb
 #PBS -M james.rogers14@imperial.ac.uk
 
 module load mpi

@@ -17,17 +17,14 @@ def likelihood(theta, N, data_array):
     rank = comm.rank        # rank of this process
 
     if any(n < 0.0 for n in theta):
-        return -np.inf
-
-    if any(n > 10.0 for n in theta):
-        return -np.inf
+        if rank == 0:
+            return -np.inf
 
     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
 
     if rank == 0:
 
         if len(R) <= 0.5 * N:
-            print "Not enough planets for {}".format(theta)
             return -np.inf
 
         x = np.logspace(-1,2,150)

@@ -110,13 +110,6 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
 
 
     if R_guess == None:
-        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
-        sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
-        if np.sign(sign_test1) == np.sign(sign_test2):
-            print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
-            print "PARAMS"
-            print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
-            return None, None        
         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
                        M_core_kg, R_core_meters, X))
     else:
