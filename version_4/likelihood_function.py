@@ -17,14 +17,17 @@ def likelihood(theta, N, data_array):
     rank = comm.rank        # rank of this process
 
     if any(n < 0.0 for n in theta):
-        if rank == 0:
-            return -np.inf
+        return -np.inf
+
+    if any(n > 10.0 for n in theta):
+        return -np.inf
 
     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
 
     if rank == 0:
 
         if len(R) <= 0.5 * N:
+            print "Not enough planets for {}".format(theta)
             return -np.inf
 
         x = np.logspace(-1,2,150)
@@ -60,13 +63,13 @@ def likelihood(theta, N, data_array):
 
 # ///////////////////////////////// TEST ///////////////////////////////////// #
 
-# comm = MPI.COMM_WORLD   # get MPI communicator object
-# rank = comm.rank        # rank of this process
-# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-# for i in range(5):
-#     L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
-#                             1000,
-#                             CKS_array)
-#
-#     if rank == 0:
-#         print L
+comm = MPI.COMM_WORLD   # get MPI communicator object
+rank = comm.rank        # rank of this process
+CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+for i in range(5):
+    L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
+                            1000,
+                            CKS_array)
+
+    if rank == 0:
+        print L

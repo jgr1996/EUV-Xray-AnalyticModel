@@ -13,22 +13,23 @@ import evolve_population
 
 
 if __name__ == '__main__':
-
+    
+    print emcee.__version__
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
     theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
     ndim = len(theta)
-    n_walkers = 30
+    n_walkers = 100
     n_iterations = 10000
 
     theta_guesses = []
     for i in range(n_walkers):
         theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
 
-    N = 1500
-    step_size = 1.8
+    N = 2000
+    step_size = 0.05
 
     if rank == 0:
         # use time as label for output directory
@@ -53,12 +54,12 @@ if __name__ == '__main__':
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
-    step_size = emcee.moves.StretchMove(a=step_size)
+    # step_size = emcee.moves.GaussianMove(cov=step_size)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood,
-                                    args=(N, CKS_array),
-                                    moves = step_size)
+                                    args=(N, CKS_array))
+                                    # moves = step_size)
 
 
     iteration = 0
@@ -73,4 +74,6 @@ if __name__ == '__main__':
             if sampler.iteration % 100:
                 continue
             tau = sampler.get_autocorr_time(tol=0)
-            print "The autocorreclation time is {0} for iteration {1}".format(tau, sampler.iteration)
+            file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
+            file.write("The autocorreclation time is {0} for iteration {1} \n".format(tau, sampler.iteration))
+            file.close()

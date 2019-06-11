@@ -53,12 +53,12 @@ if __name__ == '__main__':
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 
-    step_size = emcee.moves.GaussianMove(cov=step_size)
+    # step_size = emcee.moves.GaussianMove(cov=step_size)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood,
-                                    args=(N, CKS_array),
-                                    moves = step_size)
+                                    args=(N, CKS_array))
+                                    # moves = step_size)
 
 
     iteration = 0

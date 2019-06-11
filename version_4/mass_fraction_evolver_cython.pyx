@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from numpy import random as rand
 from scipy import stats
 from constants import *
-import R_photosphere
+import R_photosphere_cython
 import RKF45
 
 """
@@ -41,7 +41,7 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
         L_HE = L_sat * (t_seconds/t_sat)**(-1-a0)
 
     # Calulate photospheric radius
-    R_ph = R_photosphere.calculate_R_photosphere(t, M_star, a, M_core, R_core,
+    R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core,
                                                  X, KH_timescale_cutoff, R_guess)
 
     if R_ph == None:
@@ -101,9 +101,9 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
     a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
 
     #calculate initial photospheric radius
-    R_ph_init = R_photosphere.calculate_R_photosphere(t_start, M_star, a, M_core,
+    R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,
                                                       R_core, initial_X, KH_timescale_cutoff,
-                                                      R_guess=None)
+                                                      R_guess=0.0)
 
     # define arrays for storing t steps and variables
     X_array = np.array([initial_X])
@@ -123,8 +123,8 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
         if (t_new, X_new, dt_next) == (None, None, None):
             return None, None, None, None, None, None
         # calculate new R_ph
-        R_ph_new = R_photosphere.calculate_R_photosphere(t_new, M_star, a, M_core,
-                                                         R_core, X_new, KH_timescale_cutoff, None)
+        R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,
+                                                         R_core, X_new, KH_timescale_cutoff, 0.0)
 
 
         # if X becomes very small, we can assume all atmosphere is eroded
@@ -239,3 +239,7 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 # print R_core
 
 # print snr_recovery(1.0, 1.0, 1.0)
+
+# params = [0.1, 5.0, 2.0, 10, 1.0, 1.0, 100]
+# for i in range(100):
+#     observed_radius, period, M_core, initial_X, R_core, R_star = RK45_driver(1, 3000, 0.01, 1e-5, params)

@@ -116,9 +116,9 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
-            return None, None        
+            return None, None
         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
-                       M_core_kg, R_core_meters, X))
+                       M_core_kg, R_core_meters, X), disp=False)
     else:
         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
@@ -128,7 +128,7 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
             return None, None
         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
-                       M_core_kg, R_core_meters, X))
+                       M_core_kg, R_core_meters, X), disp=False)
 
 
     Rho_rcb = (mu * m_H / k_B) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) *  \

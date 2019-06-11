@@ -64,37 +64,27 @@ def calculate_sound_speed_squared(T_eq):
 
 # ///////////////////// ANALYTIC MODEL EQUATIONS FOR R_rcb /////////////////// #
 
-def R_rcb_equation(R_rcb, T_eq, c_s_squared, KH_timescale_seconds,
-                   M_core_kg, R_core_meters, X):
-    """
-    Returns equation for which solution is R_Rcb:
 
-    R_rcb: Radiative-convective boundary radius
-    a = semi-major axis of orbit (AU)
-    KH_timescale = Kelvin-Helmholtz (cooling) timescale for atmosphere (years)
-    M_core = Mass of planet core (Earth masses)
-    R_core = Radius of planet core (Earth Radius)
-    X = Envelope mass fraction M_env / M_core
-    """
+cdef double R_rcb_equation(double R_rcb, double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X):
+
 
     # collecting physical constants and terms which aren't a function of R_rcb
-    c = (4 * pi * mu * m_H / (M_core_kg * k_B)) * \
-        ((Delta_ab * G * M_core_kg / c_s_squared)**(1/(gamma-1))) * \
-        ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / \
-        (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
+    cdef double c1 = (4.0 * 3.14159 * 2.35 * 1.67e-27 / (M_core_kg * 1.381e-23))
+    cdef double c2 = ((0.4 * 6.674e-11 * M_core_kg / c_s_squared)**(1/((5/3)-1)))
+    cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+
+    cdef double c = c1 * c2 * c3
 
     # full equation
-    equation = c * (R_rcb**3) * \
-               I2_interpolate((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * \
-               ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X
+    cdef double equation = c * (R_rcb**3) * I2_interpolate((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X
 
     return equation
 
 
+
 # /////////////////////////////// SOLVE FOR R_rcb //////////////////////////// #
 
-def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
-                            M_core_kg, R_core_meters, X, R_guess):
+cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X, double R_guess):
     """
     Calculates solution of R_rcb_equation using Newton-Raphson/secant method. Then
     finds Rho_rcb using the solution R_rcb:
@@ -109,24 +99,29 @@ def solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
     """
 
 
-    if R_guess == None:
-        R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
-                       M_core_kg, R_core_meters, X))
-    else:
-        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
-        sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
-        if np.sign(sign_test1) == np.sign(sign_test2):
+    if R_guess == 0.0:
+        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
+        sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        if sign_test1 == sign_test2:
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
             return None, None
-        R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
-                       M_core_kg, R_core_meters, X))
+        R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
+    else:
+        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        if sign_test1 == sign_test2:
+            print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
+            print "PARAMS"
+            print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
+            return None, None
+        R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
 
 
-    Rho_rcb = (mu * m_H / k_B) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) *  \
-              64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds * R_rcb / \
-              (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
+    cdef double Rho_rcb_1 = (2.35 * 1.67e-27 / 1.381e-23)
+    cdef double Rho_rcb_2 = ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * 64.0 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds * R_rcb / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+    cdef double Rho_rcb = Rho_rcb_1 * Rho_rcb_2
 
 
     return R_rcb, Rho_rcb
@@ -162,8 +157,7 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff
     R_core_meters = R_core * R_earth
 
     # solve simultaneous equations for radiative-convective boundary radius and density
-    R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds,
-                                             M_core_kg, R_core_meters, X, R_guess)
+    R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X, R_guess)
 
 
 

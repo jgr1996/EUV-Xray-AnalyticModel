@@ -39,7 +39,19 @@ np.savetxt('dR_Rc_array.csv', dR_Rc_range, delimiter=',')
 np.savetxt('I2.csv', I2_array, delimiter=',')
 np.savetxt('I2_I1.csv', I2_I1_array, delimiter=',')
 
+# //////////////////////////// CREATE POLYNOMIAL FITS //////////////////////// #
+
+I2_fit = np.polyfit(dR_Rc_range, I2_array, 100)
+
+I2_I1_fit = np.polyfit(dR_Rc_range, I2_I1_array, 100)
+
 # //////////////////////////////////////////////////////////////////////////// #
 
+# plt.figure(1)
 # plt.loglog(dR_Rc_range, I2_array)
+# plt.loglog(dR_Rc_range, np.polyval(I2_fit,dR_Rc_range))
+#
+# plt.figure(2)
+# plt.loglog(dR_Rc_range, [1/i for i in I2_I1_array])
+#
 # plt.show()
