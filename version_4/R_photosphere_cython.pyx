@@ -13,6 +13,31 @@ are used to determine the photospheric radius of a planet undergoing EUV/Xray
 photo-evaporation.
 """
 
+cdef double pi = 3.141598
+cdef double stefan = 5.67e-8
+cdef double kappa_0 = 2.294e-8
+cdef double G = 6.674e-11
+cdef double gamma = 5/3
+cdef double Delta_ab = (gamma-1)/gamma
+cdef double mu = 2.35
+cdef double m_H = 1.67e-27
+cdef double k_B = 1.381e-23
+cdef double alpha = 0.68
+cdef double beta = 0.45
+cdef double M_sun = 1.989e30
+cdef double L_sun = 3.828e26
+cdef double AU = 1.496e11
+cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+cdef double M_earth = 5.927e24
+cdef double R_earth = 6.378e6
+cdef double eta_0 = 0.17
+cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+cdef double t_sat = 100 * Myr
+cdef double a0 = 0.5
+cdef double b_cutoff = 0.7
+cdef double R_sun = 6.957e8
+
+
 # /////////////////////////// IMPORT TABULATED INTEGRALS ///////////////////// #
 
 dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')
@@ -42,24 +67,24 @@ def I2_I1_interpolate(dR_Rc):
 
 # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
 
-def calculate_T_eq(M_star, a):
+cdef double calculate_T_eq(double M_star, double a):
     """
     Calculates the equilibrium temperature of the planet:
     M_star: Mass of host star (solar masses)
     a = semi-major axis of orbit (AU)
     """
 
-    T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8
+    cdef double T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8
     return T_eq
 
 
-def calculate_sound_speed_squared(T_eq):
+cdef double calculate_sound_speed_squared(double T_eq):
     """
     Calculates the isothermal sound speed of atmosphere:
     T_eq = Equilibrium temperature of planet (K)
     """
 
-    c_s_squared = (k_B * T_eq) / (mu * m_H)
+    cdef double c_s_squared = (k_B * T_eq) / (mu * m_H)
     return c_s_squared
 
 # ///////////////////// ANALYTIC MODEL EQUATIONS FOR R_rcb /////////////////// #
@@ -69,9 +94,9 @@ cdef double R_rcb_equation(double R_rcb, double T_eq, double c_s_squared, double
 
 
     # collecting physical constants and terms which aren't a function of R_rcb
-    cdef double c1 = (4.0 * 3.14159 * 2.35 * 1.67e-27 / (M_core_kg * 1.381e-23))
-    cdef double c2 = ((0.4 * 6.674e-11 * M_core_kg / c_s_squared)**(1/((5/3)-1)))
-    cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+    cdef double c1 = (4 * pi * mu * m_H / (M_core_kg * k_B))
+    cdef double c2 = ((Delta_ab * G * M_core_kg / c_s_squared)**(1/(gamma-1)))
+    cdef double c3 = ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
 
     cdef double c = c1 * c2 * c3
 
@@ -106,7 +131,7 @@ cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescal
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
-            return None, None
+            return 0.0, 0.0
         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
     else:
         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
@@ -115,7 +140,7 @@ cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescal
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
-            return None, None
+            return 0.0, 0.0
         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
 
 
@@ -130,7 +155,7 @@ cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescal
 
 # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
 
-def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):
+cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, double R_core, double X, double KH_timescale_cutoff, double R_guess):
     """
     Returns the photospheric radius of the planet (in meters):
 
@@ -144,40 +169,41 @@ def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff
     """
 
     # calculate temperature and sound speed for system
-    T_eq = calculate_T_eq(M_star, a)
-    c_s_squared = calculate_sound_speed_squared(T_eq)
+    cdef double T_eq = calculate_T_eq(M_star, a)
+    cdef double c_s_squared = calculate_sound_speed_squared(T_eq)
 
+    cdef double KH_timescale_seconds
     if t < KH_timescale_cutoff:
         KH_timescale_seconds = KH_timescale_cutoff*Myr
     else:
         KH_timescale_seconds = t*Myr
 
     # convert to SI
-    M_core_kg = M_core * M_earth
-    R_core_meters = R_core * R_earth
+    cdef double M_core_kg = M_core * M_earth
+    cdef double R_core_meters = R_core * R_earth
 
     # solve simultaneous equations for radiative-convective boundary radius and density
+    cdef double R_rcb, Rho_rcb
     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X, R_guess)
 
 
-
-    if (R_rcb, Rho_rcb) == (None, None):
-        return None
+    if (R_rcb, Rho_rcb) == (0.0, 0.0):
+        return 0.0
 
     # calculate gravitational constant (assumed constant)
-    g = G * M_core_kg / (R_rcb*R_rcb)
+    cdef double g = G * M_core_kg / (R_rcb*R_rcb)
 
     # calcualte scale height
-    H = (k_B * T_eq) / (mu * m_H * g)
+    cdef double H = (k_B * T_eq) / (mu * m_H * g)
 
     # locate photosphere by finding pressure at which P=2/3 * g/kappa
-    P_photosphere = (2 * g / (3 * kappa_0 * T_eq**beta))**(1/(alpha+1))
+    cdef double P_photosphere = (2 * g / (3 * kappa_0 * T_eq**beta))**(1/(alpha+1))
 
     # calculate photospheric density
-    Rho_photosphere = P_photosphere * mu * m_H / (k_B * T_eq)
+    cdef double Rho_photosphere = P_photosphere * mu * m_H / (k_B * T_eq)
 
     # calculate photospheric radius
-    R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)
+    cdef double R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)
 
     return R_photosphere
 

@@ -899,42 +899,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 #define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
 #endif
 
-/* RaiseArgTupleInvalid.proto */
-static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
-    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
-/* RaiseDoubleKeywords.proto */
-static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
-
-/* ParseKeywords.proto */
-static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
-    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
-    const char* function_name);
-
-/* PyObjectCallMethO.proto */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg);
-#endif
-
-/* PyObjectCallOneArg.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
-
-/* PyIntBinop.proto */
-#if !CYTHON_COMPILING_IN_PYPY
-static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, long intval, int inplace);
-#else
-#define __Pyx_PyInt_SubtractObjC(op1, op2, intval, inplace)\
-    (inplace ? PyNumber_InPlaceSubtract(op1, op2) : PyNumber_Subtract(op1, op2))
-#endif
-
-/* PyIntBinop.proto */
-#if !CYTHON_COMPILING_IN_PYPY
-static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace);
-#else
-#define __Pyx_PyInt_AddObjC(op1, op2, intval, inplace)\
-    (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
-#endif
-
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -976,6 +940,22 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
                                   int lineno, const char *filename,
                                   int full_traceback, int nogil);
 
+/* PyObjectCallMethO.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg);
+#endif
+
+/* PyObjectCallOneArg.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
+
+/* PyIntBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, long intval, int inplace);
+#else
+#define __Pyx_PyInt_SubtractObjC(op1, op2, intval, inplace)\
+    (inplace ? PyNumber_InPlaceSubtract(op1, op2) : PyNumber_Subtract(op1, op2))
+#endif
+
 /* RaiseTooManyValuesToUnpack.proto */
 static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
 
@@ -987,6 +967,18 @@ static CYTHON_INLINE int __Pyx_IterFinish(void);
 
 /* UnpackItemEndCheck.proto */
 static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
+
+/* RaiseArgTupleInvalid.proto */
+static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
+    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+/* RaiseDoubleKeywords.proto */
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+/* ParseKeywords.proto */
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
+    const char* function_name);
 
 /* FetchCommonType.proto */
 static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type);
@@ -1130,32 +1122,50 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'R_photosphere_cython' */
 static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_double____double____double____double____double____double____double____double___to_py = 0;
+static double __pyx_v_20R_photosphere_cython_pi;
+static double __pyx_v_20R_photosphere_cython_stefan;
+static double __pyx_v_20R_photosphere_cython_kappa_0;
+static double __pyx_v_20R_photosphere_cython_G;
+static double __pyx_v_20R_photosphere_cython_gamma;
+static double __pyx_v_20R_photosphere_cython_Delta_ab;
+static double __pyx_v_20R_photosphere_cython_mu;
+static double __pyx_v_20R_photosphere_cython_m_H;
+static double __pyx_v_20R_photosphere_cython_k_B;
+static double __pyx_v_20R_photosphere_cython_alpha;
+static double __pyx_v_20R_photosphere_cython_beta;
+static double __pyx_v_20R_photosphere_cython_M_sun;
+static double __pyx_v_20R_photosphere_cython_L_sun;
+static double __pyx_v_20R_photosphere_cython_AU;
+static double __pyx_v_20R_photosphere_cython_T_eq_earth;
+static double __pyx_v_20R_photosphere_cython_M_earth;
+static double __pyx_v_20R_photosphere_cython_R_earth;
+static double __pyx_v_20R_photosphere_cython_eta_0;
+static double __pyx_v_20R_photosphere_cython_Myr;
+static double __pyx_v_20R_photosphere_cython_t_sat;
+static double __pyx_v_20R_photosphere_cython_a0;
+static double __pyx_v_20R_photosphere_cython_b_cutoff;
+static double __pyx_v_20R_photosphere_cython_R_sun;
+static double __pyx_f_20R_photosphere_cython_calculate_T_eq(double, double); /*proto*/
+static double __pyx_f_20R_photosphere_cython_calculate_sound_speed_squared(double); /*proto*/
 static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double, double, double, double, double, double, double); /*proto*/
 static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double, double, double, double, double, double, double); /*proto*/
+static PyObject *__pyx_f_20R_photosphere_cython_calculate_R_photosphere(double, double, double, double, double, double, double, double, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(double (*)(double, double, double, double, double, double, double)); /*proto*/
 #define __Pyx_MODULE_NAME "R_photosphere_cython"
 extern int __pyx_module_is_main_R_photosphere_cython;
 int __pyx_module_is_main_R_photosphere_cython = 0;
 
 /* Implementation of 'R_photosphere_cython' */
-static const char __pyx_k_G[] = "G";
-static const char __pyx_k_H[] = "H";
 static const char __pyx_k_X[] = "X";
 static const char __pyx_k_a[] = "a";
-static const char __pyx_k_g[] = "g";
 static const char __pyx_k_t[] = "t";
 static const char __pyx_k__6[] = "*";
 static const char __pyx_k__8[] = ",";
-static const char __pyx_k_mu[] = "mu";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_Myr[] = "Myr";
 static const char __pyx_k_end[] = "end";
-static const char __pyx_k_k_B[] = "k_B";
 static const char __pyx_k_log[] = "log";
-static const char __pyx_k_m_H[] = "m_H";
 static const char __pyx_k_T_eq[] = "T_eq";
 static const char __pyx_k_args[] = "args";
-static const char __pyx_k_beta[] = "beta";
 static const char __pyx_k_disp[] = "disp";
 static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
@@ -1164,9 +1174,7 @@ static const char __pyx_k_sign[] = "sign";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_wrap[] = "wrap";
 static const char __pyx_k_R_rcb[] = "R_rcb";
-static const char __pyx_k_alpha[] = "alpha";
 static const char __pyx_k_dR_Rc[] = "dR_Rc";
-static const char __pyx_k_gamma[] = "gamma";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_print[] = "print";
 static const char __pyx_k_I2_csv[] = "I2.csv";
@@ -1178,11 +1186,7 @@ static const char __pyx_k_brentq[] = "brentq";
 static const char __pyx_k_fsolve[] = "fsolve";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_interp[] = "interp";
-static const char __pyx_k_M_earth[] = "M_earth";
-static const char __pyx_k_R_earth[] = "R_earth";
 static const char __pyx_k_R_guess[] = "R_guess";
-static const char __pyx_k_Rho_rcb[] = "Rho_rcb";
-static const char __pyx_k_kappa_0[] = "kappa_0";
 static const char __pyx_k_loadtxt[] = "loadtxt";
 static const char __pyx_k_I2_array[] = "I2_array";
 static const char __pyx_k_I2_value[] = "I2_value";
@@ -1190,34 +1194,25 @@ static const char __pyx_k_I2_I1_csv[] = "I2_I1.csv";
 static const char __pyx_k_M_core_kg[] = "M_core_kg";
 static const char __pyx_k_constants[] = "constants";
 static const char __pyx_k_delimiter[] = "delimiter";
-static const char __pyx_k_T_eq_earth[] = "T_eq_earth";
 static const char __pyx_k_I2_I1_array[] = "I2_I1_array";
 static const char __pyx_k_I2_I1_value[] = "I2_I1_value";
 static const char __pyx_k_c_s_squared[] = "c_s_squared";
 static const char __pyx_k_cfunc_to_py[] = "cfunc.to_py";
 static const char __pyx_k_dR_Rc_array[] = "dR_Rc_array";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_P_photosphere[] = "P_photosphere";
 static const char __pyx_k_R_core_meters[] = "R_core_meters";
-static const char __pyx_k_R_photosphere[] = "R_photosphere";
 static const char __pyx_k_I2_interpolate[] = "I2_interpolate";
-static const char __pyx_k_calculate_T_eq[] = "calculate_T_eq";
 static const char __pyx_k_scipy_optimize[] = "scipy.optimize";
-static const char __pyx_k_Rho_photosphere[] = "Rho_photosphere";
 static const char __pyx_k_dR_Rc_array_csv[] = "dR_Rc_array.csv";
 static const char __pyx_k_I2_I1_interpolate[] = "I2_I1_interpolate";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_KH_timescale_cutoff[] = "KH_timescale_cutoff";
 static const char __pyx_k_KH_timescale_seconds[] = "KH_timescale_seconds";
 static const char __pyx_k_R_photosphere_cython[] = "R_photosphere_cython";
-static const char __pyx_k_calculate_R_photosphere[] = "calculate_R_photosphere";
 static const char __pyx_k_R_photosphere_cython_pyx[] = "R_photosphere_cython.pyx";
 static const char __pyx_k_Pyx_CFunc_double____double[] = "__Pyx_CFunc_double____double____double____double____double____double____double____double___to_py.<locals>.wrap";
-static const char __pyx_k_calculate_sound_speed_squared[] = "calculate_sound_speed_squared";
 static const char __pyx_k_ERROR_WITH_BRENTQ_SOLVER_f_a_and[] = "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign";
 static PyObject *__pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and;
-static PyObject *__pyx_n_s_G;
-static PyObject *__pyx_n_s_H;
 static PyObject *__pyx_n_s_I2_I1_array;
 static PyObject *__pyx_kp_s_I2_I1_csv;
 static PyObject *__pyx_n_s_I2_I1_interpolate;
@@ -1230,36 +1225,23 @@ static PyObject *__pyx_n_s_KH_timescale_cutoff;
 static PyObject *__pyx_n_s_KH_timescale_seconds;
 static PyObject *__pyx_n_s_M_core;
 static PyObject *__pyx_n_s_M_core_kg;
-static PyObject *__pyx_n_s_M_earth;
 static PyObject *__pyx_n_s_M_star;
-static PyObject *__pyx_n_s_Myr;
 static PyObject *__pyx_n_s_PARAMS;
-static PyObject *__pyx_n_s_P_photosphere;
 static PyObject *__pyx_n_s_Pyx_CFunc_double____double;
 static PyObject *__pyx_n_s_R_core;
 static PyObject *__pyx_n_s_R_core_meters;
-static PyObject *__pyx_n_s_R_earth;
 static PyObject *__pyx_n_s_R_guess;
-static PyObject *__pyx_n_s_R_photosphere;
 static PyObject *__pyx_n_s_R_photosphere_cython;
 static PyObject *__pyx_kp_s_R_photosphere_cython_pyx;
 static PyObject *__pyx_n_s_R_rcb;
-static PyObject *__pyx_n_s_Rho_photosphere;
-static PyObject *__pyx_n_s_Rho_rcb;
 static PyObject *__pyx_n_s_T_eq;
-static PyObject *__pyx_n_s_T_eq_earth;
 static PyObject *__pyx_n_s_X;
 static PyObject *__pyx_n_s__6;
 static PyObject *__pyx_kp_s__8;
 static PyObject *__pyx_n_s_a;
-static PyObject *__pyx_n_s_alpha;
 static PyObject *__pyx_n_s_args;
-static PyObject *__pyx_n_s_beta;
 static PyObject *__pyx_n_s_brentq;
 static PyObject *__pyx_n_s_c_s_squared;
-static PyObject *__pyx_n_s_calculate_R_photosphere;
-static PyObject *__pyx_n_s_calculate_T_eq;
-static PyObject *__pyx_n_s_calculate_sound_speed_squared;
 static PyObject *__pyx_n_s_cfunc_to_py;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_constants;
@@ -1271,18 +1253,12 @@ static PyObject *__pyx_n_s_disp;
 static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_fsolve;
-static PyObject *__pyx_n_s_g;
-static PyObject *__pyx_n_s_gamma;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_interp;
-static PyObject *__pyx_n_s_k_B;
-static PyObject *__pyx_n_s_kappa_0;
 static PyObject *__pyx_n_s_loadtxt;
 static PyObject *__pyx_n_s_log;
-static PyObject *__pyx_n_s_m_H;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_math;
-static PyObject *__pyx_n_s_mu;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_print;
@@ -1294,22 +1270,16 @@ static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_wrap;
 static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_dR_Rc); /* proto */
 static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_dR_Rc); /* proto */
-static PyObject *__pyx_pf_20R_photosphere_cython_4calculate_T_eq(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_M_star, PyObject *__pyx_v_a); /* proto */
-static PyObject *__pyx_pf_20R_photosphere_cython_6calculate_sound_speed_squared(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_T_eq); /* proto */
-static PyObject *__pyx_pf_20R_photosphere_cython_8calculate_R_photosphere(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_t, PyObject *__pyx_v_M_star, PyObject *__pyx_v_a, PyObject *__pyx_v_M_core, PyObject *__pyx_v_R_core, PyObject *__pyx_v_X, PyObject *__pyx_v_KH_timescale_cutoff, PyObject *__pyx_v_R_guess); /* proto */
+static PyObject *__pyx_pf_20R_photosphere_cython_4calculate_R_photosphere(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t, double __pyx_v_M_star, double __pyx_v_a, double __pyx_v_M_core, double __pyx_v_R_core, double __pyx_v_X, double __pyx_v_KH_timescale_cutoff, double __pyx_v_R_guess); /* proto */
 static PyObject *__pyx_pf_11cfunc_dot_to_py_96__Pyx_CFunc_double____double____double____double____double____double____double____double___to_py_wrap(PyObject *__pyx_self, double __pyx_v_R_rcb, double __pyx_v_T_eq, double __pyx_v_c_s_squared, double __pyx_v_KH_timescale_seconds, double __pyx_v_M_core_kg, double __pyx_v_R_core_meters, double __pyx_v_X); /* proto */
 static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_float_0_5;
-static PyObject *__pyx_float_0_8;
+static PyObject *__pyx_float_0_0;
 static PyObject *__pyx_float_64_0;
 static PyObject *__pyx_float_0_001;
 static PyObject *__pyx_float_0_0001;
 static PyObject *__pyx_float_3_14159;
 static PyObject *__pyx_float_5_67eneg_8;
 static PyObject *__pyx_int_1;
-static PyObject *__pyx_int_2;
-static PyObject *__pyx_int_3;
-static PyObject *__pyx_int_500;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
@@ -1319,18 +1289,12 @@ static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__15;
-static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_tuple__19;
 static PyObject *__pyx_codeobj__5;
 static PyObject *__pyx_codeobj__12;
 static PyObject *__pyx_codeobj__14;
-static PyObject *__pyx_codeobj__16;
-static PyObject *__pyx_codeobj__18;
-static PyObject *__pyx_codeobj__20;
 /* Late includes */
 
-/* "R_photosphere_cython.pyx":24
+/* "R_photosphere_cython.pyx":49
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  * 
  * def I2_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
@@ -1366,21 +1330,21 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("I2_interpolate", 0);
 
-  /* "R_photosphere_cython.pyx":30
+  /* "R_photosphere_cython.pyx":55
  *     """
  * 
  *     I2_value = np.interp(dR_Rc, dR_Rc_array, I2_array)             # <<<<<<<<<<<<<<
  *     return I2_value
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_interp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_interp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dR_Rc_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dR_Rc_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -1397,7 +1361,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_dR_Rc, __pyx_t_2, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -1407,7 +1371,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_dR_Rc, __pyx_t_2, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -1415,7 +1379,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -1429,7 +1393,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_6, __pyx_t_4);
     __pyx_t_2 = 0;
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -1437,7 +1401,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   __pyx_v_I2_value = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "R_photosphere_cython.pyx":31
+  /* "R_photosphere_cython.pyx":56
  * 
  *     I2_value = np.interp(dR_Rc, dR_Rc_array, I2_array)
  *     return I2_value             # <<<<<<<<<<<<<<
@@ -1449,7 +1413,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   __pyx_r = __pyx_v_I2_value;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":24
+  /* "R_photosphere_cython.pyx":49
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  * 
  * def I2_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
@@ -1474,7 +1438,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_I2_interpolate(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":34
+/* "R_photosphere_cython.pyx":59
  * 
  * 
  * def I2_I1_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
@@ -1510,21 +1474,21 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("I2_I1_interpolate", 0);
 
-  /* "R_photosphere_cython.pyx":40
+  /* "R_photosphere_cython.pyx":65
  *     """
  * 
  *     I2_I1_value = np.interp(dR_Rc, dR_Rc_array, I2_I1_array)             # <<<<<<<<<<<<<<
  *     return I2_I1_value
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_interp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_interp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dR_Rc_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dR_Rc_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -1541,7 +1505,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_dR_Rc, __pyx_t_2, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -1551,7 +1515,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_dR_Rc, __pyx_t_2, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -1559,7 +1523,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -1573,7 +1537,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_6, __pyx_t_4);
     __pyx_t_2 = 0;
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -1581,7 +1545,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   __pyx_v_I2_I1_value = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "R_photosphere_cython.pyx":41
+  /* "R_photosphere_cython.pyx":66
  * 
  *     I2_I1_value = np.interp(dR_Rc, dR_Rc_array, I2_I1_array)
  *     return I2_I1_value             # <<<<<<<<<<<<<<
@@ -1593,7 +1557,7 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   __pyx_r = __pyx_v_I2_I1_value;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":34
+  /* "R_photosphere_cython.pyx":59
  * 
  * 
  * def I2_I1_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
@@ -1618,243 +1582,119 @@ static PyObject *__pyx_pf_20R_photosphere_cython_2I2_I1_interpolate(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":45
+/* "R_photosphere_cython.pyx":70
  * # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
  * 
- * def calculate_T_eq(M_star, a):             # <<<<<<<<<<<<<<
+ * cdef double calculate_T_eq(double M_star, double a):             # <<<<<<<<<<<<<<
  *     """
  *     Calculates the equilibrium temperature of the planet:
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_20R_photosphere_cython_5calculate_T_eq(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_20R_photosphere_cython_4calculate_T_eq[] = "\n    Calculates the equilibrium temperature of the planet:\n    M_star: Mass of host star (solar masses)\n    a = semi-major axis of orbit (AU)\n    ";
-static PyMethodDef __pyx_mdef_20R_photosphere_cython_5calculate_T_eq = {"calculate_T_eq", (PyCFunction)__pyx_pw_20R_photosphere_cython_5calculate_T_eq, METH_VARARGS|METH_KEYWORDS, __pyx_doc_20R_photosphere_cython_4calculate_T_eq};
-static PyObject *__pyx_pw_20R_photosphere_cython_5calculate_T_eq(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_M_star = 0;
-  PyObject *__pyx_v_a = 0;
-  PyObject *__pyx_r = 0;
+static double __pyx_f_20R_photosphere_cython_calculate_T_eq(double __pyx_v_M_star, double __pyx_v_a) {
+  double __pyx_v_T_eq;
+  double __pyx_r;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("calculate_T_eq (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_M_star,&__pyx_n_s_a,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_M_star)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_a)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("calculate_T_eq", 1, 2, 2, 1); __PYX_ERR(0, 45, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculate_T_eq") < 0)) __PYX_ERR(0, 45, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_M_star = values[0];
-    __pyx_v_a = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calculate_T_eq", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 45, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("R_photosphere_cython.calculate_T_eq", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_20R_photosphere_cython_4calculate_T_eq(__pyx_self, __pyx_v_M_star, __pyx_v_a);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_20R_photosphere_cython_4calculate_T_eq(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_M_star, PyObject *__pyx_v_a) {
-  PyObject *__pyx_v_T_eq = NULL;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("calculate_T_eq", 0);
 
-  /* "R_photosphere_cython.pyx":52
+  /* "R_photosphere_cython.pyx":77
  *     """
  * 
- *     T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8             # <<<<<<<<<<<<<<
+ *     cdef double T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8             # <<<<<<<<<<<<<<
  *     return T_eq
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_T_eq_earth); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_a); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Power(__pyx_t_2, __pyx_float_0_5, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Power(__pyx_v_M_star, __pyx_float_0_8, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_T_eq = __pyx_t_1;
-  __pyx_t_1 = 0;
+  if (unlikely(__pyx_v_a == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 77, __pyx_L1_error)
+  }
+  __pyx_v_T_eq = ((__pyx_v_20R_photosphere_cython_T_eq_earth * pow((1.0 / __pyx_v_a), 0.5)) * pow(__pyx_v_M_star, 0.8));
 
-  /* "R_photosphere_cython.pyx":53
+  /* "R_photosphere_cython.pyx":78
  * 
- *     T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8
+ *     cdef double T_eq = T_eq_earth * (1/a)**0.5 * (M_star)**0.8
  *     return T_eq             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_T_eq);
   __pyx_r = __pyx_v_T_eq;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":45
+  /* "R_photosphere_cython.pyx":70
  * # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
  * 
- * def calculate_T_eq(M_star, a):             # <<<<<<<<<<<<<<
+ * cdef double calculate_T_eq(double M_star, double a):             # <<<<<<<<<<<<<<
  *     """
  *     Calculates the equilibrium temperature of the planet:
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("R_photosphere_cython.calculate_T_eq", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __Pyx_WriteUnraisable("R_photosphere_cython.calculate_T_eq", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_T_eq);
-  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":56
+/* "R_photosphere_cython.pyx":81
  * 
  * 
- * def calculate_sound_speed_squared(T_eq):             # <<<<<<<<<<<<<<
+ * cdef double calculate_sound_speed_squared(double T_eq):             # <<<<<<<<<<<<<<
  *     """
  *     Calculates the isothermal sound speed of atmosphere:
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_20R_photosphere_cython_7calculate_sound_speed_squared(PyObject *__pyx_self, PyObject *__pyx_v_T_eq); /*proto*/
-static char __pyx_doc_20R_photosphere_cython_6calculate_sound_speed_squared[] = "\n    Calculates the isothermal sound speed of atmosphere:\n    T_eq = Equilibrium temperature of planet (K)\n    ";
-static PyMethodDef __pyx_mdef_20R_photosphere_cython_7calculate_sound_speed_squared = {"calculate_sound_speed_squared", (PyCFunction)__pyx_pw_20R_photosphere_cython_7calculate_sound_speed_squared, METH_O, __pyx_doc_20R_photosphere_cython_6calculate_sound_speed_squared};
-static PyObject *__pyx_pw_20R_photosphere_cython_7calculate_sound_speed_squared(PyObject *__pyx_self, PyObject *__pyx_v_T_eq) {
-  PyObject *__pyx_r = 0;
+static double __pyx_f_20R_photosphere_cython_calculate_sound_speed_squared(double __pyx_v_T_eq) {
+  double __pyx_v_c_s_squared;
+  double __pyx_r;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("calculate_sound_speed_squared (wrapper)", 0);
-  __pyx_r = __pyx_pf_20R_photosphere_cython_6calculate_sound_speed_squared(__pyx_self, ((PyObject *)__pyx_v_T_eq));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_20R_photosphere_cython_6calculate_sound_speed_squared(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_T_eq) {
-  PyObject *__pyx_v_c_s_squared = NULL;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
+  double __pyx_t_1;
+  double __pyx_t_2;
   __Pyx_RefNannySetupContext("calculate_sound_speed_squared", 0);
 
-  /* "R_photosphere_cython.pyx":62
+  /* "R_photosphere_cython.pyx":87
  *     """
  * 
- *     c_s_squared = (k_B * T_eq) / (mu * m_H)             # <<<<<<<<<<<<<<
+ *     cdef double c_s_squared = (k_B * T_eq) / (mu * m_H)             # <<<<<<<<<<<<<<
  *     return c_s_squared
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_k_B); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_T_eq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_mu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_m_H); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_c_s_squared = __pyx_t_3;
-  __pyx_t_3 = 0;
+  __pyx_t_1 = (__pyx_v_20R_photosphere_cython_k_B * __pyx_v_T_eq);
+  __pyx_t_2 = (__pyx_v_20R_photosphere_cython_mu * __pyx_v_20R_photosphere_cython_m_H);
+  if (unlikely(__pyx_t_2 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 87, __pyx_L1_error)
+  }
+  __pyx_v_c_s_squared = (__pyx_t_1 / __pyx_t_2);
 
-  /* "R_photosphere_cython.pyx":63
+  /* "R_photosphere_cython.pyx":88
  * 
- *     c_s_squared = (k_B * T_eq) / (mu * m_H)
+ *     cdef double c_s_squared = (k_B * T_eq) / (mu * m_H)
  *     return c_s_squared             # <<<<<<<<<<<<<<
  * 
  * # ///////////////////// ANALYTIC MODEL EQUATIONS FOR R_rcb /////////////////// #
  */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_c_s_squared);
   __pyx_r = __pyx_v_c_s_squared;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":56
+  /* "R_photosphere_cython.pyx":81
  * 
  * 
- * def calculate_sound_speed_squared(T_eq):             # <<<<<<<<<<<<<<
+ * cdef double calculate_sound_speed_squared(double T_eq):             # <<<<<<<<<<<<<<
  *     """
  *     Calculates the isothermal sound speed of atmosphere:
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("R_photosphere_cython.calculate_sound_speed_squared", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __Pyx_WriteUnraisable("R_photosphere_cython.calculate_sound_speed_squared", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_c_s_squared);
-  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":68
+/* "R_photosphere_cython.pyx":93
  * 
  * 
  * cdef double R_rcb_equation(double R_rcb, double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X):             # <<<<<<<<<<<<<<
@@ -1872,60 +1712,71 @@ static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double __pyx_v_R_rcb
   __Pyx_RefNannyDeclarations
   double __pyx_t_1;
   double __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
+  double __pyx_t_3;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
   PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
   __Pyx_RefNannySetupContext("R_rcb_equation", 0);
 
-  /* "R_photosphere_cython.pyx":72
+  /* "R_photosphere_cython.pyx":97
  * 
  *     # collecting physical constants and terms which aren't a function of R_rcb
- *     cdef double c1 = (4.0 * 3.14159 * 2.35 * 1.67e-27 / (M_core_kg * 1.381e-23))             # <<<<<<<<<<<<<<
- *     cdef double c2 = ((0.4 * 6.674e-11 * M_core_kg / c_s_squared)**(1/((5/3)-1)))
- *     cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+ *     cdef double c1 = (4 * pi * mu * m_H / (M_core_kg * k_B))             # <<<<<<<<<<<<<<
+ *     cdef double c2 = ((Delta_ab * G * M_core_kg / c_s_squared)**(1/(gamma-1)))
+ *     cdef double c3 = ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
  */
-  __pyx_t_1 = (((4.0 * 3.14159) * 2.35) * 1.67e-27);
-  __pyx_t_2 = (__pyx_v_M_core_kg * 1.381e-23);
+  __pyx_t_1 = (((4.0 * __pyx_v_20R_photosphere_cython_pi) * __pyx_v_20R_photosphere_cython_mu) * __pyx_v_20R_photosphere_cython_m_H);
+  __pyx_t_2 = (__pyx_v_M_core_kg * __pyx_v_20R_photosphere_cython_k_B);
   if (unlikely(__pyx_t_2 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 72, __pyx_L1_error)
+    __PYX_ERR(0, 97, __pyx_L1_error)
   }
   __pyx_v_c1 = (__pyx_t_1 / __pyx_t_2);
 
-  /* "R_photosphere_cython.pyx":73
+  /* "R_photosphere_cython.pyx":98
  *     # collecting physical constants and terms which aren't a function of R_rcb
- *     cdef double c1 = (4.0 * 3.14159 * 2.35 * 1.67e-27 / (M_core_kg * 1.381e-23))
- *     cdef double c2 = ((0.4 * 6.674e-11 * M_core_kg / c_s_squared)**(1/((5/3)-1)))             # <<<<<<<<<<<<<<
- *     cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+ *     cdef double c1 = (4 * pi * mu * m_H / (M_core_kg * k_B))
+ *     cdef double c2 = ((Delta_ab * G * M_core_kg / c_s_squared)**(1/(gamma-1)))             # <<<<<<<<<<<<<<
+ *     cdef double c3 = ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
  * 
  */
-  __pyx_t_2 = ((0.4 * 6.674e-11) * __pyx_v_M_core_kg);
+  __pyx_t_2 = ((__pyx_v_20R_photosphere_cython_Delta_ab * __pyx_v_20R_photosphere_cython_G) * __pyx_v_M_core_kg);
   if (unlikely(__pyx_v_c_s_squared == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 73, __pyx_L1_error)
+    __PYX_ERR(0, 98, __pyx_L1_error)
   }
-  __pyx_v_c2 = pow((__pyx_t_2 / __pyx_v_c_s_squared), (1.0 / ((5.0 / 3.0) - 1.0)));
+  __pyx_t_1 = (__pyx_v_20R_photosphere_cython_gamma - 1.0);
+  if (unlikely(__pyx_t_1 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 98, __pyx_L1_error)
+  }
+  __pyx_v_c2 = pow((__pyx_t_2 / __pyx_v_c_s_squared), (1.0 / __pyx_t_1));
 
-  /* "R_photosphere_cython.pyx":74
- *     cdef double c1 = (4.0 * 3.14159 * 2.35 * 1.67e-27 / (M_core_kg * 1.381e-23))
- *     cdef double c2 = ((0.4 * 6.674e-11 * M_core_kg / c_s_squared)**(1/((5/3)-1)))
- *     cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))             # <<<<<<<<<<<<<<
+  /* "R_photosphere_cython.pyx":99
+ *     cdef double c1 = (4 * pi * mu * m_H / (M_core_kg * k_B))
+ *     cdef double c2 = ((Delta_ab * G * M_core_kg / c_s_squared)**(1/(gamma-1)))
+ *     cdef double c3 = ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))             # <<<<<<<<<<<<<<
  * 
  *     cdef double c = c1 * c2 * c3
  */
-  __pyx_t_2 = ((((64.0 * 3.14159) * 5.67e-8) * pow(__pyx_v_T_eq, ((3.0 - 0.68) - 0.45))) * __pyx_v_KH_timescale_seconds);
-  __pyx_t_1 = (((3.0 * 2.294e-8) * __pyx_v_M_core_kg) * __pyx_v_X);
-  if (unlikely(__pyx_t_1 == 0)) {
+  __pyx_t_1 = ((((64.0 * __pyx_v_20R_photosphere_cython_pi) * __pyx_v_20R_photosphere_cython_stefan) * pow(__pyx_v_T_eq, ((3.0 - __pyx_v_20R_photosphere_cython_alpha) - __pyx_v_20R_photosphere_cython_beta))) * __pyx_v_KH_timescale_seconds);
+  __pyx_t_2 = (((3.0 * __pyx_v_20R_photosphere_cython_kappa_0) * __pyx_v_M_core_kg) * __pyx_v_X);
+  if (unlikely(__pyx_t_2 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 74, __pyx_L1_error)
+    __PYX_ERR(0, 99, __pyx_L1_error)
   }
-  __pyx_v_c3 = pow((__pyx_t_2 / __pyx_t_1), (1.0 / (0.68 + 1.0)));
+  __pyx_t_3 = (__pyx_v_20R_photosphere_cython_alpha + 1.0);
+  if (unlikely(__pyx_t_3 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 99, __pyx_L1_error)
+  }
+  __pyx_v_c3 = pow((__pyx_t_1 / __pyx_t_2), (1.0 / __pyx_t_3));
 
-  /* "R_photosphere_cython.pyx":76
- *     cdef double c3 = ((64 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+  /* "R_photosphere_cython.pyx":101
+ *     cdef double c3 = ((64 * pi * stefan * (T_eq**(3-alpha-beta)) * KH_timescale_seconds / (3 * kappa_0 * M_core_kg * X))**(1/(alpha+1)))
  * 
  *     cdef double c = c1 * c2 * c3             # <<<<<<<<<<<<<<
  * 
@@ -1933,182 +1784,174 @@ static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double __pyx_v_R_rcb
  */
   __pyx_v_c = ((__pyx_v_c1 * __pyx_v_c2) * __pyx_v_c3);
 
-  /* "R_photosphere_cython.pyx":79
+  /* "R_photosphere_cython.pyx":104
  * 
  *     # full equation
  *     cdef double equation = c * (R_rcb**3) * I2_interpolate((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X             # <<<<<<<<<<<<<<
  * 
  *     return equation
  */
-  __pyx_t_3 = PyFloat_FromDouble((__pyx_v_c * pow(__pyx_v_R_rcb, 3.0))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_interpolate); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_c * pow(__pyx_v_R_rcb, 3.0))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_interpolate); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   if (unlikely(__pyx_v_R_core_meters == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 79, __pyx_L1_error)
+    __PYX_ERR(0, 104, __pyx_L1_error)
   }
-  __pyx_t_6 = PyFloat_FromDouble(((__pyx_v_R_rcb / __pyx_v_R_core_meters) - 1.0)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(((__pyx_v_R_rcb / __pyx_v_R_core_meters) - 1.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_8 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+    __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_6);
+    if (likely(__pyx_t_8)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      __Pyx_INCREF(__pyx_t_8);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_6, function);
+    }
+  }
+  if (!__pyx_t_8) {
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_GOTREF(__pyx_t_5);
+  } else {
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(__pyx_t_6)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_7};
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    } else
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_7};
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    } else
+    #endif
+    {
+      __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 104, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8); __pyx_t_8 = NULL;
+      __Pyx_GIVEREF(__pyx_t_7);
+      PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_t_7);
+      __pyx_t_7 = 0;
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_9, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = PyNumber_Multiply(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(__pyx_v_R_rcb == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 104, __pyx_L1_error)
+  }
+  __pyx_t_3 = (__pyx_v_20R_photosphere_cython_gamma - 1.0);
+  if (unlikely(__pyx_t_3 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 104, __pyx_L1_error)
+  }
+  __pyx_t_5 = PyFloat_FromDouble(pow((1.0 / __pyx_v_R_rcb), (1.0 / __pyx_t_3))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyNumber_Multiply(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_interpolate); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (unlikely(__pyx_v_R_core_meters == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 104, __pyx_L1_error)
+  }
+  __pyx_t_9 = PyFloat_FromDouble(((__pyx_v_R_rcb / __pyx_v_R_core_meters) - 1.0)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_7 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_5);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_6);
     if (likely(__pyx_t_7)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
       __Pyx_INCREF(__pyx_t_7);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
+      __Pyx_DECREF_SET(__pyx_t_6, function);
     }
   }
   if (!__pyx_t_7) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_GOTREF(__pyx_t_5);
   } else {
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_6};
-      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+    if (PyFunction_Check(__pyx_t_6)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_9};
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_6};
-      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_9};
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
-      __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_6);
-      __pyx_t_6 = 0;
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_9);
+      PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_9);
+      __pyx_t_9 = 0;
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
   }
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_R_rcb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyNumber_Multiply(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(__pyx_v_R_rcb == 0)) {
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_3 = (__pyx_v_20R_photosphere_cython_alpha + 1.0);
+  if (unlikely(__pyx_t_3 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 79, __pyx_L1_error)
+    __PYX_ERR(0, 104, __pyx_L1_error)
   }
-  __pyx_t_4 = PyFloat_FromDouble((1.0 / __pyx_v_R_rcb)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_gamma); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyInt_SubtractObjC(__pyx_t_3, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_6 = PyFloat_FromDouble((1.0 / __pyx_t_3)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_5 = PyNumber_Power(__pyx_t_8, __pyx_t_6, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyNumber_Power(__pyx_t_4, __pyx_t_3, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = PyNumber_Multiply(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_interpolate); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (unlikely(__pyx_v_R_core_meters == 0)) {
-    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 79, __pyx_L1_error)
-  }
-  __pyx_t_4 = PyFloat_FromDouble(((__pyx_v_R_rcb / __pyx_v_R_core_meters) - 1.0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Subtract(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_6)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_6);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
-    }
-  }
-  if (!__pyx_t_6) {
-    __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_GOTREF(__pyx_t_8);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_4};
-      __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_4};
-      __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
-      __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_4);
-      __pyx_t_4 = 0;
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    }
-  }
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_R_rcb); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_alpha); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = __Pyx_PyInt_AddObjC(__pyx_t_5, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyNumber_Power(__pyx_t_7, __pyx_t_5, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_3 = PyNumber_Subtract(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_equation = __pyx_t_1;
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_v_equation = __pyx_t_3;
 
-  /* "R_photosphere_cython.pyx":81
+  /* "R_photosphere_cython.pyx":106
  *     cdef double equation = c * (R_rcb**3) * I2_interpolate((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X
  * 
  *     return equation             # <<<<<<<<<<<<<<
@@ -2118,7 +1961,7 @@ static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double __pyx_v_R_rcb
   __pyx_r = __pyx_v_equation;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":68
+  /* "R_photosphere_cython.pyx":93
  * 
  * 
  * cdef double R_rcb_equation(double R_rcb, double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X):             # <<<<<<<<<<<<<<
@@ -2128,12 +1971,12 @@ static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double __pyx_v_R_rcb
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_WriteUnraisable("R_photosphere_cython.R_rcb_equation", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
@@ -2141,7 +1984,7 @@ static double __pyx_f_20R_photosphere_cython_R_rcb_equation(double __pyx_v_R_rcb
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":87
+/* "R_photosphere_cython.pyx":112
  * # /////////////////////////////// SOLVE FOR R_rcb //////////////////////////// #
  * 
  * cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X, double R_guess):             # <<<<<<<<<<<<<<
@@ -2164,15 +2007,15 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
-  double __pyx_t_7;
+  PyObject *__pyx_t_7 = NULL;
   PyObject *__pyx_t_8 = NULL;
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
+  double __pyx_t_12;
   __Pyx_RefNannySetupContext("solve_Rho_rcb_and_R_rcb", 0);
 
-  /* "R_photosphere_cython.pyx":102
+  /* "R_photosphere_cython.pyx":127
  * 
  * 
  *     if R_guess == 0.0:             # <<<<<<<<<<<<<<
@@ -2182,19 +2025,19 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
   __pyx_t_1 = ((__pyx_v_R_guess == 0.0) != 0);
   if (__pyx_t_1) {
 
-    /* "R_photosphere_cython.pyx":103
+    /* "R_photosphere_cython.pyx":128
  * 
  *     if R_guess == 0.0:
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))             # <<<<<<<<<<<<<<
  *         sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sign); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 103, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sign); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(0.0001, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(0.0001, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -2207,14 +2050,14 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2223,20 +2066,20 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 103, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 128, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -2245,68 +2088,61 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
     __pyx_v_sign_test1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "R_photosphere_cython.pyx":104
+    /* "R_photosphere_cython.pyx":129
  *     if R_guess == 0.0:
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))             # <<<<<<<<<<<<<<
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  */
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sign); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sign); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_earth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation((500.0 * __pyx_v_20R_photosphere_cython_R_earth), __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_int_500, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 104, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(__pyx_t_7, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = NULL;
+    __pyx_t_3 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_6);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_6);
+      if (likely(__pyx_t_3)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_6, function);
       }
     }
-    if (!__pyx_t_4) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (!__pyx_t_3) {
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_6)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
-        __Pyx_GIVEREF(__pyx_t_3);
-        PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_3);
-        __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
+        __Pyx_GIVEREF(__pyx_t_4);
+        PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_4);
+        __pyx_t_4 = 0;
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -2315,82 +2151,82 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
     __pyx_v_sign_test2 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "R_photosphere_cython.pyx":105
+    /* "R_photosphere_cython.pyx":130
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:             # <<<<<<<<<<<<<<
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"
  */
-    __pyx_t_2 = PyObject_RichCompare(__pyx_v_sign_test1, __pyx_v_sign_test2, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 105, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_v_sign_test1, __pyx_v_sign_test2, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 130, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_1) {
 
-      /* "R_photosphere_cython.pyx":106
+      /* "R_photosphere_cython.pyx":131
  *         sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"             # <<<<<<<<<<<<<<
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
  */
-      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
 
-      /* "R_photosphere_cython.pyx":107
+      /* "R_photosphere_cython.pyx":132
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"             # <<<<<<<<<<<<<<
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None
+ *             return 0.0, 0.0
  */
-      if (__Pyx_PrintOne(0, __pyx_n_s_PARAMS) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_n_s_PARAMS) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
 
-      /* "R_photosphere_cython.pyx":108
+      /* "R_photosphere_cython.pyx":133
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X             # <<<<<<<<<<<<<<
- *             return None, None
+ *             return 0.0, 0.0
  *         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  */
-      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 133, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_6 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 133, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 133, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 133, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 133, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_8 = PyTuple_New(6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 133, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_9 = PyTuple_New(6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 108, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_GIVEREF(__pyx_t_2);
-      PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2);
+      PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2);
       __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_6);
+      PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_5);
-      PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_5);
-      __Pyx_GIVEREF(__pyx_t_3);
-      PyTuple_SET_ITEM(__pyx_t_9, 3, __pyx_t_3);
+      PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_5);
       __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_9, 4, __pyx_t_4);
-      __Pyx_GIVEREF(__pyx_t_8);
-      PyTuple_SET_ITEM(__pyx_t_9, 5, __pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_8, 3, __pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_3);
+      PyTuple_SET_ITEM(__pyx_t_8, 4, __pyx_t_3);
+      __Pyx_GIVEREF(__pyx_t_7);
+      PyTuple_SET_ITEM(__pyx_t_8, 5, __pyx_t_7);
       __pyx_t_2 = 0;
       __pyx_t_6 = 0;
       __pyx_t_5 = 0;
-      __pyx_t_3 = 0;
       __pyx_t_4 = 0;
-      __pyx_t_8 = 0;
-      if (__Pyx_Print(0, __pyx_t_9, 1) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_3 = 0;
+      __pyx_t_7 = 0;
+      if (__Pyx_Print(0, __pyx_t_8, 1) < 0) __PYX_ERR(0, 133, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "R_photosphere_cython.pyx":109
+      /* "R_photosphere_cython.pyx":134
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0             # <<<<<<<<<<<<<<
  *         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  *     else:
  */
@@ -2399,7 +2235,7 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
       __pyx_r = __pyx_tuple_;
       goto __pyx_L0;
 
-      /* "R_photosphere_cython.pyx":105
+      /* "R_photosphere_cython.pyx":130
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:             # <<<<<<<<<<<<<<
@@ -2408,79 +2244,76 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  */
     }
 
-    /* "R_photosphere_cython.pyx":110
+    /* "R_photosphere_cython.pyx":135
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None
+ *             return 0.0, 0.0
  *         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)             # <<<<<<<<<<<<<<
  *     else:
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  */
-    __pyx_t_9 = __Pyx_GetModuleGlobalName(__pyx_n_s_brentq); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_8 = __Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(__pyx_f_20R_photosphere_cython_R_rcb_equation); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_brentq); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_earth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_int_500, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(__pyx_f_20R_photosphere_cython_R_rcb_equation); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_3 = PyFloat_FromDouble((500.0 * __pyx_v_20R_photosphere_cython_R_earth)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_7);
     __Pyx_INCREF(__pyx_float_0_001);
     __Pyx_GIVEREF(__pyx_float_0_001);
     PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_float_0_001);
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_3);
-    __pyx_t_8 = 0;
+    __pyx_t_7 = 0;
     __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_9 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(6); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_12 = PyTuple_New(6); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_7);
     __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_12, 1, __pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_6);
-    PyTuple_SET_ITEM(__pyx_t_12, 2, __pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_11, 2, __pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_12, 3, __pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_11, 3, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_11, 4, __pyx_t_9);
     __Pyx_GIVEREF(__pyx_t_10);
-    PyTuple_SET_ITEM(__pyx_t_12, 4, __pyx_t_10);
-    __Pyx_GIVEREF(__pyx_t_11);
-    PyTuple_SET_ITEM(__pyx_t_12, 5, __pyx_t_11);
-    __pyx_t_8 = 0;
+    PyTuple_SET_ITEM(__pyx_t_11, 5, __pyx_t_10);
+    __pyx_t_7 = 0;
     __pyx_t_5 = 0;
     __pyx_t_6 = 0;
     __pyx_t_2 = 0;
+    __pyx_t_9 = 0;
     __pyx_t_10 = 0;
-    __pyx_t_11 = 0;
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_t_12) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_disp, Py_False) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-    __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 110, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_t_11) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_disp, Py_False) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_R_rcb = __pyx_t_12;
-    __pyx_t_12 = 0;
+    __pyx_v_R_rcb = __pyx_t_11;
+    __pyx_t_11 = 0;
 
-    /* "R_photosphere_cython.pyx":102
+    /* "R_photosphere_cython.pyx":127
  * 
  * 
  *     if R_guess == 0.0:             # <<<<<<<<<<<<<<
@@ -2490,7 +2323,7 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
     goto __pyx_L3;
   }
 
-  /* "R_photosphere_cython.pyx":112
+  /* "R_photosphere_cython.pyx":137
  *         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  *     else:
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))             # <<<<<<<<<<<<<<
@@ -2498,211 +2331,201 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  *         if sign_test1 == sign_test2:
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sign); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sign); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(0.0001, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(0.0001, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_9 = NULL;
+    __pyx_t_8 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_4);
-      if (likely(__pyx_t_9)) {
+      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_8)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-        __Pyx_INCREF(__pyx_t_9);
+        __Pyx_INCREF(__pyx_t_8);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_4, function);
       }
     }
-    if (!__pyx_t_9) {
-      __pyx_t_12 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 112, __pyx_L1_error)
+    if (!__pyx_t_8) {
+      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 137, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_GOTREF(__pyx_t_11);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_3};
-        __pyx_t_12 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 112, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_GOTREF(__pyx_t_12);
+        PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_3};
+        __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else
       #endif
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_3};
-        __pyx_t_12 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 112, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_GOTREF(__pyx_t_12);
+        PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_3};
+        __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else
       #endif
       {
-        __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 112, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_9); __pyx_t_9 = NULL;
+        __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
-        PyTuple_SET_ITEM(__pyx_t_11, 0+1, __pyx_t_3);
+        PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_11, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 112, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_10, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       }
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_v_sign_test1 = __pyx_t_12;
-    __pyx_t_12 = 0;
+    __pyx_v_sign_test1 = __pyx_t_11;
+    __pyx_t_11 = 0;
 
-    /* "R_photosphere_cython.pyx":113
+    /* "R_photosphere_cython.pyx":138
  *     else:
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))             # <<<<<<<<<<<<<<
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  */
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sign); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 113, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_11);
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sign); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_earth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation((__pyx_v_20R_photosphere_cython_R_earth * (1.0 + __pyx_v_R_guess)), __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyFloat_FromDouble((1.0 + __pyx_v_R_guess)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_9 = PyNumber_Multiply(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 113, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = PyFloat_FromDouble(__pyx_f_20R_photosphere_cython_R_rcb_equation(__pyx_t_7, __pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 113, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
     __pyx_t_3 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_11))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_11);
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_10))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_10);
       if (likely(__pyx_t_3)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_11);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_10);
         __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_11, function);
+        __Pyx_DECREF_SET(__pyx_t_10, function);
       }
     }
     if (!__pyx_t_3) {
-      __pyx_t_12 = __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_9); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 113, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_GOTREF(__pyx_t_12);
+      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 138, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GOTREF(__pyx_t_11);
     } else {
       #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_11)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_9};
-        __pyx_t_12 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 113, __pyx_L1_error)
+      if (PyFunction_Check(__pyx_t_10)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
+        __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 138, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_9};
-        __pyx_t_12 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 113, __pyx_L1_error)
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
+        __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 138, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
-        __Pyx_GIVEREF(__pyx_t_9);
-        PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_9);
-        __pyx_t_9 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_4, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 113, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 138, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_3); __pyx_t_3 = NULL;
+        __Pyx_GIVEREF(__pyx_t_4);
+        PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_4);
+        __pyx_t_4 = 0;
+        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_8, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 138, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
     }
-    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_v_sign_test2 = __pyx_t_12;
-    __pyx_t_12 = 0;
+    __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+    __pyx_v_sign_test2 = __pyx_t_11;
+    __pyx_t_11 = 0;
 
-    /* "R_photosphere_cython.pyx":114
+    /* "R_photosphere_cython.pyx":139
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:             # <<<<<<<<<<<<<<
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"
  */
-    __pyx_t_12 = PyObject_RichCompare(__pyx_v_sign_test1, __pyx_v_sign_test2, Py_EQ); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 114, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 114, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __pyx_t_11 = PyObject_RichCompare(__pyx_v_sign_test1, __pyx_v_sign_test2, Py_EQ); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 139, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 139, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     if (__pyx_t_1) {
 
-      /* "R_photosphere_cython.pyx":115
+      /* "R_photosphere_cython.pyx":140
  *         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"             # <<<<<<<<<<<<<<
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
  */
-      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and) < 0) __PYX_ERR(0, 140, __pyx_L1_error)
 
-      /* "R_photosphere_cython.pyx":116
+      /* "R_photosphere_cython.pyx":141
  *         if sign_test1 == sign_test2:
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"             # <<<<<<<<<<<<<<
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None
+ *             return 0.0, 0.0
  */
-      if (__Pyx_PrintOne(0, __pyx_n_s_PARAMS) < 0) __PYX_ERR(0, 116, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_n_s_PARAMS) < 0) __PYX_ERR(0, 141, __pyx_L1_error)
 
-      /* "R_photosphere_cython.pyx":117
+      /* "R_photosphere_cython.pyx":142
  *             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X             # <<<<<<<<<<<<<<
- *             return None, None
+ *             return 0.0, 0.0
  *         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  */
-      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 117, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 142, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_9 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 117, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 142, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 142, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 142, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_9 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 142, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_GIVEREF(__pyx_t_12);
-      PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_12);
       __Pyx_GIVEREF(__pyx_t_11);
-      PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_11);
+      PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_11);
+      __Pyx_GIVEREF(__pyx_t_10);
+      PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_10);
+      __Pyx_GIVEREF(__pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_t_4);
-      __Pyx_GIVEREF(__pyx_t_9);
-      PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_t_9);
+      PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_t_3);
-      __Pyx_GIVEREF(__pyx_t_10);
-      PyTuple_SET_ITEM(__pyx_t_2, 5, __pyx_t_10);
-      __pyx_t_12 = 0;
+      __Pyx_GIVEREF(__pyx_t_9);
+      PyTuple_SET_ITEM(__pyx_t_2, 5, __pyx_t_9);
       __pyx_t_11 = 0;
-      __pyx_t_4 = 0;
-      __pyx_t_9 = 0;
-      __pyx_t_3 = 0;
       __pyx_t_10 = 0;
-      if (__Pyx_Print(0, __pyx_t_2, 1) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_8 = 0;
+      __pyx_t_4 = 0;
+      __pyx_t_3 = 0;
+      __pyx_t_9 = 0;
+      if (__Pyx_Print(0, __pyx_t_2, 1) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "R_photosphere_cython.pyx":118
+      /* "R_photosphere_cython.pyx":143
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0             # <<<<<<<<<<<<<<
  *         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  * 
  */
@@ -2711,7 +2534,7 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
       __pyx_r = __pyx_tuple__2;
       goto __pyx_L0;
 
-      /* "R_photosphere_cython.pyx":114
+      /* "R_photosphere_cython.pyx":139
  *         sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
  *         if sign_test1 == sign_test2:             # <<<<<<<<<<<<<<
@@ -2720,84 +2543,78 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  */
     }
 
-    /* "R_photosphere_cython.pyx":119
+    /* "R_photosphere_cython.pyx":144
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None
+ *             return 0.0, 0.0
  *         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_brentq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_brentq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = __Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(__pyx_f_20R_photosphere_cython_R_rcb_equation); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_earth); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_CFunc_double____double____double____double____double____double____double____double___to_py(__pyx_f_20R_photosphere_cython_R_rcb_equation); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_3 = PyFloat_FromDouble((__pyx_v_20R_photosphere_cython_R_earth * (1.0 + __pyx_v_R_guess))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 144, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_9 = PyFloat_FromDouble((1.0 + __pyx_v_R_guess)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_4 = PyNumber_Multiply(__pyx_t_3, __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = PyTuple_New(3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_GIVEREF(__pyx_t_10);
-    PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_9);
     __Pyx_INCREF(__pyx_float_0_0001);
     __Pyx_GIVEREF(__pyx_float_0_0001);
-    PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_float_0_0001);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_4);
-    __pyx_t_10 = 0;
-    __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_8 = PyTuple_New(6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_GIVEREF(__pyx_t_10);
-    PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_10);
+    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_float_0_0001);
     __Pyx_GIVEREF(__pyx_t_3);
-    PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_11);
-    PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_11);
-    __Pyx_GIVEREF(__pyx_t_12);
-    PyTuple_SET_ITEM(__pyx_t_8, 3, __pyx_t_12);
-    __Pyx_GIVEREF(__pyx_t_6);
-    PyTuple_SET_ITEM(__pyx_t_8, 4, __pyx_t_6);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_8, 5, __pyx_t_5);
-    __pyx_t_10 = 0;
+    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_3);
+    __pyx_t_9 = 0;
     __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_9 = PyFloat_FromDouble(__pyx_v_T_eq); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_c_s_squared); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_M_core_kg); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_7 = PyTuple_New(6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_9);
+    __Pyx_GIVEREF(__pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_10);
+    PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_10);
+    __Pyx_GIVEREF(__pyx_t_11);
+    PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_11);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_7, 4, __pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_7, 5, __pyx_t_5);
+    __pyx_t_9 = 0;
+    __pyx_t_8 = 0;
+    __pyx_t_10 = 0;
     __pyx_t_11 = 0;
-    __pyx_t_12 = 0;
     __pyx_t_6 = 0;
     __pyx_t_5 = 0;
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_args, __pyx_t_8) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_disp, Py_False) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_t_7) < 0) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_disp, Py_False) < 0) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_v_R_rcb = __pyx_t_8;
-    __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_v_R_rcb = __pyx_t_7;
+    __pyx_t_7 = 0;
   }
   __pyx_L3:;
 
-  /* "R_photosphere_cython.pyx":122
+  /* "R_photosphere_cython.pyx":147
  * 
  * 
  *     cdef double Rho_rcb_1 = (2.35 * 1.67e-27 / 1.381e-23)             # <<<<<<<<<<<<<<
@@ -2806,110 +2623,110 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  */
   __pyx_v_Rho_rcb_1 = ((2.35 * 1.67e-27) / 1.381e-23);
 
-  /* "R_photosphere_cython.pyx":123
+  /* "R_photosphere_cython.pyx":148
  * 
  *     cdef double Rho_rcb_1 = (2.35 * 1.67e-27 / 1.381e-23)
  *     cdef double Rho_rcb_2 = ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * 64.0 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds * R_rcb / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))             # <<<<<<<<<<<<<<
  *     cdef double Rho_rcb = Rho_rcb_1 * Rho_rcb_2
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_interpolate); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_I2_I1_interpolate); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_9 = PyFloat_FromDouble(__pyx_v_R_core_meters); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_v_R_rcb, __pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_v_R_rcb, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyInt_SubtractObjC(__pyx_t_2, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyInt_SubtractObjC(__pyx_t_2, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
     if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_4, function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
     }
   }
   if (!__pyx_t_2) {
-    __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GOTREF(__pyx_t_7);
   } else {
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_4)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_9};
-      __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+    if (PyFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_4};
+      __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_9};
-      __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_4};
+      __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
+      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 148, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
-      __Pyx_GIVEREF(__pyx_t_9);
-      PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_9);
-      __pyx_t_9 = 0;
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_GIVEREF(__pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_4);
+      __pyx_t_4 = 0;
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
   }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_8, __pyx_float_64_0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyNumber_Multiply(__pyx_t_4, __pyx_float_3_14159); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_8, __pyx_float_5_67eneg_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyFloat_FromDouble(pow(__pyx_v_T_eq, ((3.0 - 0.68) - 0.45))); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_7, __pyx_float_64_0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_float_3_14159); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_7, __pyx_float_5_67eneg_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyFloat_FromDouble(pow(__pyx_v_T_eq, ((3.0 - 0.68) - 0.45))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_KH_timescale_seconds); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyNumber_Multiply(__pyx_t_4, __pyx_v_R_rcb); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyFloat_FromDouble((((3.0 * 2.294e-8) * __pyx_v_M_core_kg) * __pyx_v_X)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_8, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_v_R_rcb); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyFloat_FromDouble((((3.0 * 2.294e-8) * __pyx_v_M_core_kg) * __pyx_v_X)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyFloat_FromDouble((1.0 / (0.68 + 1.0))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_8 = PyNumber_Power(__pyx_t_5, __pyx_t_4, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyFloat_FromDouble((1.0 / (0.68 + 1.0))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_7 = PyNumber_Power(__pyx_t_5, __pyx_t_3, Py_None); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_v_Rho_rcb_2 = __pyx_t_7;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_12 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_12 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_v_Rho_rcb_2 = __pyx_t_12;
 
-  /* "R_photosphere_cython.pyx":124
+  /* "R_photosphere_cython.pyx":149
  *     cdef double Rho_rcb_1 = (2.35 * 1.67e-27 / 1.381e-23)
  *     cdef double Rho_rcb_2 = ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * 64.0 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds * R_rcb / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
  *     cdef double Rho_rcb = Rho_rcb_1 * Rho_rcb_2             # <<<<<<<<<<<<<<
@@ -2918,7 +2735,7 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  */
   __pyx_v_Rho_rcb = (__pyx_v_Rho_rcb_1 * __pyx_v_Rho_rcb_2);
 
-  /* "R_photosphere_cython.pyx":127
+  /* "R_photosphere_cython.pyx":152
  * 
  * 
  *     return R_rcb, Rho_rcb             # <<<<<<<<<<<<<<
@@ -2926,21 +2743,21 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_Rho_rcb); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 127, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_Rho_rcb); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_R_rcb);
   __Pyx_GIVEREF(__pyx_v_R_rcb);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_R_rcb);
-  __Pyx_GIVEREF(__pyx_t_8);
-  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_8);
-  __pyx_t_8 = 0;
-  __pyx_r = __pyx_t_4;
-  __pyx_t_4 = 0;
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_R_rcb);
+  __Pyx_GIVEREF(__pyx_t_7);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_7);
+  __pyx_t_7 = 0;
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "R_photosphere_cython.pyx":87
+  /* "R_photosphere_cython.pyx":112
  * # /////////////////////////////// SOLVE FOR R_rcb //////////////////////////// #
  * 
  * cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescale_seconds, double M_core_kg, double R_core_meters, double X, double R_guess):             # <<<<<<<<<<<<<<
@@ -2955,11 +2772,11 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("R_photosphere_cython.solve_Rho_rcb_and_R_rcb", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -2971,27 +2788,425 @@ static PyObject *__pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(double _
   return __pyx_r;
 }
 
-/* "R_photosphere_cython.pyx":133
+/* "R_photosphere_cython.pyx":158
  * # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
  * 
- * def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):             # <<<<<<<<<<<<<<
+ * cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, double R_core, double X, double KH_timescale_cutoff, double R_guess):             # <<<<<<<<<<<<<<
  *     """
  *     Returns the photospheric radius of the planet (in meters):
  */
 
+static PyObject *__pyx_pw_20R_photosphere_cython_5calculate_R_photosphere(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_f_20R_photosphere_cython_calculate_R_photosphere(double __pyx_v_t, double __pyx_v_M_star, double __pyx_v_a, double __pyx_v_M_core, double __pyx_v_R_core, double __pyx_v_X, double __pyx_v_KH_timescale_cutoff, double __pyx_v_R_guess, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  double __pyx_v_T_eq;
+  double __pyx_v_c_s_squared;
+  double __pyx_v_KH_timescale_seconds;
+  double __pyx_v_M_core_kg;
+  double __pyx_v_R_core_meters;
+  double __pyx_v_R_rcb;
+  double __pyx_v_Rho_rcb;
+  double __pyx_v_g;
+  double __pyx_v_H;
+  double __pyx_v_P_photosphere;
+  double __pyx_v_Rho_photosphere;
+  double __pyx_v_R_photosphere;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *(*__pyx_t_6)(PyObject *);
+  double __pyx_t_7;
+  double __pyx_t_8;
+  double __pyx_t_9;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  __Pyx_RefNannySetupContext("calculate_R_photosphere", 0);
+
+  /* "R_photosphere_cython.pyx":172
+ * 
+ *     # calculate temperature and sound speed for system
+ *     cdef double T_eq = calculate_T_eq(M_star, a)             # <<<<<<<<<<<<<<
+ *     cdef double c_s_squared = calculate_sound_speed_squared(T_eq)
+ * 
+ */
+  __pyx_v_T_eq = __pyx_f_20R_photosphere_cython_calculate_T_eq(__pyx_v_M_star, __pyx_v_a);
+
+  /* "R_photosphere_cython.pyx":173
+ *     # calculate temperature and sound speed for system
+ *     cdef double T_eq = calculate_T_eq(M_star, a)
+ *     cdef double c_s_squared = calculate_sound_speed_squared(T_eq)             # <<<<<<<<<<<<<<
+ * 
+ *     cdef double KH_timescale_seconds
+ */
+  __pyx_v_c_s_squared = __pyx_f_20R_photosphere_cython_calculate_sound_speed_squared(__pyx_v_T_eq);
+
+  /* "R_photosphere_cython.pyx":176
+ * 
+ *     cdef double KH_timescale_seconds
+ *     if t < KH_timescale_cutoff:             # <<<<<<<<<<<<<<
+ *         KH_timescale_seconds = KH_timescale_cutoff*Myr
+ *     else:
+ */
+  __pyx_t_1 = ((__pyx_v_t < __pyx_v_KH_timescale_cutoff) != 0);
+  if (__pyx_t_1) {
+
+    /* "R_photosphere_cython.pyx":177
+ *     cdef double KH_timescale_seconds
+ *     if t < KH_timescale_cutoff:
+ *         KH_timescale_seconds = KH_timescale_cutoff*Myr             # <<<<<<<<<<<<<<
+ *     else:
+ *         KH_timescale_seconds = t*Myr
+ */
+    __pyx_v_KH_timescale_seconds = (__pyx_v_KH_timescale_cutoff * __pyx_v_20R_photosphere_cython_Myr);
+
+    /* "R_photosphere_cython.pyx":176
+ * 
+ *     cdef double KH_timescale_seconds
+ *     if t < KH_timescale_cutoff:             # <<<<<<<<<<<<<<
+ *         KH_timescale_seconds = KH_timescale_cutoff*Myr
+ *     else:
+ */
+    goto __pyx_L3;
+  }
+
+  /* "R_photosphere_cython.pyx":179
+ *         KH_timescale_seconds = KH_timescale_cutoff*Myr
+ *     else:
+ *         KH_timescale_seconds = t*Myr             # <<<<<<<<<<<<<<
+ * 
+ *     # convert to SI
+ */
+  /*else*/ {
+    __pyx_v_KH_timescale_seconds = (__pyx_v_t * __pyx_v_20R_photosphere_cython_Myr);
+  }
+  __pyx_L3:;
+
+  /* "R_photosphere_cython.pyx":182
+ * 
+ *     # convert to SI
+ *     cdef double M_core_kg = M_core * M_earth             # <<<<<<<<<<<<<<
+ *     cdef double R_core_meters = R_core * R_earth
+ * 
+ */
+  __pyx_v_M_core_kg = (__pyx_v_M_core * __pyx_v_20R_photosphere_cython_M_earth);
+
+  /* "R_photosphere_cython.pyx":183
+ *     # convert to SI
+ *     cdef double M_core_kg = M_core * M_earth
+ *     cdef double R_core_meters = R_core * R_earth             # <<<<<<<<<<<<<<
+ * 
+ *     # solve simultaneous equations for radiative-convective boundary radius and density
+ */
+  __pyx_v_R_core_meters = (__pyx_v_R_core * __pyx_v_20R_photosphere_cython_R_earth);
+
+  /* "R_photosphere_cython.pyx":187
+ *     # solve simultaneous equations for radiative-convective boundary radius and density
+ *     cdef double R_rcb, Rho_rcb
+ *     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X, R_guess)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_2 = __pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(__pyx_v_T_eq, __pyx_v_c_s_squared, __pyx_v_KH_timescale_seconds, __pyx_v_M_core_kg, __pyx_v_R_core_meters, __pyx_v_X, __pyx_v_R_guess); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if ((likely(PyTuple_CheckExact(__pyx_t_2))) || (PyList_CheckExact(__pyx_t_2))) {
+    PyObject* sequence = __pyx_t_2;
+    Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
+    if (unlikely(size != 2)) {
+      if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+      else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+      __PYX_ERR(0, 187, __pyx_L1_error)
+    }
+    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    if (likely(PyTuple_CheckExact(sequence))) {
+      __pyx_t_3 = PyTuple_GET_ITEM(sequence, 0); 
+      __pyx_t_4 = PyTuple_GET_ITEM(sequence, 1); 
+    } else {
+      __pyx_t_3 = PyList_GET_ITEM(sequence, 0); 
+      __pyx_t_4 = PyList_GET_ITEM(sequence, 1); 
+    }
+    __Pyx_INCREF(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_4);
+    #else
+    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    #endif
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  } else {
+    Py_ssize_t index = -1;
+    __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_6 = Py_TYPE(__pyx_t_5)->tp_iternext;
+    index = 0; __pyx_t_3 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_3)) goto __pyx_L4_unpacking_failed;
+    __Pyx_GOTREF(__pyx_t_3);
+    index = 1; __pyx_t_4 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_4)) goto __pyx_L4_unpacking_failed;
+    __Pyx_GOTREF(__pyx_t_4);
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 2) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_t_6 = NULL;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    goto __pyx_L5_unpacking_done;
+    __pyx_L4_unpacking_failed:;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_6 = NULL;
+    if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+    __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_L5_unpacking_done:;
+  }
+  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_v_R_rcb = __pyx_t_7;
+  __pyx_v_Rho_rcb = __pyx_t_8;
+
+  /* "R_photosphere_cython.pyx":190
+ * 
+ * 
+ *     if (R_rcb, Rho_rcb) == (0.0, 0.0):             # <<<<<<<<<<<<<<
+ *         return 0.0
+ * 
+ */
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_R_rcb); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_Rho_rcb); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_4);
+  __pyx_t_2 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyObject_RichCompare(__pyx_t_3, __pyx_tuple__3, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (__pyx_t_1) {
+
+    /* "R_photosphere_cython.pyx":191
+ * 
+ *     if (R_rcb, Rho_rcb) == (0.0, 0.0):
+ *         return 0.0             # <<<<<<<<<<<<<<
+ * 
+ *     # calculate gravitational constant (assumed constant)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_float_0_0);
+    __pyx_r = __pyx_float_0_0;
+    goto __pyx_L0;
+
+    /* "R_photosphere_cython.pyx":190
+ * 
+ * 
+ *     if (R_rcb, Rho_rcb) == (0.0, 0.0):             # <<<<<<<<<<<<<<
+ *         return 0.0
+ * 
+ */
+  }
+
+  /* "R_photosphere_cython.pyx":194
+ * 
+ *     # calculate gravitational constant (assumed constant)
+ *     cdef double g = G * M_core_kg / (R_rcb*R_rcb)             # <<<<<<<<<<<<<<
+ * 
+ *     # calcualte scale height
+ */
+  __pyx_t_8 = (__pyx_v_20R_photosphere_cython_G * __pyx_v_M_core_kg);
+  __pyx_t_7 = (__pyx_v_R_rcb * __pyx_v_R_rcb);
+  if (unlikely(__pyx_t_7 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 194, __pyx_L1_error)
+  }
+  __pyx_v_g = (__pyx_t_8 / __pyx_t_7);
+
+  /* "R_photosphere_cython.pyx":197
+ * 
+ *     # calcualte scale height
+ *     cdef double H = (k_B * T_eq) / (mu * m_H * g)             # <<<<<<<<<<<<<<
+ * 
+ *     # locate photosphere by finding pressure at which P=2/3 * g/kappa
+ */
+  __pyx_t_7 = (__pyx_v_20R_photosphere_cython_k_B * __pyx_v_T_eq);
+  __pyx_t_8 = ((__pyx_v_20R_photosphere_cython_mu * __pyx_v_20R_photosphere_cython_m_H) * __pyx_v_g);
+  if (unlikely(__pyx_t_8 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 197, __pyx_L1_error)
+  }
+  __pyx_v_H = (__pyx_t_7 / __pyx_t_8);
+
+  /* "R_photosphere_cython.pyx":200
+ * 
+ *     # locate photosphere by finding pressure at which P=2/3 * g/kappa
+ *     cdef double P_photosphere = (2 * g / (3 * kappa_0 * T_eq**beta))**(1/(alpha+1))             # <<<<<<<<<<<<<<
+ * 
+ *     # calculate photospheric density
+ */
+  __pyx_t_8 = (2.0 * __pyx_v_g);
+  __pyx_t_7 = ((3.0 * __pyx_v_20R_photosphere_cython_kappa_0) * pow(__pyx_v_T_eq, __pyx_v_20R_photosphere_cython_beta));
+  if (unlikely(__pyx_t_7 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 200, __pyx_L1_error)
+  }
+  __pyx_t_9 = (__pyx_v_20R_photosphere_cython_alpha + 1.0);
+  if (unlikely(__pyx_t_9 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 200, __pyx_L1_error)
+  }
+  __pyx_v_P_photosphere = pow((__pyx_t_8 / __pyx_t_7), (1.0 / __pyx_t_9));
+
+  /* "R_photosphere_cython.pyx":203
+ * 
+ *     # calculate photospheric density
+ *     cdef double Rho_photosphere = P_photosphere * mu * m_H / (k_B * T_eq)             # <<<<<<<<<<<<<<
+ * 
+ *     # calculate photospheric radius
+ */
+  __pyx_t_9 = ((__pyx_v_P_photosphere * __pyx_v_20R_photosphere_cython_mu) * __pyx_v_20R_photosphere_cython_m_H);
+  __pyx_t_7 = (__pyx_v_20R_photosphere_cython_k_B * __pyx_v_T_eq);
+  if (unlikely(__pyx_t_7 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 203, __pyx_L1_error)
+  }
+  __pyx_v_Rho_photosphere = (__pyx_t_9 / __pyx_t_7);
+
+  /* "R_photosphere_cython.pyx":206
+ * 
+ *     # calculate photospheric radius
+ *     cdef double R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)             # <<<<<<<<<<<<<<
+ * 
+ *     return R_photosphere
+ */
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_rcb); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_H); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_log); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(__pyx_v_Rho_photosphere == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 206, __pyx_L1_error)
+  }
+  __pyx_t_5 = PyFloat_FromDouble((__pyx_v_Rho_rcb / __pyx_v_Rho_photosphere)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_11 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_10))) {
+    __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_10);
+    if (likely(__pyx_t_11)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_10);
+      __Pyx_INCREF(__pyx_t_11);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_10, function);
+    }
+  }
+  if (!__pyx_t_11) {
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
+  } else {
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(__pyx_t_10)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_5};
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    } else
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_5};
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    } else
+    #endif
+    {
+      __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_11); __pyx_t_11 = NULL;
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_t_5);
+      __pyx_t_5 = 0;
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_12, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = PyNumber_Multiply(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyNumber_Add(__pyx_t_4, __pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_R_photosphere = __pyx_t_7;
+
+  /* "R_photosphere_cython.pyx":208
+ *     cdef double R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)
+ * 
+ *     return R_photosphere             # <<<<<<<<<<<<<<
+ * 
+ * #test script
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_R_photosphere); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "R_photosphere_cython.pyx":158
+ * # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
+ * 
+ * cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, double R_core, double X, double KH_timescale_cutoff, double R_guess):             # <<<<<<<<<<<<<<
+ *     """
+ *     Returns the photospheric radius of the planet (in meters):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_AddTraceback("R_photosphere_cython.calculate_R_photosphere", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* Python wrapper */
-static PyObject *__pyx_pw_20R_photosphere_cython_9calculate_R_photosphere(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_20R_photosphere_cython_8calculate_R_photosphere[] = "\n    Returns the photospheric radius of the planet (in meters):\n\n    M_star: Mass of host star (solar masses)\n    a: semi-major axis of orbit (AU)\n    KH_timescale = Kelvin-Helmholtz (cooling) timescale for atmosphere (years)\n    M_core = Mass of planet core (Earth masses)\n    R_core = Radius of planet core (Earth Radius)\n    X = Envelope mass fraction M_env / M_core\n\n    ";
-static PyMethodDef __pyx_mdef_20R_photosphere_cython_9calculate_R_photosphere = {"calculate_R_photosphere", (PyCFunction)__pyx_pw_20R_photosphere_cython_9calculate_R_photosphere, METH_VARARGS|METH_KEYWORDS, __pyx_doc_20R_photosphere_cython_8calculate_R_photosphere};
-static PyObject *__pyx_pw_20R_photosphere_cython_9calculate_R_photosphere(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_t = 0;
-  PyObject *__pyx_v_M_star = 0;
-  PyObject *__pyx_v_a = 0;
-  PyObject *__pyx_v_M_core = 0;
-  PyObject *__pyx_v_R_core = 0;
-  PyObject *__pyx_v_X = 0;
-  PyObject *__pyx_v_KH_timescale_cutoff = 0;
-  PyObject *__pyx_v_R_guess = 0;
+static PyObject *__pyx_pw_20R_photosphere_cython_5calculate_R_photosphere(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_20R_photosphere_cython_4calculate_R_photosphere[] = "\n    Returns the photospheric radius of the planet (in meters):\n\n    M_star: Mass of host star (solar masses)\n    a: semi-major axis of orbit (AU)\n    KH_timescale = Kelvin-Helmholtz (cooling) timescale for atmosphere (years)\n    M_core = Mass of planet core (Earth masses)\n    R_core = Radius of planet core (Earth Radius)\n    X = Envelope mass fraction M_env / M_core\n\n    ";
+static PyObject *__pyx_pw_20R_photosphere_cython_5calculate_R_photosphere(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  double __pyx_v_t;
+  double __pyx_v_M_star;
+  double __pyx_v_a;
+  double __pyx_v_M_core;
+  double __pyx_v_R_core;
+  double __pyx_v_X;
+  double __pyx_v_KH_timescale_cutoff;
+  double __pyx_v_R_guess;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("calculate_R_photosphere (wrapper)", 0);
@@ -3030,47 +3245,47 @@ static PyObject *__pyx_pw_20R_photosphere_cython_9calculate_R_photosphere(PyObje
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_M_star)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 1); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 1); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_a)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 2); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 2); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_M_core)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 3); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 3); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_core)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 4); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 4); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_X)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 5); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 5); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_KH_timescale_cutoff)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 6); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 6); __PYX_ERR(0, 158, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_guess)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 7); __PYX_ERR(0, 133, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, 7); __PYX_ERR(0, 158, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculate_R_photosphere") < 0)) __PYX_ERR(0, 133, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculate_R_photosphere") < 0)) __PYX_ERR(0, 158, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
@@ -3084,601 +3299,48 @@ static PyObject *__pyx_pw_20R_photosphere_cython_9calculate_R_photosphere(PyObje
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
-    __pyx_v_t = values[0];
-    __pyx_v_M_star = values[1];
-    __pyx_v_a = values[2];
-    __pyx_v_M_core = values[3];
-    __pyx_v_R_core = values[4];
-    __pyx_v_X = values[5];
-    __pyx_v_KH_timescale_cutoff = values[6];
-    __pyx_v_R_guess = values[7];
+    __pyx_v_t = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_t == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_M_star = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_M_star == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_a = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_a == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_M_core = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_M_core == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_R_core = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_R_core == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_X = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_X == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_KH_timescale_cutoff = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_KH_timescale_cutoff == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
+    __pyx_v_R_guess = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_R_guess == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 133, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("calculate_R_photosphere", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 158, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("R_photosphere_cython.calculate_R_photosphere", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_20R_photosphere_cython_8calculate_R_photosphere(__pyx_self, __pyx_v_t, __pyx_v_M_star, __pyx_v_a, __pyx_v_M_core, __pyx_v_R_core, __pyx_v_X, __pyx_v_KH_timescale_cutoff, __pyx_v_R_guess);
+  __pyx_r = __pyx_pf_20R_photosphere_cython_4calculate_R_photosphere(__pyx_self, __pyx_v_t, __pyx_v_M_star, __pyx_v_a, __pyx_v_M_core, __pyx_v_R_core, __pyx_v_X, __pyx_v_KH_timescale_cutoff, __pyx_v_R_guess);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_20R_photosphere_cython_8calculate_R_photosphere(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_t, PyObject *__pyx_v_M_star, PyObject *__pyx_v_a, PyObject *__pyx_v_M_core, PyObject *__pyx_v_R_core, PyObject *__pyx_v_X, PyObject *__pyx_v_KH_timescale_cutoff, PyObject *__pyx_v_R_guess) {
-  PyObject *__pyx_v_T_eq = NULL;
-  PyObject *__pyx_v_c_s_squared = NULL;
-  PyObject *__pyx_v_KH_timescale_seconds = NULL;
-  PyObject *__pyx_v_M_core_kg = NULL;
-  PyObject *__pyx_v_R_core_meters = NULL;
-  PyObject *__pyx_v_R_rcb = NULL;
-  PyObject *__pyx_v_Rho_rcb = NULL;
-  PyObject *__pyx_v_g = NULL;
-  PyObject *__pyx_v_H = NULL;
-  PyObject *__pyx_v_P_photosphere = NULL;
-  PyObject *__pyx_v_Rho_photosphere = NULL;
-  PyObject *__pyx_v_R_photosphere = NULL;
+static PyObject *__pyx_pf_20R_photosphere_cython_4calculate_R_photosphere(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t, double __pyx_v_M_star, double __pyx_v_a, double __pyx_v_M_core, double __pyx_v_R_core, double __pyx_v_X, double __pyx_v_KH_timescale_cutoff, double __pyx_v_R_guess) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  double __pyx_t_7;
-  double __pyx_t_8;
-  double __pyx_t_9;
-  double __pyx_t_10;
-  double __pyx_t_11;
-  double __pyx_t_12;
-  double __pyx_t_13;
-  PyObject *(*__pyx_t_14)(PyObject *);
-  PyObject *__pyx_t_15 = NULL;
   __Pyx_RefNannySetupContext("calculate_R_photosphere", 0);
-
-  /* "R_photosphere_cython.pyx":147
- * 
- *     # calculate temperature and sound speed for system
- *     T_eq = calculate_T_eq(M_star, a)             # <<<<<<<<<<<<<<
- *     c_s_squared = calculate_sound_speed_squared(T_eq)
- * 
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calculate_T_eq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_4 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_M_star, __pyx_v_a};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_M_star, __pyx_v_a};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
-    }
-    __Pyx_INCREF(__pyx_v_M_star);
-    __Pyx_GIVEREF(__pyx_v_M_star);
-    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_M_star);
-    __Pyx_INCREF(__pyx_v_a);
-    __Pyx_GIVEREF(__pyx_v_a);
-    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_a);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_T_eq = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":148
- *     # calculate temperature and sound speed for system
- *     T_eq = calculate_T_eq(M_star, a)
- *     c_s_squared = calculate_sound_speed_squared(T_eq)             # <<<<<<<<<<<<<<
- * 
- *     if t < KH_timescale_cutoff:
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calculate_sound_speed_squared); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_5)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_5);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (!__pyx_t_5) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_T_eq); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_T_eq};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_T_eq};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-    } else
-    #endif
-    {
-      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
-      __Pyx_INCREF(__pyx_v_T_eq);
-      __Pyx_GIVEREF(__pyx_v_T_eq);
-      PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_T_eq);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_c_s_squared = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":150
- *     c_s_squared = calculate_sound_speed_squared(T_eq)
- * 
- *     if t < KH_timescale_cutoff:             # <<<<<<<<<<<<<<
- *         KH_timescale_seconds = KH_timescale_cutoff*Myr
- *     else:
- */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_t, __pyx_v_KH_timescale_cutoff, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_6) {
-
-    /* "R_photosphere_cython.pyx":151
- * 
- *     if t < KH_timescale_cutoff:
- *         KH_timescale_seconds = KH_timescale_cutoff*Myr             # <<<<<<<<<<<<<<
- *     else:
- *         KH_timescale_seconds = t*Myr
- */
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Myr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_v_KH_timescale_cutoff, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_KH_timescale_seconds = __pyx_t_2;
-    __pyx_t_2 = 0;
-
-    /* "R_photosphere_cython.pyx":150
- *     c_s_squared = calculate_sound_speed_squared(T_eq)
- * 
- *     if t < KH_timescale_cutoff:             # <<<<<<<<<<<<<<
- *         KH_timescale_seconds = KH_timescale_cutoff*Myr
- *     else:
- */
-    goto __pyx_L3;
-  }
-
-  /* "R_photosphere_cython.pyx":153
- *         KH_timescale_seconds = KH_timescale_cutoff*Myr
- *     else:
- *         KH_timescale_seconds = t*Myr             # <<<<<<<<<<<<<<
- * 
- *     # convert to SI
- */
-  /*else*/ {
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_Myr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyNumber_Multiply(__pyx_v_t, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_KH_timescale_seconds = __pyx_t_1;
-    __pyx_t_1 = 0;
-  }
-  __pyx_L3:;
-
-  /* "R_photosphere_cython.pyx":156
- * 
- *     # convert to SI
- *     M_core_kg = M_core * M_earth             # <<<<<<<<<<<<<<
- *     R_core_meters = R_core * R_earth
- * 
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_M_earth); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 156, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_M_core, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_M_core_kg = __pyx_t_2;
-  __pyx_t_2 = 0;
-
-  /* "R_photosphere_cython.pyx":157
- *     # convert to SI
- *     M_core_kg = M_core * M_earth
- *     R_core_meters = R_core * R_earth             # <<<<<<<<<<<<<<
- * 
- *     # solve simultaneous equations for radiative-convective boundary radius and density
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_earth); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_v_R_core, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_R_core_meters = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":160
- * 
- *     # solve simultaneous equations for radiative-convective boundary radius and density
- *     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X, R_guess)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_v_T_eq); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_c_s_squared); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_KH_timescale_seconds); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_M_core_kg); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_v_R_core_meters); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_12 = __pyx_PyFloat_AsDouble(__pyx_v_X); if (unlikely((__pyx_t_12 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_13 = __pyx_PyFloat_AsDouble(__pyx_v_R_guess); if (unlikely((__pyx_t_13 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_20R_photosphere_cython_solve_Rho_rcb_and_R_rcb(__pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
-    PyObject* sequence = __pyx_t_1;
-    Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
-    if (unlikely(size != 2)) {
-      if (size > 2) __Pyx_RaiseTooManyValuesError(2);
-      else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 160, __pyx_L1_error)
-    }
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    if (likely(PyTuple_CheckExact(sequence))) {
-      __pyx_t_2 = PyTuple_GET_ITEM(sequence, 0); 
-      __pyx_t_3 = PyTuple_GET_ITEM(sequence, 1); 
-    } else {
-      __pyx_t_2 = PyList_GET_ITEM(sequence, 0); 
-      __pyx_t_3 = PyList_GET_ITEM(sequence, 1); 
-    }
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx_t_3);
-    #else
-    __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 160, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 160, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  } else {
-    Py_ssize_t index = -1;
-    __pyx_t_5 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_14 = Py_TYPE(__pyx_t_5)->tp_iternext;
-    index = 0; __pyx_t_2 = __pyx_t_14(__pyx_t_5); if (unlikely(!__pyx_t_2)) goto __pyx_L4_unpacking_failed;
-    __Pyx_GOTREF(__pyx_t_2);
-    index = 1; __pyx_t_3 = __pyx_t_14(__pyx_t_5); if (unlikely(!__pyx_t_3)) goto __pyx_L4_unpacking_failed;
-    __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_14(__pyx_t_5), 2) < 0) __PYX_ERR(0, 160, __pyx_L1_error)
-    __pyx_t_14 = NULL;
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    goto __pyx_L5_unpacking_done;
-    __pyx_L4_unpacking_failed:;
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_14 = NULL;
-    if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 160, __pyx_L1_error)
-    __pyx_L5_unpacking_done:;
-  }
-  __pyx_v_R_rcb = __pyx_t_2;
-  __pyx_t_2 = 0;
-  __pyx_v_Rho_rcb = __pyx_t_3;
-  __pyx_t_3 = 0;
-
-  /* "R_photosphere_cython.pyx":164
- * 
- * 
- *     if (R_rcb, Rho_rcb) == (None, None):             # <<<<<<<<<<<<<<
- *         return None
- * 
- */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_v_R_rcb);
-  __Pyx_GIVEREF(__pyx_v_R_rcb);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_R_rcb);
-  __Pyx_INCREF(__pyx_v_Rho_rcb);
-  __Pyx_GIVEREF(__pyx_v_Rho_rcb);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_Rho_rcb);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_tuple__3, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 164, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__pyx_t_6) {
-
-    /* "R_photosphere_cython.pyx":165
- * 
- *     if (R_rcb, Rho_rcb) == (None, None):
- *         return None             # <<<<<<<<<<<<<<
- * 
- *     # calculate gravitational constant (assumed constant)
- */
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-    goto __pyx_L0;
-
-    /* "R_photosphere_cython.pyx":164
- * 
- * 
- *     if (R_rcb, Rho_rcb) == (None, None):             # <<<<<<<<<<<<<<
- *         return None
- * 
- */
-  }
-
-  /* "R_photosphere_cython.pyx":168
- * 
- *     # calculate gravitational constant (assumed constant)
- *     g = G * M_core_kg / (R_rcb*R_rcb)             # <<<<<<<<<<<<<<
- * 
- *     # calcualte scale height
- */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_G); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_M_core_kg); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_R_rcb, __pyx_v_R_rcb); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_g = __pyx_t_2;
-  __pyx_t_2 = 0;
-
-  /* "R_photosphere_cython.pyx":171
- * 
- *     # calcualte scale height
- *     H = (k_B * T_eq) / (mu * m_H * g)             # <<<<<<<<<<<<<<
- * 
- *     # locate photosphere by finding pressure at which P=2/3 * g/kappa
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_k_B); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_T_eq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_mu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_m_H); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_5, __pyx_v_g); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_H = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "R_photosphere_cython.pyx":174
- * 
- *     # locate photosphere by finding pressure at which P=2/3 * g/kappa
- *     P_photosphere = (2 * g / (3 * kappa_0 * T_eq**beta))**(1/(alpha+1))             # <<<<<<<<<<<<<<
- * 
- *     # calculate photospheric density
- */
-  __pyx_t_5 = PyNumber_Multiply(__pyx_int_2, __pyx_v_g); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_kappa_0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_int_3, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_beta); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Power(__pyx_v_T_eq, __pyx_t_1, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Power(__pyx_t_2, __pyx_t_1, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_P_photosphere = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "R_photosphere_cython.pyx":177
- * 
- *     # calculate photospheric density
- *     Rho_photosphere = P_photosphere * mu * m_H / (k_B * T_eq)             # <<<<<<<<<<<<<<
- * 
- *     # calculate photospheric radius
- */
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_mu); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_v_P_photosphere, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_m_H); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_k_B); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_5, __pyx_v_T_eq); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_Rho_photosphere = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "R_photosphere_cython.pyx":180
- * 
- *     # calculate photospheric radius
- *     R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)             # <<<<<<<<<<<<<<
- * 
- *     return R_photosphere
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_log); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_v_Rho_rcb, __pyx_v_Rho_photosphere); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (!__pyx_t_3) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_GOTREF(__pyx_t_5);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_1};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_1};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_15 = PyTuple_New(1+1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 180, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_15);
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_3); __pyx_t_3 = NULL;
-      __Pyx_GIVEREF(__pyx_t_1);
-      PyTuple_SET_ITEM(__pyx_t_15, 0+1, __pyx_t_1);
-      __pyx_t_1 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_15, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_H, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_v_R_rcb, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_R_photosphere = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "R_photosphere_cython.pyx":182
- *     R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)
- * 
- *     return R_photosphere             # <<<<<<<<<<<<<<
- * 
- * #test script
- */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_R_photosphere);
-  __pyx_r = __pyx_v_R_photosphere;
+  __pyx_t_1 = __pyx_f_20R_photosphere_cython_calculate_R_photosphere(__pyx_v_t, __pyx_v_M_star, __pyx_v_a, __pyx_v_M_core, __pyx_v_R_core, __pyx_v_X, __pyx_v_KH_timescale_cutoff, __pyx_v_R_guess, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
-
-  /* "R_photosphere_cython.pyx":133
- * # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
- * 
- * def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):             # <<<<<<<<<<<<<<
- *     """
- *     Returns the photospheric radius of the planet (in meters):
- */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_15);
   __Pyx_AddTraceback("R_photosphere_cython.calculate_R_photosphere", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_T_eq);
-  __Pyx_XDECREF(__pyx_v_c_s_squared);
-  __Pyx_XDECREF(__pyx_v_KH_timescale_seconds);
-  __Pyx_XDECREF(__pyx_v_M_core_kg);
-  __Pyx_XDECREF(__pyx_v_R_core_meters);
-  __Pyx_XDECREF(__pyx_v_R_rcb);
-  __Pyx_XDECREF(__pyx_v_Rho_rcb);
-  __Pyx_XDECREF(__pyx_v_g);
-  __Pyx_XDECREF(__pyx_v_H);
-  __Pyx_XDECREF(__pyx_v_P_photosphere);
-  __Pyx_XDECREF(__pyx_v_Rho_photosphere);
-  __Pyx_XDECREF(__pyx_v_R_photosphere);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -4008,6 +3670,7 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_double____double____double__
 };
 
 static PyMethodDef __pyx_methods[] = {
+  {"calculate_R_photosphere", (PyCFunction)__pyx_pw_20R_photosphere_cython_5calculate_R_photosphere, METH_VARARGS|METH_KEYWORDS, __pyx_doc_20R_photosphere_cython_4calculate_R_photosphere},
   {0, 0, 0, 0}
 };
 
@@ -4015,7 +3678,11 @@ static int __pyx_import_star_set(PyObject *o, PyObject* py_name, char *name) {
   static const char* internal_type_names[] = {
     "__pyx_ctuple_39c6a__double__and_double__and_double__and_double__and_double__and_double__etc",
     "__pyx_ctuple_39c6a__double__and_double__and_double__and_double__and_double__and_double__etc_struct",
+    "__pyx_ctuple_d31fe__26d5e__double__lParendouble__comma_double__comma_double__comma_double__comma_double__comma_double__comma_double__rParen__etc__and_double__and_double__etc",
+    "__pyx_ctuple_d31fe__26d5e__double__lParendouble__comma_double__comma_double__comma_double__comma_double__comma_double__comma_double__rParen__etc__and_double__and_double__etc_struct",
     "__pyx_ctuple_double",
+    "__pyx_ctuple_double__and_double",
+    "__pyx_ctuple_double__and_double_struct",
     "__pyx_ctuple_double_struct",
     "__pyx_scope_struct____Pyx_CFunc_double____double____double____double____double____double____double____double___to_py",
     0
@@ -4029,10 +3696,81 @@ static int __pyx_import_star_set(PyObject *o, PyObject* py_name, char *name) {
     type_name++;
   }
   if (0);
+  else if (__Pyx_StrEq(name, "AU")) {
+    __pyx_v_20R_photosphere_cython_AU = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_AU == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "Delta_ab")) {
+    __pyx_v_20R_photosphere_cython_Delta_ab = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_Delta_ab == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "G")) {
+    __pyx_v_20R_photosphere_cython_G = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_G == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "L_sun")) {
+    __pyx_v_20R_photosphere_cython_L_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_L_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "M_earth")) {
+    __pyx_v_20R_photosphere_cython_M_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_M_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "M_sun")) {
+    __pyx_v_20R_photosphere_cython_M_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_M_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "Myr")) {
+    __pyx_v_20R_photosphere_cython_Myr = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_Myr == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "R_earth")) {
+    __pyx_v_20R_photosphere_cython_R_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_R_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "R_sun")) {
+    __pyx_v_20R_photosphere_cython_R_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_R_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "T_eq_earth")) {
+    __pyx_v_20R_photosphere_cython_T_eq_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_T_eq_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "a0")) {
+    __pyx_v_20R_photosphere_cython_a0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_a0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "alpha")) {
+    __pyx_v_20R_photosphere_cython_alpha = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "b_cutoff")) {
+    __pyx_v_20R_photosphere_cython_b_cutoff = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_b_cutoff == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "beta")) {
+    __pyx_v_20R_photosphere_cython_beta = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "eta_0")) {
+    __pyx_v_20R_photosphere_cython_eta_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_eta_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "gamma")) {
+    __pyx_v_20R_photosphere_cython_gamma = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_gamma == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "k_B")) {
+    __pyx_v_20R_photosphere_cython_k_B = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_k_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "kappa_0")) {
+    __pyx_v_20R_photosphere_cython_kappa_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_kappa_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "m_H")) {
+    __pyx_v_20R_photosphere_cython_m_H = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_m_H == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "mu")) {
+    __pyx_v_20R_photosphere_cython_mu = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_mu == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "pi")) {
+    __pyx_v_20R_photosphere_cython_pi = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_pi == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 16, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "stefan")) {
+    __pyx_v_20R_photosphere_cython_stefan = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_stefan == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L2_error)
+  }
+  else if (__Pyx_StrEq(name, "t_sat")) {
+    __pyx_v_20R_photosphere_cython_t_sat = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_20R_photosphere_cython_t_sat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L2_error)
+  }
   else {
     if (PyObject_SetAttr(__pyx_m, py_name, o) < 0) goto bad;
   }
   return 0;
+  __pyx_L2_error:;
+  __Pyx_AddTraceback("R_photosphere_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
   bad:
   return -1;
 }
@@ -4177,8 +3915,6 @@ static struct PyModuleDef __pyx_moduledef = {
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_ERROR_WITH_BRENTQ_SOLVER_f_a_and, __pyx_k_ERROR_WITH_BRENTQ_SOLVER_f_a_and, sizeof(__pyx_k_ERROR_WITH_BRENTQ_SOLVER_f_a_and), 0, 0, 1, 0},
-  {&__pyx_n_s_G, __pyx_k_G, sizeof(__pyx_k_G), 0, 0, 1, 1},
-  {&__pyx_n_s_H, __pyx_k_H, sizeof(__pyx_k_H), 0, 0, 1, 1},
   {&__pyx_n_s_I2_I1_array, __pyx_k_I2_I1_array, sizeof(__pyx_k_I2_I1_array), 0, 0, 1, 1},
   {&__pyx_kp_s_I2_I1_csv, __pyx_k_I2_I1_csv, sizeof(__pyx_k_I2_I1_csv), 0, 0, 1, 0},
   {&__pyx_n_s_I2_I1_interpolate, __pyx_k_I2_I1_interpolate, sizeof(__pyx_k_I2_I1_interpolate), 0, 0, 1, 1},
@@ -4191,36 +3927,23 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_KH_timescale_seconds, __pyx_k_KH_timescale_seconds, sizeof(__pyx_k_KH_timescale_seconds), 0, 0, 1, 1},
   {&__pyx_n_s_M_core, __pyx_k_M_core, sizeof(__pyx_k_M_core), 0, 0, 1, 1},
   {&__pyx_n_s_M_core_kg, __pyx_k_M_core_kg, sizeof(__pyx_k_M_core_kg), 0, 0, 1, 1},
-  {&__pyx_n_s_M_earth, __pyx_k_M_earth, sizeof(__pyx_k_M_earth), 0, 0, 1, 1},
   {&__pyx_n_s_M_star, __pyx_k_M_star, sizeof(__pyx_k_M_star), 0, 0, 1, 1},
-  {&__pyx_n_s_Myr, __pyx_k_Myr, sizeof(__pyx_k_Myr), 0, 0, 1, 1},
   {&__pyx_n_s_PARAMS, __pyx_k_PARAMS, sizeof(__pyx_k_PARAMS), 0, 0, 1, 1},
-  {&__pyx_n_s_P_photosphere, __pyx_k_P_photosphere, sizeof(__pyx_k_P_photosphere), 0, 0, 1, 1},
   {&__pyx_n_s_Pyx_CFunc_double____double, __pyx_k_Pyx_CFunc_double____double, sizeof(__pyx_k_Pyx_CFunc_double____double), 0, 0, 1, 1},
   {&__pyx_n_s_R_core, __pyx_k_R_core, sizeof(__pyx_k_R_core), 0, 0, 1, 1},
   {&__pyx_n_s_R_core_meters, __pyx_k_R_core_meters, sizeof(__pyx_k_R_core_meters), 0, 0, 1, 1},
-  {&__pyx_n_s_R_earth, __pyx_k_R_earth, sizeof(__pyx_k_R_earth), 0, 0, 1, 1},
   {&__pyx_n_s_R_guess, __pyx_k_R_guess, sizeof(__pyx_k_R_guess), 0, 0, 1, 1},
-  {&__pyx_n_s_R_photosphere, __pyx_k_R_photosphere, sizeof(__pyx_k_R_photosphere), 0, 0, 1, 1},
   {&__pyx_n_s_R_photosphere_cython, __pyx_k_R_photosphere_cython, sizeof(__pyx_k_R_photosphere_cython), 0, 0, 1, 1},
   {&__pyx_kp_s_R_photosphere_cython_pyx, __pyx_k_R_photosphere_cython_pyx, sizeof(__pyx_k_R_photosphere_cython_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_R_rcb, __pyx_k_R_rcb, sizeof(__pyx_k_R_rcb), 0, 0, 1, 1},
-  {&__pyx_n_s_Rho_photosphere, __pyx_k_Rho_photosphere, sizeof(__pyx_k_Rho_photosphere), 0, 0, 1, 1},
-  {&__pyx_n_s_Rho_rcb, __pyx_k_Rho_rcb, sizeof(__pyx_k_Rho_rcb), 0, 0, 1, 1},
   {&__pyx_n_s_T_eq, __pyx_k_T_eq, sizeof(__pyx_k_T_eq), 0, 0, 1, 1},
-  {&__pyx_n_s_T_eq_earth, __pyx_k_T_eq_earth, sizeof(__pyx_k_T_eq_earth), 0, 0, 1, 1},
   {&__pyx_n_s_X, __pyx_k_X, sizeof(__pyx_k_X), 0, 0, 1, 1},
   {&__pyx_n_s__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 1, 1},
   {&__pyx_kp_s__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 0, 1, 0},
   {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
-  {&__pyx_n_s_alpha, __pyx_k_alpha, sizeof(__pyx_k_alpha), 0, 0, 1, 1},
   {&__pyx_n_s_args, __pyx_k_args, sizeof(__pyx_k_args), 0, 0, 1, 1},
-  {&__pyx_n_s_beta, __pyx_k_beta, sizeof(__pyx_k_beta), 0, 0, 1, 1},
   {&__pyx_n_s_brentq, __pyx_k_brentq, sizeof(__pyx_k_brentq), 0, 0, 1, 1},
   {&__pyx_n_s_c_s_squared, __pyx_k_c_s_squared, sizeof(__pyx_k_c_s_squared), 0, 0, 1, 1},
-  {&__pyx_n_s_calculate_R_photosphere, __pyx_k_calculate_R_photosphere, sizeof(__pyx_k_calculate_R_photosphere), 0, 0, 1, 1},
-  {&__pyx_n_s_calculate_T_eq, __pyx_k_calculate_T_eq, sizeof(__pyx_k_calculate_T_eq), 0, 0, 1, 1},
-  {&__pyx_n_s_calculate_sound_speed_squared, __pyx_k_calculate_sound_speed_squared, sizeof(__pyx_k_calculate_sound_speed_squared), 0, 0, 1, 1},
   {&__pyx_n_s_cfunc_to_py, __pyx_k_cfunc_to_py, sizeof(__pyx_k_cfunc_to_py), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_constants, __pyx_k_constants, sizeof(__pyx_k_constants), 0, 0, 1, 1},
@@ -4232,18 +3955,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_fsolve, __pyx_k_fsolve, sizeof(__pyx_k_fsolve), 0, 0, 1, 1},
-  {&__pyx_n_s_g, __pyx_k_g, sizeof(__pyx_k_g), 0, 0, 1, 1},
-  {&__pyx_n_s_gamma, __pyx_k_gamma, sizeof(__pyx_k_gamma), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_interp, __pyx_k_interp, sizeof(__pyx_k_interp), 0, 0, 1, 1},
-  {&__pyx_n_s_k_B, __pyx_k_k_B, sizeof(__pyx_k_k_B), 0, 0, 1, 1},
-  {&__pyx_n_s_kappa_0, __pyx_k_kappa_0, sizeof(__pyx_k_kappa_0), 0, 0, 1, 1},
   {&__pyx_n_s_loadtxt, __pyx_k_loadtxt, sizeof(__pyx_k_loadtxt), 0, 0, 1, 1},
   {&__pyx_n_s_log, __pyx_k_log, sizeof(__pyx_k_log), 0, 0, 1, 1},
-  {&__pyx_n_s_m_H, __pyx_k_m_H, sizeof(__pyx_k_m_H), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_math, __pyx_k_math, sizeof(__pyx_k_math), 0, 0, 1, 1},
-  {&__pyx_n_s_mu, __pyx_k_mu, sizeof(__pyx_k_mu), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
@@ -4263,36 +3980,36 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "R_photosphere_cython.pyx":109
+  /* "R_photosphere_cython.pyx":134
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0             # <<<<<<<<<<<<<<
  *         R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  *     else:
  */
-  __pyx_tuple_ = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_float_0_0, __pyx_float_0_0); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "R_photosphere_cython.pyx":118
+  /* "R_photosphere_cython.pyx":143
  *             print "PARAMS"
  *             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
- *             return None, None             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0             # <<<<<<<<<<<<<<
  *         R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
  * 
  */
-  __pyx_tuple__2 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_float_0_0, __pyx_float_0_0); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "R_photosphere_cython.pyx":164
+  /* "R_photosphere_cython.pyx":190
  * 
  * 
- *     if (R_rcb, Rho_rcb) == (None, None):             # <<<<<<<<<<<<<<
- *         return None
+ *     if (R_rcb, Rho_rcb) == (0.0, 0.0):             # <<<<<<<<<<<<<<
+ *         return 0.0
  * 
  */
-  __pyx_tuple__3 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_float_0_0, __pyx_float_0_0); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 190, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
@@ -4308,98 +4025,62 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__4);
   __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(7, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 65, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 65, __pyx_L1_error)
 
-  /* "R_photosphere_cython.pyx":18
+  /* "R_photosphere_cython.pyx":43
  * # /////////////////////////// IMPORT TABULATED INTEGRALS ///////////////////// #
  * 
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * I2_array = np.loadtxt("I2.csv", delimiter=',')
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_dR_Rc_array_csv); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_dR_Rc_array_csv); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "R_photosphere_cython.pyx":19
+  /* "R_photosphere_cython.pyx":44
  * 
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')
  * I2_array = np.loadtxt("I2.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_I2_csv); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_I2_csv); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "R_photosphere_cython.pyx":20
+  /* "R_photosphere_cython.pyx":45
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')
  * I2_array = np.loadtxt("I2.csv", delimiter=',')
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * 
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_I2_I1_csv); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_I2_I1_csv); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "R_photosphere_cython.pyx":24
+  /* "R_photosphere_cython.pyx":49
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  * 
  * def I2_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
  *     """
  *     interpolates from tabulated integral values of I2:
  */
-  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_n_s_dR_Rc, __pyx_n_s_I2_value); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_n_s_dR_Rc, __pyx_n_s_I2_value); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_I2_interpolate, 24, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_I2_interpolate, 49, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 49, __pyx_L1_error)
 
-  /* "R_photosphere_cython.pyx":34
+  /* "R_photosphere_cython.pyx":59
  * 
  * 
  * def I2_I1_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
  *     """
  *     interpolates from tabulated integral values of I2/I1:
  */
-  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_n_s_dR_Rc, __pyx_n_s_I2_I1_value); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_n_s_dR_Rc, __pyx_n_s_I2_I1_value); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_I2_I1_interpolate, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 34, __pyx_L1_error)
-
-  /* "R_photosphere_cython.pyx":45
- * # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
- * 
- * def calculate_T_eq(M_star, a):             # <<<<<<<<<<<<<<
- *     """
- *     Calculates the equilibrium temperature of the planet:
- */
-  __pyx_tuple__15 = PyTuple_Pack(3, __pyx_n_s_M_star, __pyx_n_s_a, __pyx_n_s_T_eq); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_calculate_T_eq, 45, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 45, __pyx_L1_error)
-
-  /* "R_photosphere_cython.pyx":56
- * 
- * 
- * def calculate_sound_speed_squared(T_eq):             # <<<<<<<<<<<<<<
- *     """
- *     Calculates the isothermal sound speed of atmosphere:
- */
-  __pyx_tuple__17 = PyTuple_Pack(2, __pyx_n_s_T_eq, __pyx_n_s_c_s_squared); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_calculate_sound_speed_squared, 56, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 56, __pyx_L1_error)
-
-  /* "R_photosphere_cython.pyx":133
- * # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
- * 
- * def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):             # <<<<<<<<<<<<<<
- *     """
- *     Returns the photospheric radius of the planet (in meters):
- */
-  __pyx_tuple__19 = PyTuple_Pack(20, __pyx_n_s_t, __pyx_n_s_M_star, __pyx_n_s_a, __pyx_n_s_M_core, __pyx_n_s_R_core, __pyx_n_s_X, __pyx_n_s_KH_timescale_cutoff, __pyx_n_s_R_guess, __pyx_n_s_T_eq, __pyx_n_s_c_s_squared, __pyx_n_s_KH_timescale_seconds, __pyx_n_s_M_core_kg, __pyx_n_s_R_core_meters, __pyx_n_s_R_rcb, __pyx_n_s_Rho_rcb, __pyx_n_s_g, __pyx_n_s_H, __pyx_n_s_P_photosphere, __pyx_n_s_Rho_photosphere, __pyx_n_s_R_photosphere); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(8, 0, 20, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_calculate_R_photosphere, 133, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_R_photosphere_cython_pyx, __pyx_n_s_I2_I1_interpolate, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4409,17 +4090,13 @@ static int __Pyx_InitCachedConstants(void) {
 
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  __pyx_float_0_5 = PyFloat_FromDouble(0.5); if (unlikely(!__pyx_float_0_5)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_0_8 = PyFloat_FromDouble(0.8); if (unlikely(!__pyx_float_0_8)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_float_0_0 = PyFloat_FromDouble(0.0); if (unlikely(!__pyx_float_0_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_64_0 = PyFloat_FromDouble(64.0); if (unlikely(!__pyx_float_64_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_001 = PyFloat_FromDouble(0.001); if (unlikely(!__pyx_float_0_001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_0001 = PyFloat_FromDouble(0.0001); if (unlikely(!__pyx_float_0_0001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_3_14159 = PyFloat_FromDouble(3.14159); if (unlikely(!__pyx_float_3_14159)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_5_67eneg_8 = PyFloat_FromDouble(5.67e-8); if (unlikely(!__pyx_float_5_67eneg_8)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_500 = PyInt_FromLong(500); if (unlikely(!__pyx_int_500)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4574,7 +4251,8 @@ static int __pyx_pymod_exec_R_photosphere_cython(PyObject *__pyx_pyinit_module)
 {
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
+  double __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannyDeclarations
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m && __pyx_m == __pyx_pyinit_module) return 0;
@@ -4742,130 +4420,311 @@ if (!__Pyx_RefNanny) {
   if (__pyx_import_star(__pyx_t_1) < 0) __PYX_ERR(0, 5, __pyx_L1_error);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
+  /* "R_photosphere_cython.pyx":16
+ * """
+ * 
+ * cdef double pi = 3.141598             # <<<<<<<<<<<<<<
+ * cdef double stefan = 5.67e-8
+ * cdef double kappa_0 = 2.294e-8
+ */
+  __pyx_v_20R_photosphere_cython_pi = 3.141598;
+
+  /* "R_photosphere_cython.pyx":17
+ * 
+ * cdef double pi = 3.141598
+ * cdef double stefan = 5.67e-8             # <<<<<<<<<<<<<<
+ * cdef double kappa_0 = 2.294e-8
+ * cdef double G = 6.674e-11
+ */
+  __pyx_v_20R_photosphere_cython_stefan = 5.67e-8;
+
   /* "R_photosphere_cython.pyx":18
+ * cdef double pi = 3.141598
+ * cdef double stefan = 5.67e-8
+ * cdef double kappa_0 = 2.294e-8             # <<<<<<<<<<<<<<
+ * cdef double G = 6.674e-11
+ * cdef double gamma = 5/3
+ */
+  __pyx_v_20R_photosphere_cython_kappa_0 = 2.294e-8;
+
+  /* "R_photosphere_cython.pyx":19
+ * cdef double stefan = 5.67e-8
+ * cdef double kappa_0 = 2.294e-8
+ * cdef double G = 6.674e-11             # <<<<<<<<<<<<<<
+ * cdef double gamma = 5/3
+ * cdef double Delta_ab = (gamma-1)/gamma
+ */
+  __pyx_v_20R_photosphere_cython_G = 6.674e-11;
+
+  /* "R_photosphere_cython.pyx":20
+ * cdef double kappa_0 = 2.294e-8
+ * cdef double G = 6.674e-11
+ * cdef double gamma = 5/3             # <<<<<<<<<<<<<<
+ * cdef double Delta_ab = (gamma-1)/gamma
+ * cdef double mu = 2.35
+ */
+  __pyx_v_20R_photosphere_cython_gamma = (5.0 / 3.0);
+
+  /* "R_photosphere_cython.pyx":21
+ * cdef double G = 6.674e-11
+ * cdef double gamma = 5/3
+ * cdef double Delta_ab = (gamma-1)/gamma             # <<<<<<<<<<<<<<
+ * cdef double mu = 2.35
+ * cdef double m_H = 1.67e-27
+ */
+  __pyx_t_3 = (__pyx_v_20R_photosphere_cython_gamma - 1.0);
+  if (unlikely(__pyx_v_20R_photosphere_cython_gamma == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 21, __pyx_L1_error)
+  }
+  __pyx_v_20R_photosphere_cython_Delta_ab = (__pyx_t_3 / __pyx_v_20R_photosphere_cython_gamma);
+
+  /* "R_photosphere_cython.pyx":22
+ * cdef double gamma = 5/3
+ * cdef double Delta_ab = (gamma-1)/gamma
+ * cdef double mu = 2.35             # <<<<<<<<<<<<<<
+ * cdef double m_H = 1.67e-27
+ * cdef double k_B = 1.381e-23
+ */
+  __pyx_v_20R_photosphere_cython_mu = 2.35;
+
+  /* "R_photosphere_cython.pyx":23
+ * cdef double Delta_ab = (gamma-1)/gamma
+ * cdef double mu = 2.35
+ * cdef double m_H = 1.67e-27             # <<<<<<<<<<<<<<
+ * cdef double k_B = 1.381e-23
+ * cdef double alpha = 0.68
+ */
+  __pyx_v_20R_photosphere_cython_m_H = 1.67e-27;
+
+  /* "R_photosphere_cython.pyx":24
+ * cdef double mu = 2.35
+ * cdef double m_H = 1.67e-27
+ * cdef double k_B = 1.381e-23             # <<<<<<<<<<<<<<
+ * cdef double alpha = 0.68
+ * cdef double beta = 0.45
+ */
+  __pyx_v_20R_photosphere_cython_k_B = 1.381e-23;
+
+  /* "R_photosphere_cython.pyx":25
+ * cdef double m_H = 1.67e-27
+ * cdef double k_B = 1.381e-23
+ * cdef double alpha = 0.68             # <<<<<<<<<<<<<<
+ * cdef double beta = 0.45
+ * cdef double M_sun = 1.989e30
+ */
+  __pyx_v_20R_photosphere_cython_alpha = 0.68;
+
+  /* "R_photosphere_cython.pyx":26
+ * cdef double k_B = 1.381e-23
+ * cdef double alpha = 0.68
+ * cdef double beta = 0.45             # <<<<<<<<<<<<<<
+ * cdef double M_sun = 1.989e30
+ * cdef double L_sun = 3.828e26
+ */
+  __pyx_v_20R_photosphere_cython_beta = 0.45;
+
+  /* "R_photosphere_cython.pyx":27
+ * cdef double alpha = 0.68
+ * cdef double beta = 0.45
+ * cdef double M_sun = 1.989e30             # <<<<<<<<<<<<<<
+ * cdef double L_sun = 3.828e26
+ * cdef double AU = 1.496e11
+ */
+  __pyx_v_20R_photosphere_cython_M_sun = 1.989e30;
+
+  /* "R_photosphere_cython.pyx":28
+ * cdef double beta = 0.45
+ * cdef double M_sun = 1.989e30
+ * cdef double L_sun = 3.828e26             # <<<<<<<<<<<<<<
+ * cdef double AU = 1.496e11
+ * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+ */
+  __pyx_v_20R_photosphere_cython_L_sun = 3.828e26;
+
+  /* "R_photosphere_cython.pyx":29
+ * cdef double M_sun = 1.989e30
+ * cdef double L_sun = 3.828e26
+ * cdef double AU = 1.496e11             # <<<<<<<<<<<<<<
+ * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+ * cdef double M_earth = 5.927e24
+ */
+  __pyx_v_20R_photosphere_cython_AU = 1.496e11;
+
+  /* "R_photosphere_cython.pyx":30
+ * cdef double L_sun = 3.828e26
+ * cdef double AU = 1.496e11
+ * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25             # <<<<<<<<<<<<<<
+ * cdef double M_earth = 5.927e24
+ * cdef double R_earth = 6.378e6
+ */
+  __pyx_t_3 = ((((16.0 * __pyx_v_20R_photosphere_cython_stefan) * __pyx_v_20R_photosphere_cython_pi) * __pyx_v_20R_photosphere_cython_AU) * __pyx_v_20R_photosphere_cython_AU);
+  if (unlikely(__pyx_t_3 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 30, __pyx_L1_error)
+  }
+  __pyx_v_20R_photosphere_cython_T_eq_earth = pow((__pyx_v_20R_photosphere_cython_L_sun / __pyx_t_3), 0.25);
+
+  /* "R_photosphere_cython.pyx":31
+ * cdef double AU = 1.496e11
+ * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+ * cdef double M_earth = 5.927e24             # <<<<<<<<<<<<<<
+ * cdef double R_earth = 6.378e6
+ * cdef double eta_0 = 0.17
+ */
+  __pyx_v_20R_photosphere_cython_M_earth = 5.927e24;
+
+  /* "R_photosphere_cython.pyx":32
+ * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+ * cdef double M_earth = 5.927e24
+ * cdef double R_earth = 6.378e6             # <<<<<<<<<<<<<<
+ * cdef double eta_0 = 0.17
+ * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+ */
+  __pyx_v_20R_photosphere_cython_R_earth = 6.378e6;
+
+  /* "R_photosphere_cython.pyx":33
+ * cdef double M_earth = 5.927e24
+ * cdef double R_earth = 6.378e6
+ * cdef double eta_0 = 0.17             # <<<<<<<<<<<<<<
+ * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+ * cdef double t_sat = 100 * Myr
+ */
+  __pyx_v_20R_photosphere_cython_eta_0 = 0.17;
+
+  /* "R_photosphere_cython.pyx":34
+ * cdef double R_earth = 6.378e6
+ * cdef double eta_0 = 0.17
+ * cdef double Myr = 1e6 * 365 * 24 * 60 * 60             # <<<<<<<<<<<<<<
+ * cdef double t_sat = 100 * Myr
+ * cdef double a0 = 0.5
+ */
+  __pyx_v_20R_photosphere_cython_Myr = ((((1e6 * 365.0) * 24.0) * 60.0) * 60.0);
+
+  /* "R_photosphere_cython.pyx":35
+ * cdef double eta_0 = 0.17
+ * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+ * cdef double t_sat = 100 * Myr             # <<<<<<<<<<<<<<
+ * cdef double a0 = 0.5
+ * cdef double b_cutoff = 0.7
+ */
+  __pyx_v_20R_photosphere_cython_t_sat = (100.0 * __pyx_v_20R_photosphere_cython_Myr);
+
+  /* "R_photosphere_cython.pyx":36
+ * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+ * cdef double t_sat = 100 * Myr
+ * cdef double a0 = 0.5             # <<<<<<<<<<<<<<
+ * cdef double b_cutoff = 0.7
+ * cdef double R_sun = 6.957e8
+ */
+  __pyx_v_20R_photosphere_cython_a0 = 0.5;
+
+  /* "R_photosphere_cython.pyx":37
+ * cdef double t_sat = 100 * Myr
+ * cdef double a0 = 0.5
+ * cdef double b_cutoff = 0.7             # <<<<<<<<<<<<<<
+ * cdef double R_sun = 6.957e8
+ * 
+ */
+  __pyx_v_20R_photosphere_cython_b_cutoff = 0.7;
+
+  /* "R_photosphere_cython.pyx":38
+ * cdef double a0 = 0.5
+ * cdef double b_cutoff = 0.7
+ * cdef double R_sun = 6.957e8             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_v_20R_photosphere_cython_R_sun = 6.957e8;
+
+  /* "R_photosphere_cython.pyx":43
  * # /////////////////////////// IMPORT TABULATED INTEGRALS ///////////////////// #
  * 
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * I2_array = np.loadtxt("I2.csv", delimiter=',')
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__7, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__7, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_dR_Rc_array, __pyx_t_3) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_dR_Rc_array, __pyx_t_4) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "R_photosphere_cython.pyx":19
+  /* "R_photosphere_cython.pyx":44
  * 
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')
  * I2_array = np.loadtxt("I2.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')
  * 
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__9, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__9, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_array, __pyx_t_2) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_array, __pyx_t_2) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "R_photosphere_cython.pyx":20
+  /* "R_photosphere_cython.pyx":45
  * dR_Rc_array = np.loadtxt("dR_Rc_array.csv", delimiter=',')
  * I2_array = np.loadtxt("I2.csv", delimiter=',')
  * I2_I1_array = np.loadtxt("I2_I1.csv", delimiter=',')             # <<<<<<<<<<<<<<
  * 
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_loadtxt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_delimiter, __pyx_kp_s__8) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_I1_array, __pyx_t_1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_I1_array, __pyx_t_1) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "R_photosphere_cython.pyx":24
+  /* "R_photosphere_cython.pyx":49
  * # /////////////////////////// INTERPOLATION OF INTEGRALS ///////////////////// #
  * 
  * def I2_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
  *     """
  *     interpolates from tabulated integral values of I2:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_1I2_interpolate, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_1I2_interpolate, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_interpolate, __pyx_t_1) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_interpolate, __pyx_t_1) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "R_photosphere_cython.pyx":34
+  /* "R_photosphere_cython.pyx":59
  * 
  * 
  * def I2_I1_interpolate(dR_Rc):             # <<<<<<<<<<<<<<
  *     """
  *     interpolates from tabulated integral values of I2/I1:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_3I2_I1_interpolate, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_3I2_I1_interpolate, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_I1_interpolate, __pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":45
- * # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
- * 
- * def calculate_T_eq(M_star, a):             # <<<<<<<<<<<<<<
- *     """
- *     Calculates the equilibrium temperature of the planet:
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_5calculate_T_eq, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculate_T_eq, __pyx_t_1) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":56
- * 
- * 
- * def calculate_sound_speed_squared(T_eq):             # <<<<<<<<<<<<<<
- *     """
- *     Calculates the isothermal sound speed of atmosphere:
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_7calculate_sound_speed_squared, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculate_sound_speed_squared, __pyx_t_1) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "R_photosphere_cython.pyx":133
- * # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
- * 
- * def calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess):             # <<<<<<<<<<<<<<
- *     """
- *     Returns the photospheric radius of the planet (in meters):
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_20R_photosphere_cython_9calculate_R_photosphere, NULL, __pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculate_R_photosphere, __pyx_t_1) < 0) __PYX_ERR(0, 133, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_I2_I1_interpolate, __pyx_t_1) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "R_photosphere_cython.pyx":1
@@ -4892,7 +4751,7 @@ if (!__Pyx_RefNanny) {
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init R_photosphere_cython", 0, __pyx_lineno, __pyx_filename);
@@ -5148,146 +5007,70 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 }
 #endif
 
-/* RaiseArgTupleInvalid */
-    static void __Pyx_RaiseArgtupleInvalid(
-    const char* func_name,
-    int exact,
-    Py_ssize_t num_min,
-    Py_ssize_t num_max,
-    Py_ssize_t num_found)
-{
-    Py_ssize_t num_expected;
-    const char *more_or_less;
-    if (num_found < num_min) {
-        num_expected = num_min;
-        more_or_less = "at least";
-    } else {
-        num_expected = num_max;
-        more_or_less = "at most";
-    }
-    if (exact) {
-        more_or_less = "exactly";
-    }
-    PyErr_Format(PyExc_TypeError,
-                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                 func_name, more_or_less, num_expected,
-                 (num_expected == 1) ? "" : "s", num_found);
+/* PyErrFetchRestore */
+    #if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
 }
-
-/* RaiseDoubleKeywords */
-    static void __Pyx_RaiseDoubleKeywordsError(
-    const char* func_name,
-    PyObject* kw_name)
-{
-    PyErr_Format(PyExc_TypeError,
-        #if PY_MAJOR_VERSION >= 3
-        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
-        #else
-        "%s() got multiple values for keyword argument '%s'", func_name,
-        PyString_AsString(kw_name));
-        #endif
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
 }
+#endif
 
-/* ParseKeywords */
-    static int __Pyx_ParseOptionalKeywords(
-    PyObject *kwds,
-    PyObject **argnames[],
-    PyObject *kwds2,
-    PyObject *values[],
-    Py_ssize_t num_pos_args,
-    const char* function_name)
-{
-    PyObject *key = 0, *value = 0;
-    Py_ssize_t pos = 0;
-    PyObject*** name;
-    PyObject*** first_kw_arg = argnames + num_pos_args;
-    while (PyDict_Next(kwds, &pos, &key, &value)) {
-        name = first_kw_arg;
-        while (*name && (**name != key)) name++;
-        if (*name) {
-            values[name-argnames] = value;
-            continue;
-        }
-        name = first_kw_arg;
-        #if PY_MAJOR_VERSION < 3
-        if (likely(PyString_CheckExact(key)) || likely(PyString_Check(key))) {
-            while (*name) {
-                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
-                        && _PyString_Eq(**name, key)) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    if ((**argname == key) || (
-                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
-                             && _PyString_Eq(**argname, key))) {
-                        goto arg_passed_twice;
-                    }
-                    argname++;
-                }
-            }
-        } else
-        #endif
-        if (likely(PyUnicode_Check(key))) {
-            while (*name) {
-                int cmp = (**name == key) ? 0 :
-                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                    (PyUnicode_GET_SIZE(**name) != PyUnicode_GET_SIZE(key)) ? 1 :
-                #endif
-                    PyUnicode_Compare(**name, key);
-                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                if (cmp == 0) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    int cmp = (**argname == key) ? 0 :
-                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                        (PyUnicode_GET_SIZE(**argname) != PyUnicode_GET_SIZE(key)) ? 1 :
-                    #endif
-                        PyUnicode_Compare(**argname, key);
-                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                    if (cmp == 0) goto arg_passed_twice;
-                    argname++;
-                }
-            }
-        } else
-            goto invalid_keyword_type;
-        if (kwds2) {
-            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
-        } else {
-            goto invalid_keyword;
-        }
+/* WriteUnraisableException */
+    static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
     }
-    return 0;
-arg_passed_twice:
-    __Pyx_RaiseDoubleKeywordsError(function_name, key);
-    goto bad;
-invalid_keyword_type:
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() keywords must be strings", function_name);
-    goto bad;
-invalid_keyword:
-    PyErr_Format(PyExc_TypeError,
     #if PY_MAJOR_VERSION < 3
-        "%.200s() got an unexpected keyword argument '%.200s'",
-        function_name, PyString_AsString(key));
+    ctx = PyString_FromString(name);
     #else
-        "%s() got an unexpected keyword argument '%U'",
-        function_name, key);
+    ctx = PyUnicode_FromString(name);
     #endif
-bad:
-    return -1;
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
 }
 
 /* PyObjectCallMethO */
@@ -5472,194 +5255,6 @@ static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
 }
 #endif
 
-/* PyIntBinop */
-    #if !CYTHON_COMPILING_IN_PYPY
-static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, CYTHON_UNUSED int inplace) {
-    #if PY_MAJOR_VERSION < 3
-    if (likely(PyInt_CheckExact(op1))) {
-        const long b = intval;
-        long x;
-        long a = PyInt_AS_LONG(op1);
-            x = (long)((unsigned long)a + b);
-            if (likely((x^a) >= 0 || (x^b) >= 0))
-                return PyInt_FromLong(x);
-            return PyLong_Type.tp_as_number->nb_add(op1, op2);
-    }
-    #endif
-    #if CYTHON_USE_PYLONG_INTERNALS
-    if (likely(PyLong_CheckExact(op1))) {
-        const long b = intval;
-        long a, x;
-#ifdef HAVE_LONG_LONG
-        const PY_LONG_LONG llb = intval;
-        PY_LONG_LONG lla, llx;
-#endif
-        const digit* digits = ((PyLongObject*)op1)->ob_digit;
-        const Py_ssize_t size = Py_SIZE(op1);
-        if (likely(__Pyx_sst_abs(size) <= 1)) {
-            a = likely(size) ? digits[0] : 0;
-            if (size == -1) a = -a;
-        } else {
-            switch (size) {
-                case -2:
-                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                        a = -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
-                        lla = -(PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                case 2:
-                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                        a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
-                        lla = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                case -3:
-                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                        a = -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
-                        lla = -(PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                case 3:
-                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                        a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
-                        lla = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                case -4:
-                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                        a = -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
-                        lla = -(PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                case 4:
-                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                        a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
-                        break;
-#ifdef HAVE_LONG_LONG
-                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
-                        lla = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
-                        goto long_long;
-#endif
-                    }
-                    CYTHON_FALLTHROUGH;
-                default: return PyLong_Type.tp_as_number->nb_add(op1, op2);
-            }
-        }
-                x = a + b;
-            return PyLong_FromLong(x);
-#ifdef HAVE_LONG_LONG
-        long_long:
-                llx = lla + llb;
-            return PyLong_FromLongLong(llx);
-#endif
-        
-        
-    }
-    #endif
-    if (PyFloat_CheckExact(op1)) {
-        const long b = intval;
-        double a = PyFloat_AS_DOUBLE(op1);
-            double result;
-            PyFPE_START_PROTECT("add", return NULL)
-            result = ((double)a) + (double)b;
-            PyFPE_END_PROTECT(result)
-            return PyFloat_FromDouble(result);
-    }
-    return (inplace ? PyNumber_InPlaceAdd : PyNumber_Add)(op1, op2);
-}
-#endif
-
-/* PyErrFetchRestore */
-    #if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-    static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
-
 /* RaiseTooManyValuesToUnpack */
     static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
     PyErr_Format(PyExc_ValueError,
@@ -5718,6 +5313,148 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
         return __Pyx_IterFinish();
     }
     return 0;
+}
+
+/* RaiseArgTupleInvalid */
+    static void __Pyx_RaiseArgtupleInvalid(
+    const char* func_name,
+    int exact,
+    Py_ssize_t num_min,
+    Py_ssize_t num_max,
+    Py_ssize_t num_found)
+{
+    Py_ssize_t num_expected;
+    const char *more_or_less;
+    if (num_found < num_min) {
+        num_expected = num_min;
+        more_or_less = "at least";
+    } else {
+        num_expected = num_max;
+        more_or_less = "at most";
+    }
+    if (exact) {
+        more_or_less = "exactly";
+    }
+    PyErr_Format(PyExc_TypeError,
+                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
+                 func_name, more_or_less, num_expected,
+                 (num_expected == 1) ? "" : "s", num_found);
+}
+
+/* RaiseDoubleKeywords */
+    static void __Pyx_RaiseDoubleKeywordsError(
+    const char* func_name,
+    PyObject* kw_name)
+{
+    PyErr_Format(PyExc_TypeError,
+        #if PY_MAJOR_VERSION >= 3
+        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
+        #else
+        "%s() got multiple values for keyword argument '%s'", func_name,
+        PyString_AsString(kw_name));
+        #endif
+}
+
+/* ParseKeywords */
+    static int __Pyx_ParseOptionalKeywords(
+    PyObject *kwds,
+    PyObject **argnames[],
+    PyObject *kwds2,
+    PyObject *values[],
+    Py_ssize_t num_pos_args,
+    const char* function_name)
+{
+    PyObject *key = 0, *value = 0;
+    Py_ssize_t pos = 0;
+    PyObject*** name;
+    PyObject*** first_kw_arg = argnames + num_pos_args;
+    while (PyDict_Next(kwds, &pos, &key, &value)) {
+        name = first_kw_arg;
+        while (*name && (**name != key)) name++;
+        if (*name) {
+            values[name-argnames] = value;
+            continue;
+        }
+        name = first_kw_arg;
+        #if PY_MAJOR_VERSION < 3
+        if (likely(PyString_CheckExact(key)) || likely(PyString_Check(key))) {
+            while (*name) {
+                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
+                        && _PyString_Eq(**name, key)) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    if ((**argname == key) || (
+                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
+                             && _PyString_Eq(**argname, key))) {
+                        goto arg_passed_twice;
+                    }
+                    argname++;
+                }
+            }
+        } else
+        #endif
+        if (likely(PyUnicode_Check(key))) {
+            while (*name) {
+                int cmp = (**name == key) ? 0 :
+                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                    (PyUnicode_GET_SIZE(**name) != PyUnicode_GET_SIZE(key)) ? 1 :
+                #endif
+                    PyUnicode_Compare(**name, key);
+                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                if (cmp == 0) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    int cmp = (**argname == key) ? 0 :
+                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                        (PyUnicode_GET_SIZE(**argname) != PyUnicode_GET_SIZE(key)) ? 1 :
+                    #endif
+                        PyUnicode_Compare(**argname, key);
+                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                    if (cmp == 0) goto arg_passed_twice;
+                    argname++;
+                }
+            }
+        } else
+            goto invalid_keyword_type;
+        if (kwds2) {
+            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
+        } else {
+            goto invalid_keyword;
+        }
+    }
+    return 0;
+arg_passed_twice:
+    __Pyx_RaiseDoubleKeywordsError(function_name, key);
+    goto bad;
+invalid_keyword_type:
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() keywords must be strings", function_name);
+    goto bad;
+invalid_keyword:
+    PyErr_Format(PyExc_TypeError,
+    #if PY_MAJOR_VERSION < 3
+        "%.200s() got an unexpected keyword argument '%.200s'",
+        function_name, PyString_AsString(key));
+    #else
+        "%s() got an unexpected keyword argument '%U'",
+        function_name, key);
+    #endif
+bad:
+    return -1;
 }
 
 /* FetchCommonType */

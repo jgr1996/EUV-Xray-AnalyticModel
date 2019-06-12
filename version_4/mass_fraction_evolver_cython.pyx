@@ -14,10 +14,33 @@ Date: 12/11/2018
 This file carries out analytic calculations presented in Owen & Wu (2017) that
 forward integrate the atmospheric mass fraction of a small, close-in planet.
 """
+cdef double pi = 3.141598
+cdef double stefan = 5.67e-8
+cdef double kappa_0 = 2.294e-8
+cdef double G = 6.674e-11
+cdef double gamma = 5/3
+cdef double Delta_ab = (gamma-1)/gamma
+cdef double mu = 2.35
+cdef double m_H = 1.67e-27
+cdef double k_B = 1.381e-23
+cdef double alpha = 0.68
+cdef double beta = 0.45
+cdef double M_sun = 1.989e30
+cdef double L_sun = 3.828e26
+cdef double AU = 1.496e11
+cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
+cdef double M_earth = 5.927e24
+cdef double R_earth = 6.378e6
+cdef double eta_0 = 0.17
+cdef double Myr = 1e6 * 365 * 24 * 60 * 60
+cdef double t_sat = 100 * Myr
+cdef double a0 = 0.5
+cdef double b_cutoff = 0.7
+cdef double R_sun = 6.957e8
 
 
 # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
-def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
+cdef double calculate_tX(double t, double X, double M_core, double M_star, double a, double R_core, double KH_timescale_cutoff, double R_guess):
 
     """
     This function calculated the mass-loss timescale of the atmosphere. See Owen
@@ -25,62 +48,69 @@ def calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess):
     """
 
     # convert to SI units
-    M_core_kg = M_core * M_earth
-    a_meters = a * AU
-    t_seconds = t * Myr
-    R_core_meters = R_core * R_earth
+    cdef double M_core_kg = M_core * M_earth
+    cdef double a_meters = a * AU
+    cdef double t_seconds = t * Myr
+    cdef double R_core_meters = R_core * R_earth
 
     # Calculate envelope mass (kg)
-    M_env_kg = X * M_core_kg
+    cdef double M_env_kg = X * M_core_kg
 
     # calculate saturation luminosity for photoevaporation
-    L_sat = 10**(-3.5) * L_sun * M_star
+    cdef double L_sat = 10**(-3.5) * L_sun * M_star
+    cdef double L_HE
     if t_seconds < t_sat:
         L_HE = L_sat
     else:
         L_HE = L_sat * (t_seconds/t_sat)**(-1-a0)
 
     # Calulate photospheric radius
-    R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core,
-                                                 X, KH_timescale_cutoff, R_guess)
+    cdef double R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess)
 
-    if R_ph == None:
-        return None
+    if R_ph == 0.0:
+        return 0.0
 
-    escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
-    eta = eta_0 * (escape_velocity / 23 )**(-0.42)
+    cdef double escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
+    cdef double eta = eta_0 * (escape_velocity / 23)**(-0.42)
+
     # Calculate mass loss rate due to photoevaporation
-    M_env_dot = eta * R_ph**3 * L_HE / (4 * a_meters * a_meters * G * M_core_kg)
+    cdef double M_env_dot = eta * R_ph**3 * L_HE / (4 * a_meters * a_meters * G * M_core_kg)
 
     # Calculate mass-loss timescale
-    tX = (M_env_kg / M_env_dot) / Myr
+    cdef double tX = (M_env_kg / M_env_dot) / Myr
 
     return tX
 
 # /////////////////////////// MASS FRACTION EVOLUTION ODE //////////////////// #
 
-def dXdt_ODE(t, X, parameters):
+cdef double dXdt_ODE(double t, double X, parameters):
 
     """
     This function presents the ODE for atmospheric mass-loss dX/dt = - X / tX
     where X = M_atmosphere / M_core and tX is the mass-loss timeascale.
     """
+    cdef double M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess
+    M_core = parameters[0]
+    M_star = parameters[1]
+    a = parameters[2]
+    R_core = parameters[3]
+    KH_timescale_cutoff = parameters[4]
+    R_guess = parameters[5]
+    #M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
 
-    M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
+    cdef double tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
 
-    tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
+    if tX == 0.0:
+        return 0.0
 
-    if tX == None:
-        return None
-
-    dXdt = - X / tX
+    cdef double dXdt = - X / tX
 
     return dXdt
 
 
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
-def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
+cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy, params):
 
     """
     This function controls the integration of the mass-loss ODE. It calls upon
@@ -89,21 +119,20 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
     of the mass fraction X.
     """
 
+    cdef double initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff
     initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params
 
     # core density to core radius (measure in Earth radii)
-    core_density_SI= core_density * 1000
+    cdef double core_density_SI= core_density * 1000
 
-    density_norm = 1.7589 * core_density**(-0.3329)
-    R_core = density_norm * ((M_core)**0.25)
+    cdef double density_norm = 1.7589 * core_density**(-0.3329)
+    cdef double R_core = density_norm * ((M_core)**0.25)
 
     # orbital period to semi-major axis measured in AU
-    a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
+    cdef double a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
 
     #calculate initial photospheric radius
-    R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,
-                                                      R_core, initial_X, KH_timescale_cutoff,
-                                                      R_guess=0.0)
+    R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,R_core, initial_X, KH_timescale_cutoff,R_guess=0.0)
 
     # define arrays for storing t steps and variables
     X_array = np.array([initial_X])
@@ -112,13 +141,12 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 
     # define first time and time step
     t = t_array[0]
-    dt = dt_try
+    cdef double dt = dt_try
 
     # setup loop
-    while t<= t_stop:
+    while t <= t_stop:
         #perform an adaptive RK45 step
-        (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy,
-                                                     parameters=(M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]))
+        (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
 
         if (t_new, X_new, dt_next) == (None, None, None):
             return None, None, None, None, None, None

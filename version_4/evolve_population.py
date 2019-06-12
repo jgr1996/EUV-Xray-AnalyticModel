@@ -9,7 +9,7 @@ from scipy import special
 from mpi4py import MPI
 import matplotlib.pyplot as plt
 from constants import *
-import mass_fraction_evolver
+import mass_fraction_evolver_cython
 
 """
 Author: Rogers, J. G
@@ -242,7 +242,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
             tag = status.Get_tag()
 
             if tag == tags.START:
-                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver.RK45_driver(1, 3000, 0.01, 1e-5, params)
+                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver_cython.RK45_driver(1, 3000, 0.01, 1e-5, params)
                 comm.send((R_ph, P, M, X, R_core, R_star), dest=0, tag=tags.DONE)
             elif tag == tags.EXIT:
                 break

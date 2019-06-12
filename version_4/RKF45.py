@@ -12,7 +12,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
 
     # calculate the individual conributions to prediction
     k1 = dydx_functions(t, var_i, parameters)
-    if k1 == None:
+    if k1 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k1 = k1*dt
     var1 = var_i + 0.2*k1
@@ -20,7 +20,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
         return (None, None)
 
     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
-    if k2 == None:
+    if k2 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k2 = k2*dt
     var2 = var_i + (3/40)*k1 + (9/40)*k2
@@ -28,7 +28,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
         return (None, None)
 
     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
-    if k3 == None:
+    if k3 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k3 = k3*dt
     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
@@ -36,7 +36,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
         return (None, None)
 
     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
-    if k4 == None:
+    if k4 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k4 = k4*dt
     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
@@ -44,7 +44,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
         return (None, None)
 
     k5 = dydx_functions(t +       dt, var4, parameters)
-    if k5 == None:
+    if k5 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k5 = k5*dt
     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
@@ -53,7 +53,7 @@ def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
         return (None, None)
 
     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
-    if k6 == None:
+    if k6 == 0.0:
         return ("BRENTQ ERROR", "BRENTQ ERROR")
     k6 = k6*dt
 

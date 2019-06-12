@@ -37,24 +37,24 @@ def likelihood(theta, N, data_array):
         data = np.vstack([np.log(P),np.log(R)])
         kernel = stats.gaussian_kde(data)
         Z = np.reshape(kernel(positions).T, X.shape)
-        Z_norm = 1 / np.sum(Z)
-        Z = Z_norm * Z
-
         KDE_interp = interpolate.RectBivariateSpline(y,x,Z)
 
         P_data = data_array[3,:]
         R_data = data_array[2,:]
 
         logL = 0
-        for i in range(len(P_data)):
+        for i in range(len(P)):
             # MUST SWAP ORDER OF P AND R!!!
             logL_i = KDE_interp(R_data[i], P_data[i])[0,0]
-            if logL_i <= 0.0:
-                logL = logL - 300
-            else:
-                logL = logL + np.log(abs(logL_i))
+            logL = logL + np.log10(abs(logL_i))
 
-        return logL
+        # plt.contourf(x,y,KDE_interp(y,x), cmap='gnuplot')
+        # plt.xscale('log')
+        # plt.yscale('log')
+        # plt.scatter(P_data, R_data, s=0.5, color='black')
+        # plt.show()
+
+        return logL / len(P)
     else:
         return 0
 
@@ -63,13 +63,11 @@ def likelihood(theta, N, data_array):
 
 # ///////////////////////////////// TEST ///////////////////////////////////// #
 
-comm = MPI.COMM_WORLD   # get MPI communicator object
-rank = comm.rank        # rank of this process
-CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-for i in range(5):
-    L = likelihood_PR_space([0.03, 0.21, 0.47, 0.25, 0.41, 0.95, 0.04, 0.09, 0.41, 0.55, 0.40, 1.36, 5.0],
-                            1000,
-                            CKS_array)
-
-    if rank == 0:
-        print L
+# comm = MPI.COMM_WORLD   # get MPI communicator object
+# rank = comm.rank        # rank of this process
+# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# for i in range(1):
+#     L = likelihood([0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5], 1000, CKS_array)
+#
+#     if rank == 0:
+#         print L

@@ -18,14 +18,16 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
+    theta = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95, 0.1, 0.2, 0.4, 0.3, 1.0, 4.5]
+    # theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
+
     ndim = len(theta)
     n_walkers = 100
     n_iterations = 10000
 
     theta_guesses = []
     for i in range(n_walkers):
-        theta_guesses.append([x + rand.uniform(0, 1e-2*x) for x in theta])
+        theta_guesses.append([x + rand.uniform(0, 5e-2*x) for x in theta])
 
     N = 2000
     step_size = 0.05
@@ -73,6 +75,6 @@ if __name__ == '__main__':
             if sampler.iteration % 100:
                 continue
             tau = sampler.get_autocorr_time(tol=0)
-            file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
+            file = open("./RESULTS/{0}/Autocorrelation_{1}.txt".format(current_time_string,iteration), "w")
             file.write("The autocorreclation time is {0} for iteration {1} \n".format(tau, sampler.iteration))
             file.close()
