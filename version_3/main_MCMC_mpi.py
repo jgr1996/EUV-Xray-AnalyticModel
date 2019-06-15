@@ -18,8 +18,8 @@ if __name__ == '__main__':
     rank = comm.rank        # rank of this process
 
     # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    theta = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95, 0.1, 0.2, 0.4, 0.3, 1.0, 4.5]
-    # theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
+    # theta = [0.1, 0.20, 0.4, 0.4, 0.3, 0.95, 0.1, 0.2, 0.4, 0.3, 1.0, 4.5]
+    theta = [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
 
     ndim = len(theta)
     n_walkers = 100

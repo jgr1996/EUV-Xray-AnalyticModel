@@ -22,12 +22,15 @@ def likelihood(theta, N, data_array):
     if any(n > 10.0 for n in theta):
         return -np.inf
 
+    time1 = time.time()
     R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
+    time2 = time.time()
+    print "It took {0} seconds for {1} planets".format(time2-time1, len(R))
 
     if rank == 0:
 
         if len(R) <= 0.5 * N:
-            print "Not enough planets for {}".format(theta)
+            print "Only {0} planets for {1}".format(len(R), theta)
             return -np.inf
 
         x = np.logspace(-1,2,150)
@@ -43,7 +46,7 @@ def likelihood(theta, N, data_array):
         R_data = data_array[2,:]
 
         logL = 0
-        for i in range(len(P)):
+        for i in range(len(P_data)):
             # MUST SWAP ORDER OF P AND R!!!
             logL_i = KDE_interp(R_data[i], P_data[i])[0,0]
             logL = logL + np.log10(abs(logL_i))

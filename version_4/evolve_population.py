@@ -147,6 +147,9 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
         start_time = time.time()
         transit_number = 0
+        print "Here we go, Berstein parameters are"
+        print distribution_parameters
+
         while transit_number < N:
 
             if time.time() - start_time >= 300:
@@ -186,6 +189,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
             KH_timescale_cutoff_list.append(KH_timescale)
             transit_number = transit_number + 1
 
+
+
         tasks = range(N)
         task_index = 0
         num_workers = size - 1
@@ -203,6 +208,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
                 # Worker is ready, so send it a task
                 if task_index < len(tasks):
                     params = [k[task_index] for k in [X_initial_list, core_density_list, M_core_list, period_list, M_star_list, R_star_list, KH_timescale_cutoff_list]]
+                    if params[0] > 1.0:
+                        print "I've just sent X={}... :(".format(params[0])
                     comm.send(params, dest=source, tag=tags.START)
                     task_index += 1
                 else:
