@@ -123,8 +123,6 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
     initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params
 
     # core density to core radius (measure in Earth radii)
-    cdef double core_density_SI= core_density * 1000
-
     cdef double density_norm = 1.7589 * core_density**(-0.3329)
     cdef double R_core = density_norm * ((M_core)**0.25)
 

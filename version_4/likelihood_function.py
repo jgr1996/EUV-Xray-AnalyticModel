@@ -12,7 +12,7 @@ import evolve_population
 from evolve_population import bernstein_poly
 
 
-def likelihood(theta, N, data_array):
+def likelihood(theta, N, data_array, completeness_array):
 
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
@@ -34,7 +34,7 @@ def likelihood(theta, N, data_array):
     CDF_X = [(((X_norm/X_poly_norm) * ((bernstein_poly(i, 5, initial_X_coeffs)) - X_poly_min)) + X_min) for i in a_range]
     for i in range(1,len(CDF_X)):
         if CDF_X[i-1] > CDF_X[i]:
-            print "Not increasing CDF for X"
+            # print "Not increasing CDF for X"
             return -np.inf
 
     core_mass_coeffs = [theta[i+6] for i in range(6)]
@@ -45,18 +45,18 @@ def likelihood(theta, N, data_array):
     CDF_M = [(((M_norm/M_poly_norm) * ((bernstein_poly(i, 5, core_mass_coeffs)) - M_poly_min)) + M_min) for i in a_range]
     for i in range(1,len(CDF_M)):
         if CDF_M[i-1] > CDF_M[i]:
-            print "Not increasing CDF for M"
+            # print "Not increasing CDF for M"
             return -np.inf
 
 
     # calculate population
-    time1 = time.time()
-    R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected = evolve_population.CKS_synthetic_observation(N, theta)
-    time2 = time.time()
+    # time1 = time.time()
+    R, P, M, X, R_core = evolve_population.CKS_synthetic_observation(N, theta)
+    # time2 = time.time()
 
 
     if rank == 0:
-        print "It took {0} seconds for {1} planets".format(time2-time1, len(R))
+        # print "It took {0} seconds for {1} planets".format(time2-time1, len(R))
         if len(R) <= 0.5 * N:
             return -np.inf
 
@@ -67,7 +67,8 @@ def likelihood(theta, N, data_array):
         data = np.vstack([np.log(P),np.log(R)])
         kernel = stats.gaussian_kde(data)
         Z = np.reshape(kernel(positions).T, X.shape)
-        KDE_interp = interpolate.RectBivariateSpline(y,x,Z)
+        Z_biased = Z * completeness_array.T
+        KDE_interp = interpolate.RectBivariateSpline(y,x,Z_biased)
 
         P_data = data_array[3,:]
         R_data = data_array[2,:]
@@ -78,7 +79,14 @@ def likelihood(theta, N, data_array):
             logL_i = KDE_interp(R_data[i], P_data[i])[0,0]
             logL = logL + np.log10(abs(logL_i))
 
-        # plt.contourf(x,y,KDE_interp(y,x), cmap='gnuplot')
+        # plt.figure(1)
+        # plt.contourf(x,y,Z, cmap='Oranges')
+        # plt.xscale('log')
+        # plt.yscale('log')
+        # plt.scatter(P, R, s=0.5, color='black')
+        #
+        # plt.figure(2)
+        # plt.contourf(x,y,Z_biased, cmap='Oranges')
         # plt.xscale('log')
         # plt.yscale('log')
         # plt.scatter(P_data, R_data, s=0.5, color='black')
@@ -96,8 +104,9 @@ def likelihood(theta, N, data_array):
 # comm = MPI.COMM_WORLD   # get MPI communicator object
 # rank = comm.rank        # rank of this process
 # CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# CKS_completeness_array = np.loadtxt("survey_completeness.txt", delimiter=',')
 # for i in range(1):
-#     L = likelihood([0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5], 2000, CKS_array)
+#     L = likelihood([0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.0], 1000, CKS_array, CKS_completeness_array)
 #
 #     if rank == 0:
 #         print L

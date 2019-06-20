@@ -153,3 +153,16 @@ def planet_radius_err():
 
     plt.plot(radii, mean_err, '+', linestyle='None')
     plt.show()
+
+def stellar_mass():
+    M_star = list(useful_CKS[1,:])
+    plt.hist(M_star, bins=50, histtype='step', color='black', linewidth=2)
+    plt.show()
+
+def stellar_radius():
+    M_star = list(useful_CKS[0,:])
+    plt.hist(M_star, bins=50, histtype='step', color='black', linewidth=2)
+    plt.show()
+
+
+stellar_radius()
