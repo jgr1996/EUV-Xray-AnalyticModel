@@ -17,9 +17,9 @@ if __name__ == '__main__':
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
-    # initial guess [X_poly_coeffs, M_poly_coeffs, density_mean]
-    # theta = [0.01, 0.20, 0.4, 0.6, 0.8, 1.0, 0.01, 0.20, 0.4, 0.6, 0.8, 1.0, 1.9, 0.1, 7.6, 4.5]
-    theta = [4.0,1.9,0.01,7.6,0.026,1.44,7.7,1.34]
+    # initial guess [density, period_params, X_params, M_params]
+    theta = [4.0, 1.9, 0.01, 7.6, 0.01, 0.20, 0.4, 0.6, 0.8, 1.0, 0.01, 0.20, 0.4, 0.6, 0.8, 1.0]
+    # theta = [4.0,1.9,0.01,7.6,0.026,1.44,7.7,1.34]
 
     ndim = len(theta)
     n_walkers = 100
@@ -30,7 +30,6 @@ if __name__ == '__main__':
         theta_guesses.append([x + rand.uniform(0, 5e-2*x) for x in theta])
 
     N = 5000
-    step_size = 0.05
 
     if rank == 0:
         # use time as label for output directory
@@ -43,12 +42,10 @@ if __name__ == '__main__':
 
         file = open("./RESULTS/{0}/simulation_details.txt".format(current_time_string), "w")
         file.write("----------------- MCMC Simulation ------------------\n")
-        file.write("Parameters estimated: [Initial X Bernstein Polynomial Coefficients, Core Mass Bernstein Polynomials Coefficients, Core Density]\n")
+        file.write("Parameters estimated: [density, period_params, X_params, M_params]\n")
         file.write("Initial guess localised to: {}\n".format(theta))
         file.write("Number of Walkers: {}\n".format(n_walkers))
-        file.write("Step size: {}\n".format(step_size))
         file.write("Number of iterations: {}\n".format(n_iterations))
-        file.write("Number of cores: {}\n".format(multiprocessing.cpu_count()))
         file.write("----------------------------------------------------\n")
         file.write("Notes: Please Work...\n")
         file.close()
@@ -60,7 +57,6 @@ if __name__ == '__main__':
                                     ndim,
                                     likelihood_function.likelihood,
                                     args=(N, CKS_array, CKS_completeness_array))
-                                    # moves = step_size)
 
 
     iteration = 0

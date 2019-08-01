@@ -50,31 +50,31 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_cdf):
     observation.
     """
 
-    # # random initial mass fraction according to log-normal distribution
-    # X_min, X_max = -3.0, 0.0
-    # X_poly_min, X_poly_max = bernstein_poly(0, 5, initial_X_coeffs), bernstein_poly(1, 5, initial_X_coeffs)
-    # X_poly_norm = X_poly_max - X_poly_min
-    # X_norm = X_max - X_min
-    # U_X = rand.uniform()
-    # X_initial = 10**(((X_norm/X_poly_norm) * ((bernstein_poly(U_X, 5, initial_X_coeffs)) - X_poly_min)) + X_min)
-    #
-    # # random core mass according to Rayleigh
-    # M_min, M_max = 0.75, 10.0
-    # M_poly_min, M_poly_max = bernstein_poly(0, 5, core_mass_coeffs), bernstein_poly(1, 5, core_mass_coeffs)
-    # M_poly_norm = M_poly_max - M_poly_min
-    # M_norm = M_max - M_min
-    # U_M = rand.uniform()
-    # core_mass = ((M_norm/M_poly_norm) * ((bernstein_poly(U_M, 5, core_mass_coeffs)) - M_poly_min)) + M_min
+    # random initial mass fraction according to log-normal distribution
+    X_min, X_max = -3.0, 0.0
+    X_poly_min, X_poly_max = bernstein_poly(0, 5, initial_X_coeffs), bernstein_poly(1, 5, initial_X_coeffs)
+    X_poly_norm = X_poly_max - X_poly_min
+    X_norm = X_max - X_min
+    U_X = rand.uniform()
+    X_initial = 10**(((X_norm/X_poly_norm) * ((bernstein_poly(U_X, 5, initial_X_coeffs)) - X_poly_min)) + X_min)
+
+    # random core mass according to Rayleigh
+    M_min, M_max = 0.5, 10.0
+    M_poly_min, M_poly_max = bernstein_poly(0, 5, core_mass_coeffs), bernstein_poly(1, 5, core_mass_coeffs)
+    M_poly_norm = M_poly_max - M_poly_min
+    M_norm = M_max - M_min
+    U_M = rand.uniform()
+    core_mass = ((M_norm/M_poly_norm) * ((bernstein_poly(U_M, 5, core_mass_coeffs)) - M_poly_min)) + M_min
 
     # random period according to double power law
     P = period_cdf(rand.uniform())
 
-    (X_mean, X_stdev) = initial_X_coeffs
-    X_initial = rand.lognormal(np.log(X_mean), X_stdev)
-
-    # random core mass according to Rayleigh
-    (core_mass_mean, core_mass_stdev) = core_mass_coeffs
-    core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
+    # (X_mean, X_stdev) = initial_X_coeffs
+    # X_initial = rand.lognormal(np.log(X_mean), X_stdev)
+    #
+    # # random core mass according to Rayleigh
+    # (core_mass_mean, core_mass_stdev) = core_mass_coeffs
+    # core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
 
     return X_initial, core_mass, P
 
@@ -168,13 +168,11 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
         density_mean = distribution_parameters[0]
         period_coeffs = [distribution_parameters[i+1] for i in range(3)]
-        initial_X_coeffs = (distribution_parameters[4],distribution_parameters[5])
-        core_mass_coeffs = (distribution_parameters[6],distribution_parameters[7])
+        # initial_X_coeffs = (distribution_parameters[4],distribution_parameters[5])
+        # core_mass_coeffs = (distribution_parameters[6],distribution_parameters[7])
 
-        # initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
-        # core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
-        # period_coeffs = [distribution_parameters[i+12] for i in range(3)]
-        # density_mean = distribution_parameters[-1]
+        initial_X_coeffs = [distribution_parameters[4+i] for i in range(6)]
+        core_mass_coeffs = [distribution_parameters[10+i] for i in range(6)]
 
         KH_timescale = 100
         period_cdf = period_distribution_CDF(period_coeffs[0],
