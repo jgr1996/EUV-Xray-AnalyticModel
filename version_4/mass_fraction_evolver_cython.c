@@ -3,6 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "depends": [], 
         "name": "mass_fraction_evolver_cython", 
         "sources": [
             "mass_fraction_evolver_cython.pyx"
@@ -574,6 +575,8 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE__mass_fraction_evolver_cython
 #define __PYX_HAVE_API__mass_fraction_evolver_cython
 /* Early includes */
+#include <string.h>
+#include <stdlib.h>
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -982,6 +985,9 @@ static CYTHON_INLINE int __Pyx_IterFinish(void);
 /* UnpackItemEndCheck.proto */
 static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
 
+/* None.proto */
+static CYTHON_INLINE double __Pyx_mod_double(double, double);
+
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -1124,6 +1130,10 @@ static int __Pyx_check_binary_version(void);
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
+/* Module declarations from 'libc.string' */
+
+/* Module declarations from 'libc.stdlib' */
+
 /* Module declarations from 'mass_fraction_evolver_cython' */
 static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_double____double____double____object___to_py = 0;
 static double __pyx_v_28mass_fraction_evolver_cython_pi;
@@ -1151,7 +1161,7 @@ static double __pyx_v_28mass_fraction_evolver_cython_b_cutoff;
 static double __pyx_v_28mass_fraction_evolver_cython_R_sun;
 static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double, double, double, double, double, double, double, double); /*proto*/
 static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double, double, PyObject *); /*proto*/
-static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double, double, double, double, PyObject *, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double, double, double, double, double, double, double, double, double, double, double, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__Pyx_CFunc_double____double____double____object___to_py(double (*)(double, double, PyObject *)); /*proto*/
 #define __Pyx_MODULE_NAME "mass_fraction_evolver_cython"
 extern int __pyx_module_is_main_mass_fraction_evolver_cython;
@@ -1160,64 +1170,67 @@ int __pyx_module_is_main_mass_fraction_evolver_cython = 0;
 /* Implementation of 'mass_fraction_evolver_cython' */
 static const char __pyx_k_X[] = "X";
 static const char __pyx_k_t[] = "t";
-static const char __pyx_k__7[] = "*";
+static const char __pyx_k__4[] = "*";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_plt[] = "plt";
 static const char __pyx_k_main[] = "__main__";
-static const char __pyx_k_rand[] = "rand";
 static const char __pyx_k_sqrt[] = "sqrt";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_wrap[] = "wrap";
 static const char __pyx_k_RKF45[] = "RKF45";
-static const char __pyx_k_array[] = "array";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_scipy[] = "scipy";
 static const char __pyx_k_stats[] = "stats";
-static const char __pyx_k_append[] = "append";
+static const char __pyx_k_M_core[] = "M_core";
+static const char __pyx_k_M_star[] = "M_star";
+static const char __pyx_k_R_star[] = "R_star";
 static const char __pyx_k_choice[] = "choice";
 static const char __pyx_k_dt_try[] = "dt_try";
 static const char __pyx_k_import[] = "__import__";
-static const char __pyx_k_params[] = "params";
+static const char __pyx_k_period[] = "period";
 static const char __pyx_k_random[] = "random";
 static const char __pyx_k_t_stop[] = "t_stop";
 static const char __pyx_k_R_guess[] = "R_guess";
+static const char __pyx_k_rand_py[] = "rand_py";
 static const char __pyx_k_t_start[] = "t_start";
-static const char __pyx_k_uniform[] = "uniform";
 static const char __pyx_k_accuracy[] = "accuracy";
 static const char __pyx_k_constants[] = "constants";
+static const char __pyx_k_initial_X[] = "initial_X";
 static const char __pyx_k_parameters[] = "parameters";
 static const char __pyx_k_cfunc_to_py[] = "cfunc.to_py";
+static const char __pyx_k_core_density[] = "core_density";
 static const char __pyx_k_step_control[] = "step_control";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_matplotlib_pyplot[] = "matplotlib.pyplot";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_KH_timescale_cutoff[] = "KH_timescale_cutoff";
 static const char __pyx_k_R_photosphere_cython[] = "R_photosphere_cython";
 static const char __pyx_k_calculate_R_photosphere[] = "calculate_R_photosphere";
 static const char __pyx_k_Pyx_CFunc_double____double[] = "__Pyx_CFunc_double____double____double____object___to_py.<locals>.wrap";
+static PyObject *__pyx_n_s_KH_timescale_cutoff;
+static PyObject *__pyx_n_s_M_core;
+static PyObject *__pyx_n_s_M_star;
 static PyObject *__pyx_n_s_Pyx_CFunc_double____double;
 static PyObject *__pyx_n_s_RKF45;
 static PyObject *__pyx_n_s_R_guess;
 static PyObject *__pyx_n_s_R_photosphere_cython;
+static PyObject *__pyx_n_s_R_star;
 static PyObject *__pyx_n_s_X;
-static PyObject *__pyx_n_s__7;
+static PyObject *__pyx_n_s__4;
 static PyObject *__pyx_n_s_accuracy;
-static PyObject *__pyx_n_s_append;
-static PyObject *__pyx_n_s_array;
 static PyObject *__pyx_n_s_calculate_R_photosphere;
 static PyObject *__pyx_n_s_cfunc_to_py;
 static PyObject *__pyx_n_s_choice;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_constants;
+static PyObject *__pyx_n_s_core_density;
 static PyObject *__pyx_n_s_dt_try;
 static PyObject *__pyx_n_s_import;
+static PyObject *__pyx_n_s_initial_X;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_matplotlib_pyplot;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_parameters;
-static PyObject *__pyx_n_s_params;
-static PyObject *__pyx_n_s_plt;
-static PyObject *__pyx_n_s_rand;
+static PyObject *__pyx_n_s_period;
+static PyObject *__pyx_n_s_rand_py;
 static PyObject *__pyx_n_s_random;
 static PyObject *__pyx_n_s_scipy;
 static PyObject *__pyx_n_s_sqrt;
@@ -1228,27 +1241,20 @@ static PyObject *__pyx_n_s_t;
 static PyObject *__pyx_n_s_t_start;
 static PyObject *__pyx_n_s_t_stop;
 static PyObject *__pyx_n_s_test;
-static PyObject *__pyx_n_s_uniform;
 static PyObject *__pyx_n_s_wrap;
-static PyObject *__pyx_pf_28mass_fraction_evolver_cython_RK45_driver(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, PyObject *__pyx_v_params); /* proto */
+static PyObject *__pyx_pf_28mass_fraction_evolver_cython_RK45_driver(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, double __pyx_v_initial_X, double __pyx_v_core_density, double __pyx_v_M_core, double __pyx_v_period, double __pyx_v_M_star, double __pyx_v_R_star, double __pyx_v_KH_timescale_cutoff); /* proto */
 static PyObject *__pyx_pf_11cfunc_dot_to_py_56__Pyx_CFunc_double____double____double____object___to_py_wrap(PyObject *__pyx_self, double __pyx_v_t, double __pyx_v_X, PyObject *__pyx_v_parameters); /* proto */
 static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double____double____double____object___to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_float_0_0;
 static PyObject *__pyx_float_1_0;
-static PyObject *__pyx_float_0_08;
-static PyObject *__pyx_float_0_18;
-static PyObject *__pyx_float_1eneg_4;
 static PyObject *__pyx_float_0_001;
 static PyObject *__pyx_float_neg_1_0;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
-static PyObject *__pyx_tuple__3;
-static PyObject *__pyx_tuple__4;
-static PyObject *__pyx_tuple__5;
-static PyObject *__pyx_codeobj__6;
+static PyObject *__pyx_codeobj__3;
 /* Late includes */
 
-/* "mass_fraction_evolver_cython.pyx":43
+/* "mass_fraction_evolver_cython.pyx":45
  * 
  * # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
  * cdef double calculate_tX(double t, double X, double M_core, double M_star, double a, double R_core, double KH_timescale_cutoff, double R_guess):             # <<<<<<<<<<<<<<
@@ -1289,7 +1295,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   double __pyx_t_16;
   __Pyx_RefNannySetupContext("calculate_tX", 0);
 
-  /* "mass_fraction_evolver_cython.pyx":51
+  /* "mass_fraction_evolver_cython.pyx":53
  * 
  *     # convert to SI units
  *     cdef double M_core_kg = M_core * M_earth             # <<<<<<<<<<<<<<
@@ -1298,7 +1304,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_M_core_kg = (__pyx_v_M_core * __pyx_v_28mass_fraction_evolver_cython_M_earth);
 
-  /* "mass_fraction_evolver_cython.pyx":52
+  /* "mass_fraction_evolver_cython.pyx":54
  *     # convert to SI units
  *     cdef double M_core_kg = M_core * M_earth
  *     cdef double a_meters = a * AU             # <<<<<<<<<<<<<<
@@ -1307,7 +1313,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_a_meters = (__pyx_v_a * __pyx_v_28mass_fraction_evolver_cython_AU);
 
-  /* "mass_fraction_evolver_cython.pyx":53
+  /* "mass_fraction_evolver_cython.pyx":55
  *     cdef double M_core_kg = M_core * M_earth
  *     cdef double a_meters = a * AU
  *     cdef double t_seconds = t * Myr             # <<<<<<<<<<<<<<
@@ -1316,7 +1322,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_t_seconds = (__pyx_v_t * __pyx_v_28mass_fraction_evolver_cython_Myr);
 
-  /* "mass_fraction_evolver_cython.pyx":54
+  /* "mass_fraction_evolver_cython.pyx":56
  *     cdef double a_meters = a * AU
  *     cdef double t_seconds = t * Myr
  *     cdef double R_core_meters = R_core * R_earth             # <<<<<<<<<<<<<<
@@ -1325,7 +1331,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_R_core_meters = (__pyx_v_R_core * __pyx_v_28mass_fraction_evolver_cython_R_earth);
 
-  /* "mass_fraction_evolver_cython.pyx":57
+  /* "mass_fraction_evolver_cython.pyx":59
  * 
  *     # Calculate envelope mass (kg)
  *     cdef double M_env_kg = X * M_core_kg             # <<<<<<<<<<<<<<
@@ -1334,7 +1340,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_M_env_kg = (__pyx_v_X * __pyx_v_M_core_kg);
 
-  /* "mass_fraction_evolver_cython.pyx":60
+  /* "mass_fraction_evolver_cython.pyx":62
  * 
  *     # calculate saturation luminosity for photoevaporation
  *     cdef double L_sat = 10**(-3.5) * L_sun * M_star             # <<<<<<<<<<<<<<
@@ -1343,7 +1349,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_L_sat = ((pow(10.0, -3.5) * __pyx_v_28mass_fraction_evolver_cython_L_sun) * __pyx_v_M_star);
 
-  /* "mass_fraction_evolver_cython.pyx":62
+  /* "mass_fraction_evolver_cython.pyx":64
  *     cdef double L_sat = 10**(-3.5) * L_sun * M_star
  *     cdef double L_HE
  *     if t_seconds < t_sat:             # <<<<<<<<<<<<<<
@@ -1353,7 +1359,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   __pyx_t_1 = ((__pyx_v_t_seconds < __pyx_v_28mass_fraction_evolver_cython_t_sat) != 0);
   if (__pyx_t_1) {
 
-    /* "mass_fraction_evolver_cython.pyx":63
+    /* "mass_fraction_evolver_cython.pyx":65
  *     cdef double L_HE
  *     if t_seconds < t_sat:
  *         L_HE = L_sat             # <<<<<<<<<<<<<<
@@ -1362,7 +1368,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
     __pyx_v_L_HE = __pyx_v_L_sat;
 
-    /* "mass_fraction_evolver_cython.pyx":62
+    /* "mass_fraction_evolver_cython.pyx":64
  *     cdef double L_sat = 10**(-3.5) * L_sun * M_star
  *     cdef double L_HE
  *     if t_seconds < t_sat:             # <<<<<<<<<<<<<<
@@ -1372,7 +1378,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
     goto __pyx_L3;
   }
 
-  /* "mass_fraction_evolver_cython.pyx":65
+  /* "mass_fraction_evolver_cython.pyx":67
  *         L_HE = L_sat
  *     else:
  *         L_HE = L_sat * (t_seconds/t_sat)**(-1-a0)             # <<<<<<<<<<<<<<
@@ -1382,39 +1388,39 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   /*else*/ {
     if (unlikely(__pyx_v_28mass_fraction_evolver_cython_t_sat == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 65, __pyx_L1_error)
+      __PYX_ERR(0, 67, __pyx_L1_error)
     }
     __pyx_v_L_HE = (__pyx_v_L_sat * pow((__pyx_v_t_seconds / __pyx_v_28mass_fraction_evolver_cython_t_sat), (-1.0 - __pyx_v_28mass_fraction_evolver_cython_a0)));
   }
   __pyx_L3:;
 
-  /* "mass_fraction_evolver_cython.pyx":68
+  /* "mass_fraction_evolver_cython.pyx":70
  * 
  *     # Calulate photospheric radius
  *     cdef double R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess)             # <<<<<<<<<<<<<<
  * 
  *     if R_ph == 0.0:
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_9 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_R_guess); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_R_guess); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __pyx_t_12 = NULL;
   __pyx_t_13 = 0;
@@ -1431,7 +1437,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[9] = {__pyx_t_12, __pyx_t_3, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_13, 8+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_13, 8+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1447,7 +1453,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[9] = {__pyx_t_12, __pyx_t_3, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_13, 8+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_13, 8+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1461,7 +1467,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   } else
   #endif
   {
-    __pyx_t_14 = PyTuple_New(8+__pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_14 = PyTuple_New(8+__pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
     if (__pyx_t_12) {
       __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_12); __pyx_t_12 = NULL;
@@ -1490,16 +1496,16 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
     __pyx_t_9 = 0;
     __pyx_t_10 = 0;
     __pyx_t_11 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_14, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_14, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_R_ph = __pyx_t_15;
 
-  /* "mass_fraction_evolver_cython.pyx":70
+  /* "mass_fraction_evolver_cython.pyx":72
  *     cdef double R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess)
  * 
  *     if R_ph == 0.0:             # <<<<<<<<<<<<<<
@@ -1509,7 +1515,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   __pyx_t_1 = ((__pyx_v_R_ph == 0.0) != 0);
   if (__pyx_t_1) {
 
-    /* "mass_fraction_evolver_cython.pyx":71
+    /* "mass_fraction_evolver_cython.pyx":73
  * 
  *     if R_ph == 0.0:
  *         return 0.0             # <<<<<<<<<<<<<<
@@ -1519,7 +1525,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
     __pyx_r = 0.0;
     goto __pyx_L0;
 
-    /* "mass_fraction_evolver_cython.pyx":70
+    /* "mass_fraction_evolver_cython.pyx":72
  *     cdef double R_ph = R_photosphere_cython.calculate_R_photosphere(t, M_star, a, M_core, R_core, X, KH_timescale_cutoff, R_guess)
  * 
  *     if R_ph == 0.0:             # <<<<<<<<<<<<<<
@@ -1528,24 +1534,24 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   }
 
-  /* "mass_fraction_evolver_cython.pyx":73
+  /* "mass_fraction_evolver_cython.pyx":75
  *         return 0.0
  * 
  *     cdef double escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001             # <<<<<<<<<<<<<<
  *     cdef double eta = eta_0 * (escape_velocity / 23)**(-0.42)
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_15 = ((2.0 * __pyx_v_28mass_fraction_evolver_cython_G) * __pyx_v_M_core_kg);
   if (unlikely(__pyx_v_R_core_meters == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 73, __pyx_L1_error)
+    __PYX_ERR(0, 75, __pyx_L1_error)
   }
-  __pyx_t_4 = PyFloat_FromDouble((__pyx_t_15 / __pyx_v_R_core_meters)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_t_15 / __pyx_v_R_core_meters)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_11 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_14))) {
@@ -1558,14 +1564,14 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
     }
   }
   if (!__pyx_t_11) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_14, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_14, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_14)) {
       PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_14, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_14, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -1574,33 +1580,33 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_14)) {
       PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_14, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_14, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_11); __pyx_t_11 = NULL;
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-  __pyx_t_14 = PyNumber_Multiply(__pyx_t_2, __pyx_float_0_001); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_14 = PyNumber_Multiply(__pyx_t_2, __pyx_float_0_001); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_14); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_14); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   __pyx_v_escape_velocity = __pyx_t_15;
 
-  /* "mass_fraction_evolver_cython.pyx":74
+  /* "mass_fraction_evolver_cython.pyx":76
  * 
  *     cdef double escape_velocity = np.sqrt(2*G*M_core_kg / R_core_meters) * 0.001
  *     cdef double eta = eta_0 * (escape_velocity / 23)**(-0.42)             # <<<<<<<<<<<<<<
@@ -1609,7 +1615,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   __pyx_v_eta = (__pyx_v_28mass_fraction_evolver_cython_eta_0 * pow((__pyx_v_escape_velocity / 23.0), -0.42));
 
-  /* "mass_fraction_evolver_cython.pyx":77
+  /* "mass_fraction_evolver_cython.pyx":79
  * 
  *     # Calculate mass loss rate due to photoevaporation
  *     cdef double M_env_dot = eta * R_ph**3 * L_HE / (4 * a_meters * a_meters * G * M_core_kg)             # <<<<<<<<<<<<<<
@@ -1620,11 +1626,11 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   __pyx_t_16 = ((((4.0 * __pyx_v_a_meters) * __pyx_v_a_meters) * __pyx_v_28mass_fraction_evolver_cython_G) * __pyx_v_M_core_kg);
   if (unlikely(__pyx_t_16 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 77, __pyx_L1_error)
+    __PYX_ERR(0, 79, __pyx_L1_error)
   }
   __pyx_v_M_env_dot = (__pyx_t_15 / __pyx_t_16);
 
-  /* "mass_fraction_evolver_cython.pyx":80
+  /* "mass_fraction_evolver_cython.pyx":82
  * 
  *     # Calculate mass-loss timescale
  *     cdef double tX = (M_env_kg / M_env_dot) / Myr             # <<<<<<<<<<<<<<
@@ -1633,16 +1639,16 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
  */
   if (unlikely(__pyx_v_M_env_dot == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 80, __pyx_L1_error)
+    __PYX_ERR(0, 82, __pyx_L1_error)
   }
   __pyx_t_16 = (__pyx_v_M_env_kg / __pyx_v_M_env_dot);
   if (unlikely(__pyx_v_28mass_fraction_evolver_cython_Myr == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 80, __pyx_L1_error)
+    __PYX_ERR(0, 82, __pyx_L1_error)
   }
   __pyx_v_tX = (__pyx_t_16 / __pyx_v_28mass_fraction_evolver_cython_Myr);
 
-  /* "mass_fraction_evolver_cython.pyx":82
+  /* "mass_fraction_evolver_cython.pyx":84
  *     cdef double tX = (M_env_kg / M_env_dot) / Myr
  * 
  *     return tX             # <<<<<<<<<<<<<<
@@ -1652,7 +1658,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   __pyx_r = __pyx_v_tX;
   goto __pyx_L0;
 
-  /* "mass_fraction_evolver_cython.pyx":43
+  /* "mass_fraction_evolver_cython.pyx":45
  * 
  * # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
  * cdef double calculate_tX(double t, double X, double M_core, double M_star, double a, double R_core, double KH_timescale_cutoff, double R_guess):             # <<<<<<<<<<<<<<
@@ -1681,7 +1687,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_calculate_tX(double __pyx_v
   return __pyx_r;
 }
 
-/* "mass_fraction_evolver_cython.pyx":86
+/* "mass_fraction_evolver_cython.pyx":88
  * # /////////////////////////// MASS FRACTION EVOLUTION ODE //////////////////// #
  * 
  * cdef double dXdt_ODE(double t, double X, parameters):             # <<<<<<<<<<<<<<
@@ -1705,85 +1711,85 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("dXdt_ODE", 0);
 
-  /* "mass_fraction_evolver_cython.pyx":93
+  /* "mass_fraction_evolver_cython.pyx":95
  *     """
  *     cdef double M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess
  *     M_core = parameters[0]             # <<<<<<<<<<<<<<
  *     M_star = parameters[1]
  *     a = parameters[2]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_M_core = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":94
+  /* "mass_fraction_evolver_cython.pyx":96
  *     cdef double M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess
  *     M_core = parameters[0]
  *     M_star = parameters[1]             # <<<<<<<<<<<<<<
  *     a = parameters[2]
  *     R_core = parameters[3]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_M_star = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":95
+  /* "mass_fraction_evolver_cython.pyx":97
  *     M_core = parameters[0]
  *     M_star = parameters[1]
  *     a = parameters[2]             # <<<<<<<<<<<<<<
  *     R_core = parameters[3]
  *     KH_timescale_cutoff = parameters[4]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_a = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":96
+  /* "mass_fraction_evolver_cython.pyx":98
  *     M_star = parameters[1]
  *     a = parameters[2]
  *     R_core = parameters[3]             # <<<<<<<<<<<<<<
  *     KH_timescale_cutoff = parameters[4]
  *     R_guess = parameters[5]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_R_core = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":97
+  /* "mass_fraction_evolver_cython.pyx":99
  *     a = parameters[2]
  *     R_core = parameters[3]
  *     KH_timescale_cutoff = parameters[4]             # <<<<<<<<<<<<<<
  *     R_guess = parameters[5]
  *     #M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 4, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 4, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_KH_timescale_cutoff = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":98
+  /* "mass_fraction_evolver_cython.pyx":100
  *     R_core = parameters[3]
  *     KH_timescale_cutoff = parameters[4]
  *     R_guess = parameters[5]             # <<<<<<<<<<<<<<
  *     #M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
  * 
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 5, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_parameters, 5, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_R_guess = __pyx_t_2;
 
-  /* "mass_fraction_evolver_cython.pyx":101
+  /* "mass_fraction_evolver_cython.pyx":103
  *     #M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess = parameters
  * 
  *     cdef double tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)             # <<<<<<<<<<<<<<
@@ -1792,7 +1798,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
  */
   __pyx_v_tX = __pyx_f_28mass_fraction_evolver_cython_calculate_tX(__pyx_v_t, __pyx_v_X, __pyx_v_M_core, __pyx_v_M_star, __pyx_v_a, __pyx_v_R_core, __pyx_v_KH_timescale_cutoff, __pyx_v_R_guess);
 
-  /* "mass_fraction_evolver_cython.pyx":103
+  /* "mass_fraction_evolver_cython.pyx":105
  *     cdef double tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
  * 
  *     if tX == 0.0:             # <<<<<<<<<<<<<<
@@ -1802,7 +1808,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
   __pyx_t_3 = ((__pyx_v_tX == 0.0) != 0);
   if (__pyx_t_3) {
 
-    /* "mass_fraction_evolver_cython.pyx":104
+    /* "mass_fraction_evolver_cython.pyx":106
  * 
  *     if tX == 0.0:
  *         return 0.0             # <<<<<<<<<<<<<<
@@ -1812,7 +1818,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
     __pyx_r = 0.0;
     goto __pyx_L0;
 
-    /* "mass_fraction_evolver_cython.pyx":103
+    /* "mass_fraction_evolver_cython.pyx":105
  *     cdef double tX = calculate_tX(t, X, M_core, M_star, a, R_core, KH_timescale_cutoff, R_guess)
  * 
  *     if tX == 0.0:             # <<<<<<<<<<<<<<
@@ -1821,7 +1827,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
  */
   }
 
-  /* "mass_fraction_evolver_cython.pyx":106
+  /* "mass_fraction_evolver_cython.pyx":108
  *         return 0.0
  * 
  *     cdef double dXdt = - X / tX             # <<<<<<<<<<<<<<
@@ -1831,11 +1837,11 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
   __pyx_t_2 = (-__pyx_v_X);
   if (unlikely(__pyx_v_tX == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 106, __pyx_L1_error)
+    __PYX_ERR(0, 108, __pyx_L1_error)
   }
   __pyx_v_dXdt = (__pyx_t_2 / __pyx_v_tX);
 
-  /* "mass_fraction_evolver_cython.pyx":108
+  /* "mass_fraction_evolver_cython.pyx":110
  *     cdef double dXdt = - X / tX
  * 
  *     return dXdt             # <<<<<<<<<<<<<<
@@ -1845,7 +1851,7 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
   __pyx_r = __pyx_v_dXdt;
   goto __pyx_L0;
 
-  /* "mass_fraction_evolver_cython.pyx":86
+  /* "mass_fraction_evolver_cython.pyx":88
  * # /////////////////////////// MASS FRACTION EVOLUTION ODE //////////////////// #
  * 
  * cdef double dXdt_ODE(double t, double X, parameters):             # <<<<<<<<<<<<<<
@@ -1863,158 +1869,53 @@ static double __pyx_f_28mass_fraction_evolver_cython_dXdt_ODE(double __pyx_v_t, 
   return __pyx_r;
 }
 
-/* "mass_fraction_evolver_cython.pyx":113
+/* "mass_fraction_evolver_cython.pyx":115
  * # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
  * 
- * cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy, params):             # <<<<<<<<<<<<<<
- * 
- *     """
+ * cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,             # <<<<<<<<<<<<<<
+ *                   double initial_X, double core_density, double M_core,
+ *                   double period, double M_star, double R_star,
  */
 
 static PyObject *__pyx_pw_28mass_fraction_evolver_cython_1RK45_driver(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, PyObject *__pyx_v_params, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  double __pyx_v_initial_X;
-  double __pyx_v_core_density;
-  double __pyx_v_M_core;
-  double __pyx_v_period;
-  double __pyx_v_M_star;
-  double __pyx_v_R_star;
-  double __pyx_v_KH_timescale_cutoff;
+static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, double __pyx_v_initial_X, double __pyx_v_core_density, double __pyx_v_M_core, double __pyx_v_period, double __pyx_v_M_star, double __pyx_v_R_star, double __pyx_v_KH_timescale_cutoff, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_density_norm;
   double __pyx_v_R_core;
   double __pyx_v_a;
-  PyObject *__pyx_v_R_ph_init = NULL;
-  PyObject *__pyx_v_X_array = NULL;
-  PyObject *__pyx_v_t_array = NULL;
-  PyObject *__pyx_v_R_ph_array = NULL;
-  PyObject *__pyx_v_t = NULL;
+  double __pyx_v_R_ph_init;
+  double __pyx_v_X;
+  double __pyx_v_t;
+  double __pyx_v_R_ph;
   double __pyx_v_dt;
-  PyObject *__pyx_v_t_new = NULL;
-  PyObject *__pyx_v_X_new = NULL;
-  PyObject *__pyx_v_dt_next = NULL;
-  PyObject *__pyx_v_R_ph_new = NULL;
-  PyObject *__pyx_v_observed_radius = NULL;
+  double __pyx_v_R_ph_new;
+  double __pyx_v_observed_radius;
+  double __pyx_v_rad_err;
+  double __pyx_v_X_new;
+  double __pyx_v_t_new;
+  double __pyx_v_dt_next;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
+  double __pyx_t_1;
+  double __pyx_t_2;
+  double __pyx_t_3;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
   PyObject *__pyx_t_8 = NULL;
-  PyObject *(*__pyx_t_9)(PyObject *);
-  double __pyx_t_10;
-  double __pyx_t_11;
-  double __pyx_t_12;
-  double __pyx_t_13;
-  double __pyx_t_14;
-  double __pyx_t_15;
-  double __pyx_t_16;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  int __pyx_t_13;
+  PyObject *__pyx_t_14 = NULL;
+  PyObject *(*__pyx_t_15)(PyObject *);
+  int __pyx_t_16;
   PyObject *__pyx_t_17 = NULL;
   int __pyx_t_18;
-  PyObject *__pyx_t_19 = NULL;
-  int __pyx_t_20;
-  int __pyx_t_21;
   __Pyx_RefNannySetupContext("RK45_driver", 0);
 
-  /* "mass_fraction_evolver_cython.pyx":123
- * 
- *     cdef double initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff
- *     initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params             # <<<<<<<<<<<<<<
- * 
- *     # core density to core radius (measure in Earth radii)
- */
-  if ((likely(PyTuple_CheckExact(__pyx_v_params))) || (PyList_CheckExact(__pyx_v_params))) {
-    PyObject* sequence = __pyx_v_params;
-    Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
-    if (unlikely(size != 7)) {
-      if (size > 7) __Pyx_RaiseTooManyValuesError(7);
-      else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 123, __pyx_L1_error)
-    }
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    if (likely(PyTuple_CheckExact(sequence))) {
-      __pyx_t_1 = PyTuple_GET_ITEM(sequence, 0); 
-      __pyx_t_2 = PyTuple_GET_ITEM(sequence, 1); 
-      __pyx_t_3 = PyTuple_GET_ITEM(sequence, 2); 
-      __pyx_t_4 = PyTuple_GET_ITEM(sequence, 3); 
-      __pyx_t_5 = PyTuple_GET_ITEM(sequence, 4); 
-      __pyx_t_6 = PyTuple_GET_ITEM(sequence, 5); 
-      __pyx_t_7 = PyTuple_GET_ITEM(sequence, 6); 
-    } else {
-      __pyx_t_1 = PyList_GET_ITEM(sequence, 0); 
-      __pyx_t_2 = PyList_GET_ITEM(sequence, 1); 
-      __pyx_t_3 = PyList_GET_ITEM(sequence, 2); 
-      __pyx_t_4 = PyList_GET_ITEM(sequence, 3); 
-      __pyx_t_5 = PyList_GET_ITEM(sequence, 4); 
-      __pyx_t_6 = PyList_GET_ITEM(sequence, 5); 
-      __pyx_t_7 = PyList_GET_ITEM(sequence, 6); 
-    }
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_4);
-    __Pyx_INCREF(__pyx_t_5);
-    __Pyx_INCREF(__pyx_t_6);
-    __Pyx_INCREF(__pyx_t_7);
-    #else
-    {
-      Py_ssize_t i;
-      PyObject** temps[7] = {&__pyx_t_1,&__pyx_t_2,&__pyx_t_3,&__pyx_t_4,&__pyx_t_5,&__pyx_t_6,&__pyx_t_7};
-      for (i=0; i < 7; i++) {
-        PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 123, __pyx_L1_error)
-        __Pyx_GOTREF(item);
-        *(temps[i]) = item;
-      }
-    }
-    #endif
-  } else {
-    Py_ssize_t index = -1;
-    PyObject** temps[7] = {&__pyx_t_1,&__pyx_t_2,&__pyx_t_3,&__pyx_t_4,&__pyx_t_5,&__pyx_t_6,&__pyx_t_7};
-    __pyx_t_8 = PyObject_GetIter(__pyx_v_params); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_9 = Py_TYPE(__pyx_t_8)->tp_iternext;
-    for (index=0; index < 7; index++) {
-      PyObject* item = __pyx_t_9(__pyx_t_8); if (unlikely(!item)) goto __pyx_L3_unpacking_failed;
-      __Pyx_GOTREF(item);
-      *(temps[index]) = item;
-    }
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 7) < 0) __PYX_ERR(0, 123, __pyx_L1_error)
-    __pyx_t_9 = NULL;
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    goto __pyx_L4_unpacking_done;
-    __pyx_L3_unpacking_failed:;
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_9 = NULL;
-    if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 123, __pyx_L1_error)
-    __pyx_L4_unpacking_done:;
-  }
-  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_12 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_12 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_13 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_13 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_14 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_14 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_v_initial_X = __pyx_t_10;
-  __pyx_v_core_density = __pyx_t_11;
-  __pyx_v_M_core = __pyx_t_12;
-  __pyx_v_period = __pyx_t_13;
-  __pyx_v_M_star = __pyx_t_14;
-  __pyx_v_R_star = __pyx_t_15;
-  __pyx_v_KH_timescale_cutoff = __pyx_t_16;
-
-  /* "mass_fraction_evolver_cython.pyx":126
+  /* "mass_fraction_evolver_cython.pyx":128
  * 
  *     # core density to core radius (measure in Earth radii)
  *     cdef double density_norm = 1.7589 * core_density**(-0.3329)             # <<<<<<<<<<<<<<
@@ -2023,7 +1924,7 @@ static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx
  */
   __pyx_v_density_norm = (1.7589 * pow(__pyx_v_core_density, -0.3329));
 
-  /* "mass_fraction_evolver_cython.pyx":127
+  /* "mass_fraction_evolver_cython.pyx":129
  *     # core density to core radius (measure in Earth radii)
  *     cdef double density_norm = 1.7589 * core_density**(-0.3329)
  *     cdef double R_core = density_norm * ((M_core)**0.25)             # <<<<<<<<<<<<<<
@@ -2032,311 +1933,126 @@ static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx
  */
   __pyx_v_R_core = (__pyx_v_density_norm * pow(__pyx_v_M_core, 0.25));
 
-  /* "mass_fraction_evolver_cython.pyx":130
+  /* "mass_fraction_evolver_cython.pyx":132
  * 
  *     # orbital period to semi-major axis measured in AU
  *     cdef double a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU             # <<<<<<<<<<<<<<
  * 
  *     #calculate initial photospheric radius
  */
-  __pyx_t_16 = (((pow((((__pyx_v_period * 24.0) * 60.0) * 60.0), 2.0) * __pyx_v_28mass_fraction_evolver_cython_G) * __pyx_v_M_star) * __pyx_v_28mass_fraction_evolver_cython_M_sun);
-  __pyx_t_15 = ((4.0 * __pyx_v_28mass_fraction_evolver_cython_pi) * __pyx_v_28mass_fraction_evolver_cython_pi);
-  if (unlikely(__pyx_t_15 == 0)) {
+  __pyx_t_1 = (((pow((((__pyx_v_period * 24.0) * 60.0) * 60.0), 2.0) * __pyx_v_28mass_fraction_evolver_cython_G) * __pyx_v_M_star) * __pyx_v_28mass_fraction_evolver_cython_M_sun);
+  __pyx_t_2 = ((4.0 * __pyx_v_28mass_fraction_evolver_cython_pi) * __pyx_v_28mass_fraction_evolver_cython_pi);
+  if (unlikely(__pyx_t_2 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 130, __pyx_L1_error)
+    __PYX_ERR(0, 132, __pyx_L1_error)
   }
-  __pyx_t_14 = pow((__pyx_t_16 / __pyx_t_15), (1.0 / 3.0));
+  __pyx_t_3 = pow((__pyx_t_1 / __pyx_t_2), (1.0 / 3.0));
   if (unlikely(__pyx_v_28mass_fraction_evolver_cython_AU == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 130, __pyx_L1_error)
+    __PYX_ERR(0, 132, __pyx_L1_error)
   }
-  __pyx_v_a = (__pyx_t_14 / __pyx_v_28mass_fraction_evolver_cython_AU);
+  __pyx_v_a = (__pyx_t_3 / __pyx_v_28mass_fraction_evolver_cython_AU);
 
-  /* "mass_fraction_evolver_cython.pyx":133
+  /* "mass_fraction_evolver_cython.pyx":135
  * 
  *     #calculate initial photospheric radius
- *     R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,R_core, initial_X, KH_timescale_cutoff,R_guess=0.0)             # <<<<<<<<<<<<<<
+ *     cdef double R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,R_core, initial_X, KH_timescale_cutoff,R_guess=0.0) / R_earth             # <<<<<<<<<<<<<<
  * 
- *     # define arrays for storing t steps and variables
+ *     # define initial variables
  */
-  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_t_start); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_t_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_17 = PyTuple_New(7); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_17);
-  __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_t_5);
+  __pyx_t_9 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_12 = PyTuple_New(7); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
   __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_17, 2, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_17, 3, __pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_17, 4, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_17, 5, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_12, 1, __pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_7);
+  PyTuple_SET_ITEM(__pyx_t_12, 2, __pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_8);
-  PyTuple_SET_ITEM(__pyx_t_17, 6, __pyx_t_8);
-  __pyx_t_7 = 0;
-  __pyx_t_5 = 0;
+  PyTuple_SET_ITEM(__pyx_t_12, 3, __pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_9);
+  PyTuple_SET_ITEM(__pyx_t_12, 4, __pyx_t_9);
+  __Pyx_GIVEREF(__pyx_t_10);
+  PyTuple_SET_ITEM(__pyx_t_12, 5, __pyx_t_10);
+  __Pyx_GIVEREF(__pyx_t_11);
+  PyTuple_SET_ITEM(__pyx_t_12, 6, __pyx_t_11);
   __pyx_t_4 = 0;
-  __pyx_t_3 = 0;
-  __pyx_t_2 = 0;
-  __pyx_t_1 = 0;
+  __pyx_t_6 = 0;
+  __pyx_t_7 = 0;
   __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_R_guess, __pyx_float_0_0) < 0) __PYX_ERR(0, 133, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_17, __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_v_R_ph_init = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "mass_fraction_evolver_cython.pyx":136
- * 
- *     # define arrays for storing t steps and variables
- *     X_array = np.array([initial_X])             # <<<<<<<<<<<<<<
- *     t_array = np.array([t_start])
- *     R_ph_array = np.array([R_ph_init/R_earth])
- */
-  __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 136, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_array); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 136, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_17);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 136, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 136, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GIVEREF(__pyx_t_8);
-  PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_8);
-  __pyx_t_8 = 0;
-  __pyx_t_8 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_17))) {
-    __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_17);
-    if (likely(__pyx_t_8)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_17);
-      __Pyx_INCREF(__pyx_t_8);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_17, function);
-    }
-  }
-  if (!__pyx_t_8) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_17, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_17)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_17, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_17)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_17, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_8); __pyx_t_8 = NULL;
-      __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_t_6);
-      __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_17, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-  __pyx_v_X_array = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "mass_fraction_evolver_cython.pyx":137
- *     # define arrays for storing t steps and variables
- *     X_array = np.array([initial_X])
- *     t_array = np.array([t_start])             # <<<<<<<<<<<<<<
- *     R_ph_array = np.array([R_ph_init/R_earth])
- * 
- */
-  __pyx_t_17 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_17);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-  __pyx_t_17 = PyFloat_FromDouble(__pyx_v_t_start); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_17);
-  __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GIVEREF(__pyx_t_17);
-  PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_17);
-  __pyx_t_17 = 0;
-  __pyx_t_17 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_17)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_17);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (!__pyx_t_17) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 137, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_17); __pyx_t_17 = NULL;
-      __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_6);
-      __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_t_array = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_9 = 0;
+  __pyx_t_10 = 0;
+  __pyx_t_11 = 0;
+  __pyx_t_11 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_R_guess, __pyx_float_0_0) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_12, __pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_28mass_fraction_evolver_cython_R_earth); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_12 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_12); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_v_R_ph_init = __pyx_t_3;
 
   /* "mass_fraction_evolver_cython.pyx":138
- *     X_array = np.array([initial_X])
- *     t_array = np.array([t_start])
- *     R_ph_array = np.array([R_ph_init/R_earth])             # <<<<<<<<<<<<<<
  * 
- *     # define first time and time step
+ *     # define initial variables
+ *     cdef double X = initial_X             # <<<<<<<<<<<<<<
+ *     cdef double t = t_start
+ *     cdef double R_ph = R_ph_init
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_array); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_28mass_fraction_evolver_cython_R_earth); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_v_R_ph_init, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_6);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_6);
-  __pyx_t_6 = 0;
-  __pyx_t_6 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_8);
-    if (likely(__pyx_t_6)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-      __Pyx_INCREF(__pyx_t_6);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_8, function);
-    }
-  }
-  if (!__pyx_t_6) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else {
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_8)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_17 = PyTuple_New(1+1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 138, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_17);
-      __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_6); __pyx_t_6 = NULL;
-      __Pyx_GIVEREF(__pyx_t_2);
-      PyTuple_SET_ITEM(__pyx_t_17, 0+1, __pyx_t_2);
-      __pyx_t_2 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_17, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_v_R_ph_array = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_v_X = __pyx_v_initial_X;
+
+  /* "mass_fraction_evolver_cython.pyx":139
+ *     # define initial variables
+ *     cdef double X = initial_X
+ *     cdef double t = t_start             # <<<<<<<<<<<<<<
+ *     cdef double R_ph = R_ph_init
+ *     cdef double dt = dt_try
+ */
+  __pyx_v_t = __pyx_v_t_start;
+
+  /* "mass_fraction_evolver_cython.pyx":140
+ *     cdef double X = initial_X
+ *     cdef double t = t_start
+ *     cdef double R_ph = R_ph_init             # <<<<<<<<<<<<<<
+ *     cdef double dt = dt_try
+ *     cdef double R_ph_new, observed_radius, rad_err, X_new, t_new, dt_next
+ */
+  __pyx_v_R_ph = __pyx_v_R_ph_init;
 
   /* "mass_fraction_evolver_cython.pyx":141
- * 
- *     # define first time and time step
- *     t = t_array[0]             # <<<<<<<<<<<<<<
- *     cdef double dt = dt_try
- * 
- */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_t_array, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_t = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "mass_fraction_evolver_cython.pyx":142
- *     # define first time and time step
- *     t = t_array[0]
+ *     cdef double t = t_start
+ *     cdef double R_ph = R_ph_init
  *     cdef double dt = dt_try             # <<<<<<<<<<<<<<
+ *     cdef double R_ph_new, observed_radius, rad_err, X_new, t_new, dt_next
  * 
- *     # setup loop
  */
   __pyx_v_dt = __pyx_v_dt_try;
 
@@ -2345,97 +2061,94 @@ static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx
  *     # setup loop
  *     while t <= t_stop:             # <<<<<<<<<<<<<<
  *         #perform an adaptive RK45 step
- *         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
+ *         [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])
  */
   while (1) {
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_t_stop); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = PyObject_RichCompare(__pyx_v_t, __pyx_t_1, Py_LE); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (!__pyx_t_18) break;
+    __pyx_t_13 = ((__pyx_v_t <= __pyx_v_t_stop) != 0);
+    if (!__pyx_t_13) break;
 
     /* "mass_fraction_evolver_cython.pyx":147
  *     while t <= t_stop:
  *         #perform an adaptive RK45 step
- *         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])             # <<<<<<<<<<<<<<
+ *         [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])             # <<<<<<<<<<<<<<
  * 
- *         if (t_new, X_new, dt_next) == (None, None, None):
+ *         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:
  */
-    __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_RKF45); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_step_control); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_X_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_17 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_17);
-    __pyx_t_2 = __Pyx_CFunc_double____double____double____object___to_py(__pyx_f_28mass_fraction_evolver_cython_dXdt_ODE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_accuracy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = PyTuple_New(5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_INCREF(__pyx_v_t);
-    __Pyx_GIVEREF(__pyx_v_t);
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_t);
-    __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_8);
-    __Pyx_GIVEREF(__pyx_t_17);
-    PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_t_17);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_3, 3, __pyx_t_2);
-    __Pyx_GIVEREF(__pyx_t_6);
-    PyTuple_SET_ITEM(__pyx_t_3, 4, __pyx_t_6);
-    __pyx_t_8 = 0;
-    __pyx_t_17 = 0;
-    __pyx_t_2 = 0;
-    __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_17 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_17);
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_RKF45); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_step_control); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_t); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_X); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_R_ph_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_CFunc_double____double____double____object___to_py(__pyx_f_28mass_fraction_evolver_cython_dXdt_ODE); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_accuracy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_7 = PyTuple_New(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_19 = PyList_New(6); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_19);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyList_SET_ITEM(__pyx_t_19, 0, __pyx_t_2);
-    __Pyx_GIVEREF(__pyx_t_17);
-    PyList_SET_ITEM(__pyx_t_19, 1, __pyx_t_17);
-    __Pyx_GIVEREF(__pyx_t_8);
-    PyList_SET_ITEM(__pyx_t_19, 2, __pyx_t_8);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyList_SET_ITEM(__pyx_t_19, 3, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_12);
+    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_12);
+    __Pyx_GIVEREF(__pyx_t_10);
+    PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_10);
     __Pyx_GIVEREF(__pyx_t_5);
-    PyList_SET_ITEM(__pyx_t_19, 4, __pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_7);
-    PyList_SET_ITEM(__pyx_t_19, 5, __pyx_t_7);
-    __pyx_t_2 = 0;
-    __pyx_t_17 = 0;
-    __pyx_t_8 = 0;
-    __pyx_t_4 = 0;
+    PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_9);
+    __Pyx_GIVEREF(__pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_7, 4, __pyx_t_8);
+    __pyx_t_12 = 0;
+    __pyx_t_10 = 0;
     __pyx_t_5 = 0;
-    __pyx_t_7 = 0;
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parameters, __pyx_t_19) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-    __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_19);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if ((likely(PyTuple_CheckExact(__pyx_t_19))) || (PyList_CheckExact(__pyx_t_19))) {
-      PyObject* sequence = __pyx_t_19;
+    __pyx_t_9 = 0;
+    __pyx_t_8 = 0;
+    __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_9 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
+    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_ph); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_14 = PyList_New(6); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_14);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyList_SET_ITEM(__pyx_t_14, 0, __pyx_t_9);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyList_SET_ITEM(__pyx_t_14, 1, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_10);
+    PyList_SET_ITEM(__pyx_t_14, 2, __pyx_t_10);
+    __Pyx_GIVEREF(__pyx_t_12);
+    PyList_SET_ITEM(__pyx_t_14, 3, __pyx_t_12);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyList_SET_ITEM(__pyx_t_14, 4, __pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_4);
+    PyList_SET_ITEM(__pyx_t_14, 5, __pyx_t_4);
+    __pyx_t_9 = 0;
+    __pyx_t_5 = 0;
+    __pyx_t_10 = 0;
+    __pyx_t_12 = 0;
+    __pyx_t_6 = 0;
+    __pyx_t_4 = 0;
+    if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_parameters, __pyx_t_14) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_7, __pyx_t_8); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_14);
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    if ((likely(PyTuple_CheckExact(__pyx_t_14))) || (PyList_CheckExact(__pyx_t_14))) {
+      PyObject* sequence = __pyx_t_14;
       Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
@@ -2444,950 +2157,595 @@ static PyObject *__pyx_f_28mass_fraction_evolver_cython_RK45_driver(double __pyx
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
-        __pyx_t_6 = PyTuple_GET_ITEM(sequence, 0); 
-        __pyx_t_3 = PyTuple_GET_ITEM(sequence, 1); 
-        __pyx_t_1 = PyTuple_GET_ITEM(sequence, 2); 
+        __pyx_t_8 = PyTuple_GET_ITEM(sequence, 0); 
+        __pyx_t_7 = PyTuple_GET_ITEM(sequence, 1); 
+        __pyx_t_11 = PyTuple_GET_ITEM(sequence, 2); 
       } else {
-        __pyx_t_6 = PyList_GET_ITEM(sequence, 0); 
-        __pyx_t_3 = PyList_GET_ITEM(sequence, 1); 
-        __pyx_t_1 = PyList_GET_ITEM(sequence, 2); 
+        __pyx_t_8 = PyList_GET_ITEM(sequence, 0); 
+        __pyx_t_7 = PyList_GET_ITEM(sequence, 1); 
+        __pyx_t_11 = PyList_GET_ITEM(sequence, 2); 
       }
-      __Pyx_INCREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_8);
+      __Pyx_INCREF(__pyx_t_7);
+      __Pyx_INCREF(__pyx_t_11);
       #else
-      __pyx_t_6 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_11 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
       #endif
-      __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
+      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_7 = PyObject_GetIter(__pyx_t_19); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_4 = PyObject_GetIter(__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+      __pyx_t_15 = Py_TYPE(__pyx_t_4)->tp_iternext;
+      index = 0; __pyx_t_8 = __pyx_t_15(__pyx_t_4); if (unlikely(!__pyx_t_8)) goto __pyx_L5_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_8);
+      index = 1; __pyx_t_7 = __pyx_t_15(__pyx_t_4); if (unlikely(!__pyx_t_7)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-      __pyx_t_9 = Py_TYPE(__pyx_t_7)->tp_iternext;
-      index = 0; __pyx_t_6 = __pyx_t_9(__pyx_t_7); if (unlikely(!__pyx_t_6)) goto __pyx_L7_unpacking_failed;
-      __Pyx_GOTREF(__pyx_t_6);
-      index = 1; __pyx_t_3 = __pyx_t_9(__pyx_t_7); if (unlikely(!__pyx_t_3)) goto __pyx_L7_unpacking_failed;
-      __Pyx_GOTREF(__pyx_t_3);
-      index = 2; __pyx_t_1 = __pyx_t_9(__pyx_t_7); if (unlikely(!__pyx_t_1)) goto __pyx_L7_unpacking_failed;
-      __Pyx_GOTREF(__pyx_t_1);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_7), 3) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
-      __pyx_t_9 = NULL;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      goto __pyx_L8_unpacking_done;
-      __pyx_L7_unpacking_failed:;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_9 = NULL;
+      index = 2; __pyx_t_11 = __pyx_t_15(__pyx_t_4); if (unlikely(!__pyx_t_11)) goto __pyx_L5_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_11);
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_15(__pyx_t_4), 3) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_15 = NULL;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      goto __pyx_L6_unpacking_done;
+      __pyx_L5_unpacking_failed:;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_15 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
       __PYX_ERR(0, 147, __pyx_L1_error)
-      __pyx_L8_unpacking_done:;
+      __pyx_L6_unpacking_done:;
     }
-    __Pyx_XDECREF_SET(__pyx_v_t_new, __pyx_t_6);
-    __pyx_t_6 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_X_new, __pyx_t_3);
-    __pyx_t_3 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_dt_next, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_11); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __pyx_v_t_new = __pyx_t_3;
+    __pyx_v_X_new = __pyx_t_2;
+    __pyx_v_dt_next = __pyx_t_1;
 
     /* "mass_fraction_evolver_cython.pyx":149
- *         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
+ *         [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])
  * 
- *         if (t_new, X_new, dt_next) == (None, None, None):             # <<<<<<<<<<<<<<
- *             return None, None, None, None, None, None
+ *         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
  *         # calculate new R_ph
  */
-    __pyx_t_19 = PyTuple_New(3); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_19);
-    __Pyx_INCREF(__pyx_v_t_new);
-    __Pyx_GIVEREF(__pyx_v_t_new);
-    PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_v_t_new);
-    __Pyx_INCREF(__pyx_v_X_new);
-    __Pyx_GIVEREF(__pyx_v_X_new);
-    PyTuple_SET_ITEM(__pyx_t_19, 1, __pyx_v_X_new);
-    __Pyx_INCREF(__pyx_v_dt_next);
-    __Pyx_GIVEREF(__pyx_v_dt_next);
-    PyTuple_SET_ITEM(__pyx_t_19, 2, __pyx_v_dt_next);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_19, __pyx_tuple_, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__pyx_t_18) {
+    __pyx_t_14 = PyFloat_FromDouble(__pyx_v_t_new); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_14);
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_X_new); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_dt_next); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_8 = PyList_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_14);
+    PyList_SET_ITEM(__pyx_t_8, 0, __pyx_t_14);
+    __Pyx_GIVEREF(__pyx_t_11);
+    PyList_SET_ITEM(__pyx_t_8, 1, __pyx_t_11);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyList_SET_ITEM(__pyx_t_8, 2, __pyx_t_7);
+    __pyx_t_14 = 0;
+    __pyx_t_11 = 0;
+    __pyx_t_7 = 0;
+    __pyx_t_7 = PyList_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_INCREF(__pyx_float_0_0);
+    __Pyx_GIVEREF(__pyx_float_0_0);
+    PyList_SET_ITEM(__pyx_t_7, 0, __pyx_float_0_0);
+    __Pyx_INCREF(__pyx_float_0_0);
+    __Pyx_GIVEREF(__pyx_float_0_0);
+    PyList_SET_ITEM(__pyx_t_7, 1, __pyx_float_0_0);
+    __Pyx_INCREF(__pyx_float_0_0);
+    __Pyx_GIVEREF(__pyx_float_0_0);
+    PyList_SET_ITEM(__pyx_t_7, 2, __pyx_float_0_0);
+    __pyx_t_11 = PyObject_RichCompare(__pyx_t_8, __pyx_t_7, Py_EQ); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    if (__pyx_t_13) {
 
       /* "mass_fraction_evolver_cython.pyx":150
  * 
- *         if (t_new, X_new, dt_next) == (None, None, None):
- *             return None, None, None, None, None, None             # <<<<<<<<<<<<<<
+ *         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:
+ *             return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0             # <<<<<<<<<<<<<<
  *         # calculate new R_ph
- *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,
+ *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,R_core, X_new, KH_timescale_cutoff, 0.0) / R_earth
  */
       __Pyx_XDECREF(__pyx_r);
-      __Pyx_INCREF(__pyx_tuple__2);
-      __pyx_r = __pyx_tuple__2;
+      __Pyx_INCREF(__pyx_tuple_);
+      __pyx_r = __pyx_tuple_;
       goto __pyx_L0;
 
       /* "mass_fraction_evolver_cython.pyx":149
- *         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
+ *         [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])
  * 
- *         if (t_new, X_new, dt_next) == (None, None, None):             # <<<<<<<<<<<<<<
- *             return None, None, None, None, None, None
+ *         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:             # <<<<<<<<<<<<<<
+ *             return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
  *         # calculate new R_ph
  */
     }
 
     /* "mass_fraction_evolver_cython.pyx":152
- *             return None, None, None, None, None, None
+ *             return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
  *         # calculate new R_ph
- *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,             # <<<<<<<<<<<<<<
- *                                                          R_core, X_new, KH_timescale_cutoff, 0.0)
+ *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,R_core, X_new, KH_timescale_cutoff, 0.0) / R_earth             # <<<<<<<<<<<<<<
+ * 
  * 
  */
-    __pyx_t_19 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_19);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-    __pyx_t_19 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_19);
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_R_photosphere_cython); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-
-    /* "mass_fraction_evolver_cython.pyx":153
- *         # calculate new R_ph
- *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,
- *                                                          R_core, X_new, KH_timescale_cutoff, 0.0)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_calculate_R_photosphere); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_t_new); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_14 = PyFloat_FromDouble(__pyx_v_M_star); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_14);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = NULL;
-    __pyx_t_20 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_3);
-      if (likely(__pyx_t_8)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-        __Pyx_INCREF(__pyx_t_8);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_X_new); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_KH_timescale_cutoff); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_9 = NULL;
+    __pyx_t_16 = 0;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
+      __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_9)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
+        __Pyx_INCREF(__pyx_t_9);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_3, function);
-        __pyx_t_20 = 1;
+        __Pyx_DECREF_SET(__pyx_t_8, function);
+        __pyx_t_16 = 1;
       }
     }
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_3)) {
-      PyObject *__pyx_temp[9] = {__pyx_t_8, __pyx_v_t_new, __pyx_t_19, __pyx_t_6, __pyx_t_7, __pyx_t_5, __pyx_v_X_new, __pyx_t_4, __pyx_float_0_0};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_20, 8+__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (PyFunction_Check(__pyx_t_8)) {
+      PyObject *__pyx_temp[9] = {__pyx_t_9, __pyx_t_7, __pyx_t_14, __pyx_t_4, __pyx_t_6, __pyx_t_12, __pyx_t_10, __pyx_t_5, __pyx_float_0_0};
+      __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_16, 8+__pyx_t_16); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-      PyObject *__pyx_temp[9] = {__pyx_t_8, __pyx_v_t_new, __pyx_t_19, __pyx_t_6, __pyx_t_7, __pyx_t_5, __pyx_v_X_new, __pyx_t_4, __pyx_float_0_0};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_20, 8+__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
+      PyObject *__pyx_temp[9] = {__pyx_t_9, __pyx_t_7, __pyx_t_14, __pyx_t_4, __pyx_t_6, __pyx_t_12, __pyx_t_10, __pyx_t_5, __pyx_float_0_0};
+      __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_16, 8+__pyx_t_16); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else
     #endif
     {
-      __pyx_t_17 = PyTuple_New(8+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __pyx_t_17 = PyTuple_New(8+__pyx_t_16); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
-      if (__pyx_t_8) {
-        __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_8); __pyx_t_8 = NULL;
+      if (__pyx_t_9) {
+        __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_9); __pyx_t_9 = NULL;
       }
-      __Pyx_INCREF(__pyx_v_t_new);
-      __Pyx_GIVEREF(__pyx_v_t_new);
-      PyTuple_SET_ITEM(__pyx_t_17, 0+__pyx_t_20, __pyx_v_t_new);
-      __Pyx_GIVEREF(__pyx_t_19);
-      PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_20, __pyx_t_19);
-      __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_17, 2+__pyx_t_20, __pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_7);
-      PyTuple_SET_ITEM(__pyx_t_17, 3+__pyx_t_20, __pyx_t_7);
-      __Pyx_GIVEREF(__pyx_t_5);
-      PyTuple_SET_ITEM(__pyx_t_17, 4+__pyx_t_20, __pyx_t_5);
-      __Pyx_INCREF(__pyx_v_X_new);
-      __Pyx_GIVEREF(__pyx_v_X_new);
-      PyTuple_SET_ITEM(__pyx_t_17, 5+__pyx_t_20, __pyx_v_X_new);
+      PyTuple_SET_ITEM(__pyx_t_17, 0+__pyx_t_16, __pyx_t_7);
+      __Pyx_GIVEREF(__pyx_t_14);
+      PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_16, __pyx_t_14);
       __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_17, 6+__pyx_t_20, __pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_17, 2+__pyx_t_16, __pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_6);
+      PyTuple_SET_ITEM(__pyx_t_17, 3+__pyx_t_16, __pyx_t_6);
+      __Pyx_GIVEREF(__pyx_t_12);
+      PyTuple_SET_ITEM(__pyx_t_17, 4+__pyx_t_16, __pyx_t_12);
+      __Pyx_GIVEREF(__pyx_t_10);
+      PyTuple_SET_ITEM(__pyx_t_17, 5+__pyx_t_16, __pyx_t_10);
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_17, 6+__pyx_t_16, __pyx_t_5);
       __Pyx_INCREF(__pyx_float_0_0);
       __Pyx_GIVEREF(__pyx_float_0_0);
-      PyTuple_SET_ITEM(__pyx_t_17, 7+__pyx_t_20, __pyx_float_0_0);
-      __pyx_t_19 = 0;
-      __pyx_t_6 = 0;
+      PyTuple_SET_ITEM(__pyx_t_17, 7+__pyx_t_16, __pyx_float_0_0);
       __pyx_t_7 = 0;
-      __pyx_t_5 = 0;
+      __pyx_t_14 = 0;
       __pyx_t_4 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_17, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_6 = 0;
+      __pyx_t_12 = 0;
+      __pyx_t_10 = 0;
+      __pyx_t_5 = 0;
+      __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_17, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
     }
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_R_ph_new, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_28mass_fraction_evolver_cython_R_earth); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_17 = __Pyx_PyNumber_Divide(__pyx_t_11, __pyx_t_8); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_17); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+    __pyx_v_R_ph_new = __pyx_t_1;
 
-    /* "mass_fraction_evolver_cython.pyx":157
+    /* "mass_fraction_evolver_cython.pyx":156
  * 
  *         # if X becomes very small, we can assume all atmosphere is eroded
- *         if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:             # <<<<<<<<<<<<<<
- *                 # update new variables
- *                 X_array = np.append(X_array, 0.0)
+ *         if X_new <= 1e-4 or R_ph_new <= R_core:             # <<<<<<<<<<<<<<
+ *                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
+ *                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
  */
-    __pyx_t_1 = PyObject_RichCompare(__pyx_v_X_new, __pyx_float_1eneg_4, Py_LE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __pyx_t_21 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_21 < 0)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (!__pyx_t_21) {
+    __pyx_t_18 = ((__pyx_v_X_new <= 1e-4) != 0);
+    if (!__pyx_t_18) {
     } else {
-      __pyx_t_18 = __pyx_t_21;
-      goto __pyx_L11_bool_binop_done;
+      __pyx_t_13 = __pyx_t_18;
+      goto __pyx_L9_bool_binop_done;
     }
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_28mass_fraction_evolver_cython_R_earth); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_v_R_ph_new, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_17 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LE); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_21 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_21 < 0)) __PYX_ERR(0, 157, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-    __pyx_t_18 = __pyx_t_21;
-    __pyx_L11_bool_binop_done:;
-    if (__pyx_t_18) {
+    __pyx_t_18 = ((__pyx_v_R_ph_new <= __pyx_v_R_core) != 0);
+    __pyx_t_13 = __pyx_t_18;
+    __pyx_L9_bool_binop_done:;
+    if (__pyx_t_13) {
 
-      /* "mass_fraction_evolver_cython.pyx":159
- *         if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:
- *                 # update new variables
- *                 X_array = np.append(X_array, 0.0)             # <<<<<<<<<<<<<<
- *                 # update new time
- *                 t_array = np.append(t_array, t_stop+1e-7)
- */
-      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_append); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
-        if (likely(__pyx_t_1)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-          __Pyx_INCREF(__pyx_t_1);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_3, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_3)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_X_array, __pyx_float_0_0};
-        __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_X_array, __pyx_float_0_0};
-        __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-      } else
-      #endif
-      {
-        __pyx_t_4 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        if (__pyx_t_1) {
-          __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1); __pyx_t_1 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_X_array);
-        __Pyx_GIVEREF(__pyx_v_X_array);
-        PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_20, __pyx_v_X_array);
-        __Pyx_INCREF(__pyx_float_0_0);
-        __Pyx_GIVEREF(__pyx_float_0_0);
-        PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_20, __pyx_float_0_0);
-        __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF_SET(__pyx_v_X_array, __pyx_t_17);
-      __pyx_t_17 = 0;
-
-      /* "mass_fraction_evolver_cython.pyx":161
- *                 X_array = np.append(X_array, 0.0)
- *                 # update new time
- *                 t_array = np.append(t_array, t_stop+1e-7)             # <<<<<<<<<<<<<<
- *                 # update new R_ph
- *                 R_ph_array = np.append(R_ph_array, R_core)
- */
-      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_append); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyFloat_FromDouble((__pyx_v_t_stop + 1e-7)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_4);
-        if (likely(__pyx_t_1)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-          __Pyx_INCREF(__pyx_t_1);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_4, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_t_array, __pyx_t_3};
-        __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 161, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_t_array, __pyx_t_3};
-        __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 161, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      } else
-      #endif
-      {
-        __pyx_t_5 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 161, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        if (__pyx_t_1) {
-          __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1); __pyx_t_1 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_t_array);
-        __Pyx_GIVEREF(__pyx_v_t_array);
-        PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_20, __pyx_v_t_array);
-        __Pyx_GIVEREF(__pyx_t_3);
-        PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_20, __pyx_t_3);
-        __pyx_t_3 = 0;
-        __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 161, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF_SET(__pyx_v_t_array, __pyx_t_17);
-      __pyx_t_17 = 0;
-
-      /* "mass_fraction_evolver_cython.pyx":163
- *                 t_array = np.append(t_array, t_stop+1e-7)
- *                 # update new R_ph
- *                 R_ph_array = np.append(R_ph_array, R_core)             # <<<<<<<<<<<<<<
- * 
- *                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
- */
-      __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_append); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 163, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-        __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
-        if (likely(__pyx_t_3)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-          __Pyx_INCREF(__pyx_t_3);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_5, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_5)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_R_ph_array, __pyx_t_4};
-        __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 163, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_R_ph_array, __pyx_t_4};
-        __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 163, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      } else
-      #endif
-      {
-        __pyx_t_1 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        if (__pyx_t_3) {
-          __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3); __pyx_t_3 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_R_ph_array);
-        __Pyx_GIVEREF(__pyx_v_R_ph_array);
-        PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_20, __pyx_v_R_ph_array);
-        __Pyx_GIVEREF(__pyx_t_4);
-        PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_20, __pyx_t_4);
-        __pyx_t_4 = 0;
-        __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 163, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF_SET(__pyx_v_R_ph_array, __pyx_t_17);
-      __pyx_t_17 = 0;
-
-      /* "mass_fraction_evolver_cython.pyx":165
- *                 R_ph_array = np.append(R_ph_array, R_core)
- * 
- *                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]             # <<<<<<<<<<<<<<
+      /* "mass_fraction_evolver_cython.pyx":157
+ *         # if X becomes very small, we can assume all atmosphere is eroded
+ *         if X_new <= 1e-4 or R_ph_new <= R_core:
+ *                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core             # <<<<<<<<<<<<<<
+ *                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
  *                 return observed_radius, period, M_core, initial_X, R_core, R_star
- *         else:
  */
-      __pyx_t_17 = __Pyx_GetItemInt(__pyx_v_R_ph_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_v_rad_err = (__Pyx_mod_double(rand(), (0.18 - 0.08)) + (0.08 * __pyx_v_R_core));
+
+      /* "mass_fraction_evolver_cython.pyx":158
+ *         if X_new <= 1e-4 or R_ph_new <= R_core:
+ *                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
+ *                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err             # <<<<<<<<<<<<<<
+ *                 return observed_radius, period, M_core, initial_X, R_core, R_star
+ * 
+ */
+      __pyx_t_17 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 158, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
-      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_choice); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_11 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand_py); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_choice); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __pyx_t_11 = PyList_New(2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
       __Pyx_INCREF(__pyx_float_neg_1_0);
       __Pyx_GIVEREF(__pyx_float_neg_1_0);
-      PyList_SET_ITEM(__pyx_t_1, 0, __pyx_float_neg_1_0);
+      PyList_SET_ITEM(__pyx_t_11, 0, __pyx_float_neg_1_0);
       __Pyx_INCREF(__pyx_float_1_0);
       __Pyx_GIVEREF(__pyx_float_1_0);
-      PyList_SET_ITEM(__pyx_t_1, 1, __pyx_float_1_0);
-      __pyx_t_3 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-        __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_4);
-        if (likely(__pyx_t_3)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-          __Pyx_INCREF(__pyx_t_3);
+      PyList_SET_ITEM(__pyx_t_11, 1, __pyx_float_1_0);
+      __pyx_t_10 = NULL;
+      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_5);
+        if (likely(__pyx_t_10)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+          __Pyx_INCREF(__pyx_t_10);
           __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_4, function);
+          __Pyx_DECREF_SET(__pyx_t_5, function);
         }
       }
-      if (!__pyx_t_3) {
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_5);
+      if (!__pyx_t_10) {
+        __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        __Pyx_GOTREF(__pyx_t_8);
       } else {
         #if CYTHON_FAST_PYCALL
-        if (PyFunction_Check(__pyx_t_4)) {
-          PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_1};
-          __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (PyFunction_Check(__pyx_t_5)) {
+          PyObject *__pyx_temp[2] = {__pyx_t_10, __pyx_t_11};
+          __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_GOTREF(__pyx_t_8);
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         } else
         #endif
         #if CYTHON_FAST_PYCCALL
-        if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-          PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_1};
-          __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
+          PyObject *__pyx_temp[2] = {__pyx_t_10, __pyx_t_11};
+          __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_GOTREF(__pyx_t_8);
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         } else
         #endif
         {
-          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_7);
-          __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
-          __Pyx_GIVEREF(__pyx_t_1);
-          PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_1);
-          __pyx_t_1 = 0;
-          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+          __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 158, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_12);
+          __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10); __pyx_t_10 = NULL;
+          __Pyx_GIVEREF(__pyx_t_11);
+          PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_t_11);
+          __pyx_t_11 = 0;
+          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_12, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_8);
+          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         }
       }
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uniform); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_R_ph_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_rad_err); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Add(__pyx_t_17, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __pyx_t_12 = PyNumber_Multiply(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_v_observed_radius = __pyx_t_4;
-      __pyx_t_4 = 0;
+      __pyx_t_5 = PyNumber_Add(__pyx_t_17, __pyx_t_12); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+      __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_v_observed_radius = __pyx_t_1;
 
-      /* "mass_fraction_evolver_cython.pyx":166
- * 
- *                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+      /* "mass_fraction_evolver_cython.pyx":159
+ *                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
+ *                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
  *                 return observed_radius, period, M_core, initial_X, R_core, R_star             # <<<<<<<<<<<<<<
- *         else:
- *             # update new variables
+ * 
+ *         # update step size and t according to step-control
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_period); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 166, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_observed_radius); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_17 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 166, __pyx_L1_error)
+      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_period); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __pyx_t_17 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_R_star); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyTuple_New(6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx_v_observed_radius);
-      __Pyx_GIVEREF(__pyx_v_observed_radius);
-      PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_observed_radius);
-      __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_4);
+      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_R_star); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __pyx_t_6 = PyTuple_New(6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_5);
-      PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5);
+      __Pyx_GIVEREF(__pyx_t_12);
+      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_12);
       __Pyx_GIVEREF(__pyx_t_17);
-      PyTuple_SET_ITEM(__pyx_t_3, 3, __pyx_t_17);
-      __Pyx_GIVEREF(__pyx_t_7);
-      PyTuple_SET_ITEM(__pyx_t_3, 4, __pyx_t_7);
-      __Pyx_GIVEREF(__pyx_t_1);
-      PyTuple_SET_ITEM(__pyx_t_3, 5, __pyx_t_1);
-      __pyx_t_4 = 0;
+      PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_t_17);
+      __Pyx_GIVEREF(__pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
+      __Pyx_GIVEREF(__pyx_t_11);
+      PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_t_11);
+      __Pyx_GIVEREF(__pyx_t_10);
+      PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_10);
       __pyx_t_5 = 0;
+      __pyx_t_12 = 0;
       __pyx_t_17 = 0;
-      __pyx_t_7 = 0;
-      __pyx_t_1 = 0;
-      __pyx_r = __pyx_t_3;
-      __pyx_t_3 = 0;
+      __pyx_t_8 = 0;
+      __pyx_t_11 = 0;
+      __pyx_t_10 = 0;
+      __pyx_r = __pyx_t_6;
+      __pyx_t_6 = 0;
       goto __pyx_L0;
 
-      /* "mass_fraction_evolver_cython.pyx":157
+      /* "mass_fraction_evolver_cython.pyx":156
  * 
  *         # if X becomes very small, we can assume all atmosphere is eroded
- *         if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:             # <<<<<<<<<<<<<<
- *                 # update new variables
- *                 X_array = np.append(X_array, 0.0)
+ *         if X_new <= 1e-4 or R_ph_new <= R_core:             # <<<<<<<<<<<<<<
+ *                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
+ *                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
  */
     }
 
-    /* "mass_fraction_evolver_cython.pyx":169
+    /* "mass_fraction_evolver_cython.pyx":163
+ *         # update step size and t according to step-control
  *         else:
- *             # update new variables
- *             X_array = np.append(X_array, X_new)             # <<<<<<<<<<<<<<
- *             # update new time
- *             t_array = np.append(t_array, t_new)
+ *             t = t_new             # <<<<<<<<<<<<<<
+ *             dt = dt_next
+ *             X = X_new
  */
     /*else*/ {
-      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_append); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 169, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_7);
-        if (likely(__pyx_t_1)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
-          __Pyx_INCREF(__pyx_t_1);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_7, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_7)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_X_array, __pyx_v_X_new};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_X_array, __pyx_v_X_new};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-      } else
-      #endif
-      {
-        __pyx_t_17 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 169, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        if (__pyx_t_1) {
-          __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_1); __pyx_t_1 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_X_array);
-        __Pyx_GIVEREF(__pyx_v_X_array);
-        PyTuple_SET_ITEM(__pyx_t_17, 0+__pyx_t_20, __pyx_v_X_array);
-        __Pyx_INCREF(__pyx_v_X_new);
-        __Pyx_GIVEREF(__pyx_v_X_new);
-        PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_20, __pyx_v_X_new);
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_17, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_X_array, __pyx_t_3);
-      __pyx_t_3 = 0;
+      __pyx_v_t = __pyx_v_t_new;
 
-      /* "mass_fraction_evolver_cython.pyx":171
- *             X_array = np.append(X_array, X_new)
- *             # update new time
- *             t_array = np.append(t_array, t_new)             # <<<<<<<<<<<<<<
- *             # update new R_ph
- *             R_ph_array = np.append(R_ph_array, R_ph_new/R_earth)
+      /* "mass_fraction_evolver_cython.pyx":164
+ *         else:
+ *             t = t_new
+ *             dt = dt_next             # <<<<<<<<<<<<<<
+ *             X = X_new
+ *             R_ph = R_ph_new
  */
-      __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 171, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_append); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 171, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_17);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_17))) {
-        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_17);
-        if (likely(__pyx_t_7)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_17);
-          __Pyx_INCREF(__pyx_t_7);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_17, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_17)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_v_t_array, __pyx_v_t_new};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_17, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_17)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_v_t_array, __pyx_v_t_new};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_17, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-      } else
-      #endif
-      {
-        __pyx_t_1 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        if (__pyx_t_7) {
-          __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_7); __pyx_t_7 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_t_array);
-        __Pyx_GIVEREF(__pyx_v_t_array);
-        PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_20, __pyx_v_t_array);
-        __Pyx_INCREF(__pyx_v_t_new);
-        __Pyx_GIVEREF(__pyx_v_t_new);
-        PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_20, __pyx_v_t_new);
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_17, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __Pyx_DECREF_SET(__pyx_v_t_array, __pyx_t_3);
-      __pyx_t_3 = 0;
+      __pyx_v_dt = __pyx_v_dt_next;
 
-      /* "mass_fraction_evolver_cython.pyx":173
- *             t_array = np.append(t_array, t_new)
- *             # update new R_ph
- *             R_ph_array = np.append(R_ph_array, R_ph_new/R_earth)             # <<<<<<<<<<<<<<
+      /* "mass_fraction_evolver_cython.pyx":165
+ *             t = t_new
+ *             dt = dt_next
+ *             X = X_new             # <<<<<<<<<<<<<<
+ *             R_ph = R_ph_new
  * 
- *         # update step size and t according to step-control
  */
-      __pyx_t_17 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 173, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_17);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_append); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __pyx_t_17 = PyFloat_FromDouble(__pyx_v_28mass_fraction_evolver_cython_R_earth); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 173, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_17);
-      __pyx_t_7 = __Pyx_PyNumber_Divide(__pyx_v_R_ph_new, __pyx_t_17); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 173, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __pyx_t_17 = NULL;
-      __pyx_t_20 = 0;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-        __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_1);
-        if (likely(__pyx_t_17)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-          __Pyx_INCREF(__pyx_t_17);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_1, function);
-          __pyx_t_20 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_1)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_17, __pyx_v_R_ph_array, __pyx_t_7};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-        PyObject *__pyx_temp[3] = {__pyx_t_17, __pyx_v_R_ph_array, __pyx_t_7};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_20, 2+__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      } else
-      #endif
-      {
-        __pyx_t_5 = PyTuple_New(2+__pyx_t_20); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 173, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        if (__pyx_t_17) {
-          __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_17); __pyx_t_17 = NULL;
-        }
-        __Pyx_INCREF(__pyx_v_R_ph_array);
-        __Pyx_GIVEREF(__pyx_v_R_ph_array);
-        PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_20, __pyx_v_R_ph_array);
-        __Pyx_GIVEREF(__pyx_t_7);
-        PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_20, __pyx_t_7);
-        __pyx_t_7 = 0;
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF_SET(__pyx_v_R_ph_array, __pyx_t_3);
-      __pyx_t_3 = 0;
+      __pyx_v_X = __pyx_v_X_new;
+
+      /* "mass_fraction_evolver_cython.pyx":166
+ *             dt = dt_next
+ *             X = X_new
+ *             R_ph = R_ph_new             # <<<<<<<<<<<<<<
+ * 
+ *     rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph
+ */
+      __pyx_v_R_ph = __pyx_v_R_ph_new;
     }
-
-    /* "mass_fraction_evolver_cython.pyx":176
- * 
- *         # update step size and t according to step-control
- *         t = t_array[-1]             # <<<<<<<<<<<<<<
- *         dt = dt_next
- * 
- */
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_t_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF_SET(__pyx_v_t, __pyx_t_3);
-    __pyx_t_3 = 0;
-
-    /* "mass_fraction_evolver_cython.pyx":177
- *         # update step size and t according to step-control
- *         t = t_array[-1]
- *         dt = dt_next             # <<<<<<<<<<<<<<
- * 
- *     observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
- */
-    __pyx_t_14 = __pyx_PyFloat_AsDouble(__pyx_v_dt_next); if (unlikely((__pyx_t_14 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 177, __pyx_L1_error)
-    __pyx_v_dt = __pyx_t_14;
   }
 
-  /* "mass_fraction_evolver_cython.pyx":179
- *         dt = dt_next
+  /* "mass_fraction_evolver_cython.pyx":168
+ *             R_ph = R_ph_new
  * 
- *     observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]             # <<<<<<<<<<<<<<
+ *     rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph             # <<<<<<<<<<<<<<
+ *     observed_radius = R_ph + rand_py.choice([-1.0,1.0])*rad_err
+ *     return observed_radius, period, M_core, initial_X, R_core, R_star
+ */
+  __pyx_v_rad_err = (__Pyx_mod_double(rand(), (0.18 - 0.08)) + (0.08 * __pyx_v_R_ph));
+
+  /* "mass_fraction_evolver_cython.pyx":169
+ * 
+ *     rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph
+ *     observed_radius = R_ph + rand_py.choice([-1.0,1.0])*rad_err             # <<<<<<<<<<<<<<
  *     return observed_radius, period, M_core, initial_X, R_core, R_star
  * 
  */
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_R_ph_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_choice); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_R_ph); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_11 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand_py); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_choice); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __pyx_t_11 = PyList_New(2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
   __Pyx_INCREF(__pyx_float_neg_1_0);
   __Pyx_GIVEREF(__pyx_float_neg_1_0);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_float_neg_1_0);
+  PyList_SET_ITEM(__pyx_t_11, 0, __pyx_float_neg_1_0);
   __Pyx_INCREF(__pyx_float_1_0);
   __Pyx_GIVEREF(__pyx_float_1_0);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_float_1_0);
+  PyList_SET_ITEM(__pyx_t_11, 1, __pyx_float_1_0);
   __pyx_t_17 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
-    __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_7);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
+    __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_8);
     if (likely(__pyx_t_17)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
       __Pyx_INCREF(__pyx_t_17);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_7, function);
+      __Pyx_DECREF_SET(__pyx_t_8, function);
     }
   }
   if (!__pyx_t_17) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __Pyx_GOTREF(__pyx_t_10);
   } else {
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_7)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_5};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+    if (PyFunction_Check(__pyx_t_8)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_11};
+      __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_GOTREF(__pyx_t_10);
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
-      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_5};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_17, __pyx_t_11};
+      __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_GOTREF(__pyx_t_10);
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_17); __pyx_t_17 = NULL;
-      __Pyx_GIVEREF(__pyx_t_5);
-      PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_5);
-      __pyx_t_5 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 169, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_17); __pyx_t_17 = NULL;
+      __Pyx_GIVEREF(__pyx_t_11);
+      PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_t_11);
+      __pyx_t_11 = 0;
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_12, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
   }
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_rand); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_R_ph_array, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_observed_radius = __pyx_t_7;
-  __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_rad_err); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_12 = PyNumber_Multiply(__pyx_t_10, __pyx_t_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_t_12); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_v_observed_radius = __pyx_t_1;
 
-  /* "mass_fraction_evolver_cython.pyx":180
- * 
- *     observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+  /* "mass_fraction_evolver_cython.pyx":170
+ *     rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph
+ *     observed_radius = R_ph + rand_py.choice([-1.0,1.0])*rad_err
  *     return observed_radius, period, M_core, initial_X, R_core, R_star             # <<<<<<<<<<<<<<
  * 
  * #////////////////////////////////// X vs t PLOT ////////////////////////////// #
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_period); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_R_star); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_17 = PyTuple_New(6); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_observed_radius); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_12 = PyFloat_FromDouble(__pyx_v_period); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_M_core); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_initial_X); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_R_core); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_17 = PyFloat_FromDouble(__pyx_v_R_star); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_17);
-  __Pyx_INCREF(__pyx_v_observed_radius);
-  __Pyx_GIVEREF(__pyx_v_observed_radius);
-  PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_v_observed_radius);
-  __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_17, 2, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_17, 3, __pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_17, 4, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_17, 5, __pyx_t_5);
-  __pyx_t_7 = 0;
-  __pyx_t_1 = 0;
-  __pyx_t_3 = 0;
-  __pyx_t_4 = 0;
-  __pyx_t_5 = 0;
-  __pyx_r = __pyx_t_17;
+  __pyx_t_5 = PyTuple_New(6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_8);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_12);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_12);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_10);
+  PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_10);
+  __Pyx_GIVEREF(__pyx_t_11);
+  PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_t_11);
+  __Pyx_GIVEREF(__pyx_t_17);
+  PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_17);
+  __pyx_t_8 = 0;
+  __pyx_t_12 = 0;
+  __pyx_t_6 = 0;
+  __pyx_t_10 = 0;
+  __pyx_t_11 = 0;
   __pyx_t_17 = 0;
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "mass_fraction_evolver_cython.pyx":113
+  /* "mass_fraction_evolver_cython.pyx":115
  * # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
  * 
- * cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy, params):             # <<<<<<<<<<<<<<
- * 
- *     """
+ * cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,             # <<<<<<<<<<<<<<
+ *                   double initial_X, double core_density, double M_core,
+ *                   double period, double M_star, double R_star,
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_XDECREF(__pyx_t_14);
   __Pyx_XDECREF(__pyx_t_17);
-  __Pyx_XDECREF(__pyx_t_19);
   __Pyx_AddTraceback("mass_fraction_evolver_cython.RK45_driver", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_R_ph_init);
-  __Pyx_XDECREF(__pyx_v_X_array);
-  __Pyx_XDECREF(__pyx_v_t_array);
-  __Pyx_XDECREF(__pyx_v_R_ph_array);
-  __Pyx_XDECREF(__pyx_v_t);
-  __Pyx_XDECREF(__pyx_v_t_new);
-  __Pyx_XDECREF(__pyx_v_X_new);
-  __Pyx_XDECREF(__pyx_v_dt_next);
-  __Pyx_XDECREF(__pyx_v_R_ph_new);
-  __Pyx_XDECREF(__pyx_v_observed_radius);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3401,17 +2759,35 @@ static PyObject *__pyx_pw_28mass_fraction_evolver_cython_1RK45_driver(PyObject *
   double __pyx_v_t_stop;
   double __pyx_v_dt_try;
   double __pyx_v_accuracy;
-  PyObject *__pyx_v_params = 0;
+  double __pyx_v_initial_X;
+  double __pyx_v_core_density;
+  double __pyx_v_M_core;
+  double __pyx_v_period;
+  double __pyx_v_M_star;
+  double __pyx_v_R_star;
+  double __pyx_v_KH_timescale_cutoff;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("RK45_driver (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_t_start,&__pyx_n_s_t_stop,&__pyx_n_s_dt_try,&__pyx_n_s_accuracy,&__pyx_n_s_params,0};
-    PyObject* values[5] = {0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_t_start,&__pyx_n_s_t_stop,&__pyx_n_s_dt_try,&__pyx_n_s_accuracy,&__pyx_n_s_initial_X,&__pyx_n_s_core_density,&__pyx_n_s_M_core,&__pyx_n_s_period,&__pyx_n_s_M_star,&__pyx_n_s_R_star,&__pyx_n_s_KH_timescale_cutoff,0};
+    PyObject* values[11] = {0,0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 11: values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
+        CYTHON_FALLTHROUGH;
+        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
+        CYTHON_FALLTHROUGH;
+        case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+        CYTHON_FALLTHROUGH;
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+        CYTHON_FALLTHROUGH;
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        CYTHON_FALLTHROUGH;
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         CYTHON_FALLTHROUGH;
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
@@ -3434,31 +2810,67 @@ static PyObject *__pyx_pw_28mass_fraction_evolver_cython_1RK45_driver(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_t_stop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 5, 5, 1); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 1); __PYX_ERR(0, 115, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dt_try)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 5, 5, 2); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 2); __PYX_ERR(0, 115, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_accuracy)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 5, 5, 3); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 3); __PYX_ERR(0, 115, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
-        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_params)) != 0)) kw_args--;
+        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_initial_X)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 5, 5, 4); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 4); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  5:
+        if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_core_density)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 5); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  6:
+        if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_M_core)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 6); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  7:
+        if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_period)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 7); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  8:
+        if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_M_star)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 8); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  9:
+        if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_star)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 9); __PYX_ERR(0, 115, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case 10:
+        if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_KH_timescale_cutoff)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, 10); __PYX_ERR(0, 115, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RK45_driver") < 0)) __PYX_ERR(0, 113, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RK45_driver") < 0)) __PYX_ERR(0, 115, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 11) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -3466,35 +2878,47 @@ static PyObject *__pyx_pw_28mass_fraction_evolver_cython_1RK45_driver(PyObject *
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+      values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+      values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+      values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
+      values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
     }
-    __pyx_v_t_start = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_t_start == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L3_error)
-    __pyx_v_t_stop = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_t_stop == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L3_error)
-    __pyx_v_dt_try = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_dt_try == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L3_error)
-    __pyx_v_accuracy = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_accuracy == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L3_error)
-    __pyx_v_params = values[4];
+    __pyx_v_t_start = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_t_start == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L3_error)
+    __pyx_v_t_stop = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_t_stop == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L3_error)
+    __pyx_v_dt_try = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_dt_try == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L3_error)
+    __pyx_v_accuracy = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_accuracy == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L3_error)
+    __pyx_v_initial_X = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_initial_X == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+    __pyx_v_core_density = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_core_density == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+    __pyx_v_M_core = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_M_core == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+    __pyx_v_period = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_period == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L3_error)
+    __pyx_v_M_star = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_M_star == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L3_error)
+    __pyx_v_R_star = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_R_star == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L3_error)
+    __pyx_v_KH_timescale_cutoff = __pyx_PyFloat_AsDouble(values[10]); if (unlikely((__pyx_v_KH_timescale_cutoff == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 118, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 113, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("RK45_driver", 1, 11, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 115, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mass_fraction_evolver_cython.RK45_driver", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_28mass_fraction_evolver_cython_RK45_driver(__pyx_self, __pyx_v_t_start, __pyx_v_t_stop, __pyx_v_dt_try, __pyx_v_accuracy, __pyx_v_params);
+  __pyx_r = __pyx_pf_28mass_fraction_evolver_cython_RK45_driver(__pyx_self, __pyx_v_t_start, __pyx_v_t_stop, __pyx_v_dt_try, __pyx_v_accuracy, __pyx_v_initial_X, __pyx_v_core_density, __pyx_v_M_core, __pyx_v_period, __pyx_v_M_star, __pyx_v_R_star, __pyx_v_KH_timescale_cutoff);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_28mass_fraction_evolver_cython_RK45_driver(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, PyObject *__pyx_v_params) {
+static PyObject *__pyx_pf_28mass_fraction_evolver_cython_RK45_driver(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t_start, double __pyx_v_t_stop, double __pyx_v_dt_try, double __pyx_v_accuracy, double __pyx_v_initial_X, double __pyx_v_core_density, double __pyx_v_M_core, double __pyx_v_period, double __pyx_v_M_star, double __pyx_v_R_star, double __pyx_v_KH_timescale_cutoff) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("RK45_driver", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_28mass_fraction_evolver_cython_RK45_driver(__pyx_v_t_start, __pyx_v_t_stop, __pyx_v_dt_try, __pyx_v_accuracy, __pyx_v_params, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_28mass_fraction_evolver_cython_RK45_driver(__pyx_v_t_start, __pyx_v_t_stop, __pyx_v_dt_try, __pyx_v_accuracy, __pyx_v_initial_X, __pyx_v_core_density, __pyx_v_M_core, __pyx_v_period, __pyx_v_M_star, __pyx_v_R_star, __pyx_v_KH_timescale_cutoff, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3670,7 +3094,7 @@ static PyObject *__Pyx_CFunc_double____double____double____object___to_py(double
  *         """wrap(t: float, X: float, parameters) -> float"""
  *         return f(t, X, parameters)
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_56__Pyx_CFunc_double____double____double____object___to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_double____double, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_56__Pyx_CFunc_double____double____double____object___to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_double____double, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_wrap = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3799,11 +3223,13 @@ static int __pyx_import_star_set(PyObject *o, PyObject* py_name, char *name) {
   static const char* internal_type_names[] = {
     "__pyx_ctuple_3429d__double__and_double__and_double__and_double__and_double__and_double__and_double__etc",
     "__pyx_ctuple_3429d__double__and_double__and_double__and_double__and_double__and_double__and_double__etc_struct",
+    "__pyx_ctuple_39c6a__double__and_double__and_double__and_double__and_double__and_double__etc",
+    "__pyx_ctuple_39c6a__double__and_double__and_double__and_double__and_double__and_double__etc_struct",
     "__pyx_ctuple_5a936__double__and_double__and_double__and_double__and_double__and_double__and_double__and_double__etc",
     "__pyx_ctuple_5a936__double__and_double__and_double__and_double__and_double__and_double__and_double__and_double__etc_struct",
+    "__pyx_ctuple_bbaaa__double__and_double__and_double__and_double__lParendouble__comma_double__comma_PyObject__ptr__rParen__and_double__etc",
+    "__pyx_ctuple_bbaaa__double__and_double__and_double__and_double__lParendouble__comma_double__comma_PyObject__ptr__rParen__and_double__etc_struct",
     "__pyx_ctuple_double",
-    "__pyx_ctuple_double__and_double",
-    "__pyx_ctuple_double__and_double_struct",
     "__pyx_ctuple_double_struct",
     "__pyx_scope_struct____Pyx_CFunc_double____double____double____object___to_py",
     0
@@ -3818,73 +3244,73 @@ static int __pyx_import_star_set(PyObject *o, PyObject* py_name, char *name) {
   }
   if (0);
   else if (__Pyx_StrEq(name, "AU")) {
-    __pyx_v_28mass_fraction_evolver_cython_AU = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_AU == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_AU = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_AU == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "Delta_ab")) {
-    __pyx_v_28mass_fraction_evolver_cython_Delta_ab = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_Delta_ab == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_Delta_ab = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_Delta_ab == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "G")) {
-    __pyx_v_28mass_fraction_evolver_cython_G = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_G == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_G = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_G == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "L_sun")) {
-    __pyx_v_28mass_fraction_evolver_cython_L_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_L_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_L_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_L_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "M_earth")) {
-    __pyx_v_28mass_fraction_evolver_cython_M_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_M_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_M_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_M_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "M_sun")) {
-    __pyx_v_28mass_fraction_evolver_cython_M_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_M_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_M_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_M_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "Myr")) {
-    __pyx_v_28mass_fraction_evolver_cython_Myr = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_Myr == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_Myr = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_Myr == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "R_earth")) {
-    __pyx_v_28mass_fraction_evolver_cython_R_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_R_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_R_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_R_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "R_sun")) {
-    __pyx_v_28mass_fraction_evolver_cython_R_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_R_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_R_sun = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_R_sun == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "T_eq_earth")) {
-    __pyx_v_28mass_fraction_evolver_cython_T_eq_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_T_eq_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_T_eq_earth = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_T_eq_earth == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "a0")) {
-    __pyx_v_28mass_fraction_evolver_cython_a0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_a0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_a0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_a0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "alpha")) {
-    __pyx_v_28mass_fraction_evolver_cython_alpha = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_alpha = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "b_cutoff")) {
-    __pyx_v_28mass_fraction_evolver_cython_b_cutoff = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_b_cutoff == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_b_cutoff = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_b_cutoff == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "beta")) {
-    __pyx_v_28mass_fraction_evolver_cython_beta = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_beta = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "eta_0")) {
-    __pyx_v_28mass_fraction_evolver_cython_eta_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_eta_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_eta_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_eta_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "gamma")) {
-    __pyx_v_28mass_fraction_evolver_cython_gamma = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_gamma == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_gamma = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_gamma == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "k_B")) {
-    __pyx_v_28mass_fraction_evolver_cython_k_B = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_k_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_k_B = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_k_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "kappa_0")) {
-    __pyx_v_28mass_fraction_evolver_cython_kappa_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_kappa_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_kappa_0 = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_kappa_0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "m_H")) {
-    __pyx_v_28mass_fraction_evolver_cython_m_H = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_m_H == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_m_H = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_m_H == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "mu")) {
-    __pyx_v_28mass_fraction_evolver_cython_mu = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_mu == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_mu = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_mu == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "pi")) {
-    __pyx_v_28mass_fraction_evolver_cython_pi = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_pi == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_pi = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_pi == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "stefan")) {
-    __pyx_v_28mass_fraction_evolver_cython_stefan = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_stefan == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_stefan = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_stefan == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L2_error)
   }
   else if (__Pyx_StrEq(name, "t_sat")) {
-    __pyx_v_28mass_fraction_evolver_cython_t_sat = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_t_sat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L2_error)
+    __pyx_v_28mass_fraction_evolver_cython_t_sat = __pyx_PyFloat_AsDouble(o); if (unlikely((__pyx_v_28mass_fraction_evolver_cython_t_sat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L2_error)
   }
   else {
     if (PyObject_SetAttr(__pyx_m, py_name, o) < 0) goto bad;
@@ -4035,30 +3461,32 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_n_s_KH_timescale_cutoff, __pyx_k_KH_timescale_cutoff, sizeof(__pyx_k_KH_timescale_cutoff), 0, 0, 1, 1},
+  {&__pyx_n_s_M_core, __pyx_k_M_core, sizeof(__pyx_k_M_core), 0, 0, 1, 1},
+  {&__pyx_n_s_M_star, __pyx_k_M_star, sizeof(__pyx_k_M_star), 0, 0, 1, 1},
   {&__pyx_n_s_Pyx_CFunc_double____double, __pyx_k_Pyx_CFunc_double____double, sizeof(__pyx_k_Pyx_CFunc_double____double), 0, 0, 1, 1},
   {&__pyx_n_s_RKF45, __pyx_k_RKF45, sizeof(__pyx_k_RKF45), 0, 0, 1, 1},
   {&__pyx_n_s_R_guess, __pyx_k_R_guess, sizeof(__pyx_k_R_guess), 0, 0, 1, 1},
   {&__pyx_n_s_R_photosphere_cython, __pyx_k_R_photosphere_cython, sizeof(__pyx_k_R_photosphere_cython), 0, 0, 1, 1},
+  {&__pyx_n_s_R_star, __pyx_k_R_star, sizeof(__pyx_k_R_star), 0, 0, 1, 1},
   {&__pyx_n_s_X, __pyx_k_X, sizeof(__pyx_k_X), 0, 0, 1, 1},
-  {&__pyx_n_s__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 0, 1, 1},
+  {&__pyx_n_s__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 0, 1, 1},
   {&__pyx_n_s_accuracy, __pyx_k_accuracy, sizeof(__pyx_k_accuracy), 0, 0, 1, 1},
-  {&__pyx_n_s_append, __pyx_k_append, sizeof(__pyx_k_append), 0, 0, 1, 1},
-  {&__pyx_n_s_array, __pyx_k_array, sizeof(__pyx_k_array), 0, 0, 1, 1},
   {&__pyx_n_s_calculate_R_photosphere, __pyx_k_calculate_R_photosphere, sizeof(__pyx_k_calculate_R_photosphere), 0, 0, 1, 1},
   {&__pyx_n_s_cfunc_to_py, __pyx_k_cfunc_to_py, sizeof(__pyx_k_cfunc_to_py), 0, 0, 1, 1},
   {&__pyx_n_s_choice, __pyx_k_choice, sizeof(__pyx_k_choice), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_constants, __pyx_k_constants, sizeof(__pyx_k_constants), 0, 0, 1, 1},
+  {&__pyx_n_s_core_density, __pyx_k_core_density, sizeof(__pyx_k_core_density), 0, 0, 1, 1},
   {&__pyx_n_s_dt_try, __pyx_k_dt_try, sizeof(__pyx_k_dt_try), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
+  {&__pyx_n_s_initial_X, __pyx_k_initial_X, sizeof(__pyx_k_initial_X), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_matplotlib_pyplot, __pyx_k_matplotlib_pyplot, sizeof(__pyx_k_matplotlib_pyplot), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_parameters, __pyx_k_parameters, sizeof(__pyx_k_parameters), 0, 0, 1, 1},
-  {&__pyx_n_s_params, __pyx_k_params, sizeof(__pyx_k_params), 0, 0, 1, 1},
-  {&__pyx_n_s_plt, __pyx_k_plt, sizeof(__pyx_k_plt), 0, 0, 1, 1},
-  {&__pyx_n_s_rand, __pyx_k_rand, sizeof(__pyx_k_rand), 0, 0, 1, 1},
+  {&__pyx_n_s_period, __pyx_k_period, sizeof(__pyx_k_period), 0, 0, 1, 1},
+  {&__pyx_n_s_rand_py, __pyx_k_rand_py, sizeof(__pyx_k_rand_py), 0, 0, 1, 1},
   {&__pyx_n_s_random, __pyx_k_random, sizeof(__pyx_k_random), 0, 0, 1, 1},
   {&__pyx_n_s_scipy, __pyx_k_scipy, sizeof(__pyx_k_scipy), 0, 0, 1, 1},
   {&__pyx_n_s_sqrt, __pyx_k_sqrt, sizeof(__pyx_k_sqrt), 0, 0, 1, 1},
@@ -4069,7 +3497,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_t_start, __pyx_k_t_start, sizeof(__pyx_k_t_start), 0, 0, 1, 1},
   {&__pyx_n_s_t_stop, __pyx_k_t_stop, sizeof(__pyx_k_t_stop), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
-  {&__pyx_n_s_uniform, __pyx_k_uniform, sizeof(__pyx_k_uniform), 0, 0, 1, 1},
   {&__pyx_n_s_wrap, __pyx_k_wrap, sizeof(__pyx_k_wrap), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
@@ -4081,49 +3508,16 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "mass_fraction_evolver_cython.pyx":149
- *         (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
- * 
- *         if (t_new, X_new, dt_next) == (None, None, None):             # <<<<<<<<<<<<<<
- *             return None, None, None, None, None, None
- *         # calculate new R_ph
- */
-  __pyx_tuple_ = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 149, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple_);
-  __Pyx_GIVEREF(__pyx_tuple_);
-
   /* "mass_fraction_evolver_cython.pyx":150
  * 
- *         if (t_new, X_new, dt_next) == (None, None, None):
- *             return None, None, None, None, None, None             # <<<<<<<<<<<<<<
+ *         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:
+ *             return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0             # <<<<<<<<<<<<<<
  *         # calculate new R_ph
- *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,
+ *         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,R_core, X_new, KH_timescale_cutoff, 0.0) / R_earth
  */
-  __pyx_tuple__2 = PyTuple_Pack(6, Py_None, Py_None, Py_None, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__2);
-  __Pyx_GIVEREF(__pyx_tuple__2);
-
-  /* "mass_fraction_evolver_cython.pyx":165
- *                 R_ph_array = np.append(R_ph_array, R_core)
- * 
- *                 observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]             # <<<<<<<<<<<<<<
- *                 return observed_radius, period, M_core, initial_X, R_core, R_star
- *         else:
- */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_float_0_08, __pyx_float_0_18); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 165, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-
-  /* "mass_fraction_evolver_cython.pyx":179
- *         dt = dt_next
- * 
- *     observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]             # <<<<<<<<<<<<<<
- *     return observed_radius, period, M_core, initial_X, R_core, R_star
- * 
- */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_float_0_08, __pyx_float_0_18); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_tuple_ = PyTuple_Pack(6, __pyx_float_0_0, __pyx_float_0_0, __pyx_float_0_0, __pyx_float_0_0, __pyx_float_0_0, __pyx_float_0_0); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
 
   /* "cfunc.to_py":65
  * @cname("__Pyx_CFunc_double____double____double____object___to_py")
@@ -4132,10 +3526,10 @@ static int __Pyx_InitCachedConstants(void) {
  *         """wrap(t: float, X: float, parameters) -> float"""
  *         return f(t, X, parameters)
  */
-  __pyx_tuple__5 = PyTuple_Pack(3, __pyx_n_s_t, __pyx_n_s_X, __pyx_n_s_parameters); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(1, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 65, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(1, 65, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(3, __pyx_n_s_t, __pyx_n_s_X, __pyx_n_s_parameters); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 65, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 65, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(1, 65, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4147,9 +3541,6 @@ static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_float_0_0 = PyFloat_FromDouble(0.0); if (unlikely(!__pyx_float_0_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_1_0 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_float_1_0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_0_08 = PyFloat_FromDouble(0.08); if (unlikely(!__pyx_float_0_08)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_0_18 = PyFloat_FromDouble(0.18); if (unlikely(!__pyx_float_0_18)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_1eneg_4 = PyFloat_FromDouble(1e-4); if (unlikely(!__pyx_float_1eneg_4)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_001 = PyFloat_FromDouble(0.001); if (unlikely(!__pyx_float_0_001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_neg_1_0 = PyFloat_FromDouble(-1.0); if (unlikely(!__pyx_float_neg_1_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
@@ -4408,8 +3799,8 @@ if (!__Pyx_RefNanny) {
   /* "mass_fraction_evolver_cython.pyx":2
  * from __future__ import division
  * import numpy as np             # <<<<<<<<<<<<<<
- * import matplotlib.pyplot as plt
- * from numpy import random as rand
+ * from numpy import random as rand_py
+ * from scipy import stats
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4419,106 +3810,88 @@ if (!__Pyx_RefNanny) {
   /* "mass_fraction_evolver_cython.pyx":3
  * from __future__ import division
  * import numpy as np
- * import matplotlib.pyplot as plt             # <<<<<<<<<<<<<<
- * from numpy import random as rand
+ * from numpy import random as rand_py             # <<<<<<<<<<<<<<
  * from scipy import stats
+ * 
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s__7);
-  __Pyx_GIVEREF(__pyx_n_s__7);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__7);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_matplotlib_pyplot, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_INCREF(__pyx_n_s_random);
+  __Pyx_GIVEREF(__pyx_n_s_random);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_random);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_numpy, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_plt, __pyx_t_2) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_rand_py, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "mass_fraction_evolver_cython.pyx":4
  * import numpy as np
- * import matplotlib.pyplot as plt
- * from numpy import random as rand             # <<<<<<<<<<<<<<
- * from scipy import stats
- * from constants import *
+ * from numpy import random as rand_py
+ * from scipy import stats             # <<<<<<<<<<<<<<
+ * 
+ * from libc.stdlib cimport rand
  */
   __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s_random);
-  __Pyx_GIVEREF(__pyx_n_s_random);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_random);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_rand, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "mass_fraction_evolver_cython.pyx":5
- * import matplotlib.pyplot as plt
- * from numpy import random as rand
- * from scipy import stats             # <<<<<<<<<<<<<<
- * from constants import *
- * import R_photosphere_cython
- */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_stats);
   __Pyx_GIVEREF(__pyx_n_s_stats);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_stats);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_scipy, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_stats); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_stats);
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_scipy, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_stats, __pyx_t_1) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_stats); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_stats, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mass_fraction_evolver_cython.pyx":6
- * from numpy import random as rand
- * from scipy import stats
+  /* "mass_fraction_evolver_cython.pyx":8
+ * from libc.stdlib cimport rand
+ * 
  * from constants import *             # <<<<<<<<<<<<<<
  * import R_photosphere_cython
  * import RKF45
  */
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s__7);
-  __Pyx_GIVEREF(__pyx_n_s__7);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s__7);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_constants, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__pyx_import_star(__pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_n_s__4);
+  __Pyx_GIVEREF(__pyx_n_s__4);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__4);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_constants, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__pyx_import_star(__pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "mass_fraction_evolver_cython.pyx":7
- * from scipy import stats
+  /* "mass_fraction_evolver_cython.pyx":9
+ * 
  * from constants import *
  * import R_photosphere_cython             # <<<<<<<<<<<<<<
  * import RKF45
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_R_photosphere_cython, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_R_photosphere_cython, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_R_photosphere_cython, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_R_photosphere_cython, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "mass_fraction_evolver_cython.pyx":8
+  /* "mass_fraction_evolver_cython.pyx":10
  * from constants import *
  * import R_photosphere_cython
  * import RKF45             # <<<<<<<<<<<<<<
  * 
  * """
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_RKF45, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKF45, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_RKF45, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKF45, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "mass_fraction_evolver_cython.pyx":17
+  /* "mass_fraction_evolver_cython.pyx":19
  * forward integrate the atmospheric mass fraction of a small, close-in planet.
  * """
  * cdef double pi = 3.141598             # <<<<<<<<<<<<<<
@@ -4527,7 +3900,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_pi = 3.141598;
 
-  /* "mass_fraction_evolver_cython.pyx":18
+  /* "mass_fraction_evolver_cython.pyx":20
  * """
  * cdef double pi = 3.141598
  * cdef double stefan = 5.67e-8             # <<<<<<<<<<<<<<
@@ -4536,7 +3909,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_stefan = 5.67e-8;
 
-  /* "mass_fraction_evolver_cython.pyx":19
+  /* "mass_fraction_evolver_cython.pyx":21
  * cdef double pi = 3.141598
  * cdef double stefan = 5.67e-8
  * cdef double kappa_0 = 2.294e-8             # <<<<<<<<<<<<<<
@@ -4545,7 +3918,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_kappa_0 = 2.294e-8;
 
-  /* "mass_fraction_evolver_cython.pyx":20
+  /* "mass_fraction_evolver_cython.pyx":22
  * cdef double stefan = 5.67e-8
  * cdef double kappa_0 = 2.294e-8
  * cdef double G = 6.674e-11             # <<<<<<<<<<<<<<
@@ -4554,7 +3927,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_G = 6.674e-11;
 
-  /* "mass_fraction_evolver_cython.pyx":21
+  /* "mass_fraction_evolver_cython.pyx":23
  * cdef double kappa_0 = 2.294e-8
  * cdef double G = 6.674e-11
  * cdef double gamma = 5/3             # <<<<<<<<<<<<<<
@@ -4563,7 +3936,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_gamma = (5.0 / 3.0);
 
-  /* "mass_fraction_evolver_cython.pyx":22
+  /* "mass_fraction_evolver_cython.pyx":24
  * cdef double G = 6.674e-11
  * cdef double gamma = 5/3
  * cdef double Delta_ab = (gamma-1)/gamma             # <<<<<<<<<<<<<<
@@ -4573,11 +3946,11 @@ if (!__Pyx_RefNanny) {
   __pyx_t_3 = (__pyx_v_28mass_fraction_evolver_cython_gamma - 1.0);
   if (unlikely(__pyx_v_28mass_fraction_evolver_cython_gamma == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 22, __pyx_L1_error)
+    __PYX_ERR(0, 24, __pyx_L1_error)
   }
   __pyx_v_28mass_fraction_evolver_cython_Delta_ab = (__pyx_t_3 / __pyx_v_28mass_fraction_evolver_cython_gamma);
 
-  /* "mass_fraction_evolver_cython.pyx":23
+  /* "mass_fraction_evolver_cython.pyx":25
  * cdef double gamma = 5/3
  * cdef double Delta_ab = (gamma-1)/gamma
  * cdef double mu = 2.35             # <<<<<<<<<<<<<<
@@ -4586,7 +3959,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_mu = 2.35;
 
-  /* "mass_fraction_evolver_cython.pyx":24
+  /* "mass_fraction_evolver_cython.pyx":26
  * cdef double Delta_ab = (gamma-1)/gamma
  * cdef double mu = 2.35
  * cdef double m_H = 1.67e-27             # <<<<<<<<<<<<<<
@@ -4595,7 +3968,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_m_H = 1.67e-27;
 
-  /* "mass_fraction_evolver_cython.pyx":25
+  /* "mass_fraction_evolver_cython.pyx":27
  * cdef double mu = 2.35
  * cdef double m_H = 1.67e-27
  * cdef double k_B = 1.381e-23             # <<<<<<<<<<<<<<
@@ -4604,7 +3977,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_k_B = 1.381e-23;
 
-  /* "mass_fraction_evolver_cython.pyx":26
+  /* "mass_fraction_evolver_cython.pyx":28
  * cdef double m_H = 1.67e-27
  * cdef double k_B = 1.381e-23
  * cdef double alpha = 0.68             # <<<<<<<<<<<<<<
@@ -4613,7 +3986,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_alpha = 0.68;
 
-  /* "mass_fraction_evolver_cython.pyx":27
+  /* "mass_fraction_evolver_cython.pyx":29
  * cdef double k_B = 1.381e-23
  * cdef double alpha = 0.68
  * cdef double beta = 0.45             # <<<<<<<<<<<<<<
@@ -4622,7 +3995,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_beta = 0.45;
 
-  /* "mass_fraction_evolver_cython.pyx":28
+  /* "mass_fraction_evolver_cython.pyx":30
  * cdef double alpha = 0.68
  * cdef double beta = 0.45
  * cdef double M_sun = 1.989e30             # <<<<<<<<<<<<<<
@@ -4631,7 +4004,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_M_sun = 1.989e30;
 
-  /* "mass_fraction_evolver_cython.pyx":29
+  /* "mass_fraction_evolver_cython.pyx":31
  * cdef double beta = 0.45
  * cdef double M_sun = 1.989e30
  * cdef double L_sun = 3.828e26             # <<<<<<<<<<<<<<
@@ -4640,7 +4013,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_L_sun = 3.828e26;
 
-  /* "mass_fraction_evolver_cython.pyx":30
+  /* "mass_fraction_evolver_cython.pyx":32
  * cdef double M_sun = 1.989e30
  * cdef double L_sun = 3.828e26
  * cdef double AU = 1.496e11             # <<<<<<<<<<<<<<
@@ -4649,7 +4022,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_AU = 1.496e11;
 
-  /* "mass_fraction_evolver_cython.pyx":31
+  /* "mass_fraction_evolver_cython.pyx":33
  * cdef double L_sun = 3.828e26
  * cdef double AU = 1.496e11
  * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25             # <<<<<<<<<<<<<<
@@ -4659,11 +4032,11 @@ if (!__Pyx_RefNanny) {
   __pyx_t_3 = ((((16.0 * __pyx_v_28mass_fraction_evolver_cython_stefan) * __pyx_v_28mass_fraction_evolver_cython_pi) * __pyx_v_28mass_fraction_evolver_cython_AU) * __pyx_v_28mass_fraction_evolver_cython_AU);
   if (unlikely(__pyx_t_3 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 31, __pyx_L1_error)
+    __PYX_ERR(0, 33, __pyx_L1_error)
   }
   __pyx_v_28mass_fraction_evolver_cython_T_eq_earth = pow((__pyx_v_28mass_fraction_evolver_cython_L_sun / __pyx_t_3), 0.25);
 
-  /* "mass_fraction_evolver_cython.pyx":32
+  /* "mass_fraction_evolver_cython.pyx":34
  * cdef double AU = 1.496e11
  * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
  * cdef double M_earth = 5.927e24             # <<<<<<<<<<<<<<
@@ -4672,7 +4045,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_M_earth = 5.927e24;
 
-  /* "mass_fraction_evolver_cython.pyx":33
+  /* "mass_fraction_evolver_cython.pyx":35
  * cdef double T_eq_earth = (L_sun / (16 * stefan * pi * AU * AU))**0.25
  * cdef double M_earth = 5.927e24
  * cdef double R_earth = 6.378e6             # <<<<<<<<<<<<<<
@@ -4681,7 +4054,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_R_earth = 6.378e6;
 
-  /* "mass_fraction_evolver_cython.pyx":34
+  /* "mass_fraction_evolver_cython.pyx":36
  * cdef double M_earth = 5.927e24
  * cdef double R_earth = 6.378e6
  * cdef double eta_0 = 0.17             # <<<<<<<<<<<<<<
@@ -4690,7 +4063,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_eta_0 = 0.17;
 
-  /* "mass_fraction_evolver_cython.pyx":35
+  /* "mass_fraction_evolver_cython.pyx":37
  * cdef double R_earth = 6.378e6
  * cdef double eta_0 = 0.17
  * cdef double Myr = 1e6 * 365 * 24 * 60 * 60             # <<<<<<<<<<<<<<
@@ -4699,7 +4072,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_Myr = ((((1e6 * 365.0) * 24.0) * 60.0) * 60.0);
 
-  /* "mass_fraction_evolver_cython.pyx":36
+  /* "mass_fraction_evolver_cython.pyx":38
  * cdef double eta_0 = 0.17
  * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
  * cdef double t_sat = 100 * Myr             # <<<<<<<<<<<<<<
@@ -4708,7 +4081,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_t_sat = (100.0 * __pyx_v_28mass_fraction_evolver_cython_Myr);
 
-  /* "mass_fraction_evolver_cython.pyx":37
+  /* "mass_fraction_evolver_cython.pyx":39
  * cdef double Myr = 1e6 * 365 * 24 * 60 * 60
  * cdef double t_sat = 100 * Myr
  * cdef double a0 = 0.5             # <<<<<<<<<<<<<<
@@ -4717,7 +4090,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_a0 = 0.5;
 
-  /* "mass_fraction_evolver_cython.pyx":38
+  /* "mass_fraction_evolver_cython.pyx":40
  * cdef double t_sat = 100 * Myr
  * cdef double a0 = 0.5
  * cdef double b_cutoff = 0.7             # <<<<<<<<<<<<<<
@@ -4726,7 +4099,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_28mass_fraction_evolver_cython_b_cutoff = 0.7;
 
-  /* "mass_fraction_evolver_cython.pyx":39
+  /* "mass_fraction_evolver_cython.pyx":41
  * cdef double a0 = 0.5
  * cdef double b_cutoff = 0.7
  * cdef double R_sun = 6.957e8             # <<<<<<<<<<<<<<
@@ -4738,12 +4111,12 @@ if (!__Pyx_RefNanny) {
   /* "mass_fraction_evolver_cython.pyx":1
  * from __future__ import division             # <<<<<<<<<<<<<<
  * import numpy as np
- * import matplotlib.pyplot as plt
+ * from numpy import random as rand_py
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cfunc.to_py":64
  * 
@@ -5285,6 +4658,13 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, 
         return __Pyx_IterFinish();
     }
     return 0;
+}
+
+/* None */
+    static CYTHON_INLINE double __Pyx_mod_double(double a, double b) {
+    double r = fmod(a, b);
+    r += ((r != 0) & ((r < 0) ^ (b < 0))) * b;
+    return r;
 }
 
 /* RaiseArgTupleInvalid */

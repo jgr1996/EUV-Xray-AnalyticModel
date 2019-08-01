@@ -54,12 +54,12 @@ if __name__ == '__main__':
         file.close()
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-
+    CKS_completeness_array = np.loadtxt("survey_completeness.txt", delimiter=',')
     # step_size = emcee.moves.GaussianMove(cov=step_size)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,
                                     likelihood_function.likelihood,
-                                    args=(N, CKS_array))
+                                    args=(N, CKS_array, CKS_completeness_array))
                                     # moves = step_size)
 
 

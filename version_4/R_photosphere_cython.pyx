@@ -1,17 +1,11 @@
 from __future__ import division
 import numpy as np
-from scipy.optimize import brentq, fsolve
 import math
+from scipy.optimize import brentq
 from constants import *
 
-"""
-Author: Rogers, J. G
-Date: 07/11/2018
-
-This file carries out analytic calculations presented in Owen & Wu (2017) that
-are used to determine the photospheric radius of a planet undergoing EUV/Xray
-photo-evaporation.
-"""
+from libc.math cimport exp, log10, log, fabs
+from cpython cimport bool
 
 cdef double pi = 3.141598
 cdef double stefan = 5.67e-8
@@ -55,6 +49,12 @@ def I2_interpolate(dR_Rc):
     I2_value = np.interp(dR_Rc, dR_Rc_array, I2_array)
     return I2_value
 
+cpdef double I2(double dR_Rc):
+    cdef double log_dR_Rc = log10(dR_Rc)
+    cdef double log_I2 = log(1.2598238012325735 + exp(-2.4535812359864062*1.0798633578446974*log_dR_Rc)) / -1.0798633578446974 - 4.8814961274562990e-01
+    cdef double I2 = 10**log_I2
+    return I2
+
 
 def I2_I1_interpolate(dR_Rc):
     """
@@ -64,6 +64,99 @@ def I2_I1_interpolate(dR_Rc):
 
     I2_I1_value = np.interp(dR_Rc, dR_Rc_array, I2_I1_array)
     return I2_I1_value
+
+cpdef I2_I1(dR_Rc):
+    cdef double log_dR_Rc = log10(dR_Rc)
+    cdef double log_I2_I1 = -7.6521840215423576e-01 / (1.0 + exp(-(log_dR_Rc-5.7429970641208375e-02)/6.4338705851296174e-01))**1.8214254374336605E+00
+    cdef double I2_I1 = 10**log_I2_I1
+    return I2_I1
+
+# ///////////////////////////////// BRENT METHOD ///////////////////////////// #
+
+cpdef double brent(double lower, double upper, double tol, unsigned int max_iter,
+                  double T_eq, double c_s_squared, double KH_timescale_seconds,
+                  double M_core_kg, double R_core_meters, double X):
+
+    cdef double a = lower
+    cdef double b = upper
+    cdef double fa = R_rcb_equation(a, T_eq, c_s_squared,
+                                    KH_timescale_seconds, M_core_kg,
+                                    R_core_meters, X)
+
+    cdef double fb = R_rcb_equation(b, T_eq, c_s_squared,
+                                    KH_timescale_seconds, M_core_kg,
+                                    R_core_meters, X)
+    cdef double fs = 0
+
+    if fa * fb >= 0:
+        print "f(a) same sign as f(b)"
+        return 0.0
+
+    if fabs(fa) < fabs(fb):
+        a = a + b
+        b = a - b
+        a = a - b
+        fa = fa + fb
+        fb = fa - fb
+        fa = fa - fb
+
+    cdef double c = a
+    cdef double fc = fa
+    cdef bool mflag = True
+    cdef double s = 0
+    cdef double d = 0
+    cdef unsigned int i = 1
+
+    for i in range(max_iter):
+        if fabs(b-a) < tol:
+            return s
+
+        if fa != fc and fb != fc:
+            s = ( a * fb * fc / ((fa - fb) * (fa - fc)) ) \
+              + ( b * fa * fc / ((fb - fa) * (fb - fc)) ) \
+              + ( c * fa * fb / ((fc - fa) * (fc - fb)) )
+        else:
+            s = b - fb * (b - a) / (fb - fa)
+
+        if ((s < (3 * a + b) * 0.25) or (s > b)) or \
+           ( mflag and (fabs(s-b) >= (fabs(b-c) * 0.5)) ) or \
+           ( not mflag and (fabs(s-b) >= (fabs(c-d) * 0.5)) ) or \
+           ( mflag and (fabs(b-c) < tol) ) or \
+           ( not mflag and (fabs(c-d) < tol)):
+
+            s = (a+b)*0.5
+            mflag = True
+
+        else:
+            mflag = False;
+
+        fs = R_rcb_equation(s, T_eq, c_s_squared,
+                            KH_timescale_seconds, M_core_kg,
+                            R_core_meters, X)
+        d = c
+        c = b
+        fc = fb
+
+        if fa * fs < 0:
+            b = s
+            fb = fs
+
+        else:
+            a = s
+            fa = fs
+
+        if fabs(fa) < fabs(fb):
+            a = a + b
+            b = a - b
+            a = a - b
+
+            fa = fa + fb
+            fb = fa - fb
+            fa = fa - fb
+
+    print "The solution does not converge or iterations are not sufficient"
+    return 0.0
+
 
 # //////////////////////////// CALCULATE STATE VARIABLES ///////////////////// #
 
@@ -101,7 +194,7 @@ cdef double R_rcb_equation(double R_rcb, double T_eq, double c_s_squared, double
     cdef double c = c1 * c2 * c3
 
     # full equation
-    cdef double equation = c * (R_rcb**3) * I2_interpolate((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X
+    cdef double equation = c * (R_rcb**3) * I2((R_rcb/R_core_meters)-1) * ((1/R_rcb)**(1/(gamma-1))) * ((I2_I1((R_rcb/R_core_meters)-1) * R_rcb)**(1/(alpha+1))) - X
 
     return equation
 
@@ -125,27 +218,33 @@ cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescal
 
 
     if R_guess == 0.0:
-        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
-        sign_test2 = np.sign(R_rcb_equation(500*R_earth, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        sign_test1 = np.sign(R_rcb_equation(R_core_meters*1.0001, T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X))
+        sign_test2 = np.sign(R_rcb_equation(500*R_core_meters, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
         if sign_test1 == sign_test2:
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
             return 0.0, 0.0
-        R_rcb = brentq(R_rcb_equation, 0.001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
+#        R_rcb = brent(R_core_meters*1.0001, 500*R_earth, 1e-5, 100, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X)
+        R_rcb = brentq(R_rcb_equation, R_core_meters*1.0001, 500*R_earth, args=(T_eq, c_s_squared, KH_timescale_seconds,
+                       M_core_kg, R_core_meters, X), disp=False)
+
     else:
-        sign_test1 = np.sign(R_rcb_equation(0.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
+        sign_test1 = np.sign(R_rcb_equation(R_core_meters*1.0001, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
         sign_test2 = np.sign(R_rcb_equation(R_earth*(1.0+R_guess), T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X))
         if sign_test1 == sign_test2:
             print "ERROR WITH BRENTQ SOLVER: f(a) and f(b) have same sign"
             print "PARAMS"
             print T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X
             return 0.0, 0.0
-        R_rcb = brentq(R_rcb_equation, 0.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X), disp=False)
+#        R_rcb = brent(R_core_meters*1.0001, R_earth*(1.0+R_guess), 1e-5, 100, T_eq, c_s_squared, KH_timescale_seconds,M_core_kg, R_core_meters, X)
+        R_rcb = brentq(R_rcb_equation, R_core_meters*1.0001, R_earth*(1.0+R_guess), args=(T_eq, c_s_squared, KH_timescale_seconds,
+                       M_core_kg, R_core_meters, X), disp=False)
+
 
 
     cdef double Rho_rcb_1 = (2.35 * 1.67e-27 / 1.381e-23)
-    cdef double Rho_rcb_2 = ((I2_I1_interpolate((R_rcb/R_core_meters)-1) * 64.0 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds * R_rcb / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
+    cdef double Rho_rcb_2 = ((I2_I1((R_rcb/R_core_meters)-1) * 64.0 * 3.14159 * 5.67e-8 * (T_eq**(3-0.68-0.45)) * KH_timescale_seconds * R_rcb / (3 * 2.294e-8 * M_core_kg * X))**(1/(0.68+1)))
     cdef double Rho_rcb = Rho_rcb_1 * Rho_rcb_2
 
 
@@ -155,7 +254,7 @@ cdef solve_Rho_rcb_and_R_rcb(double T_eq, double c_s_squared, double KH_timescal
 
 # ////////////////////////// SOLVE FOR R_photosphere ///////////////////////// #
 
-cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, double R_core, double X, double KH_timescale_cutoff, double R_guess):
+cpdef double calculate_R_photosphere(double t, double M_star, double a, double M_core, double R_core, double X, double KH_timescale_cutoff, double R_guess):
     """
     Returns the photospheric radius of the planet (in meters):
 
@@ -186,7 +285,6 @@ cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, 
     cdef double R_rcb, Rho_rcb
     R_rcb, Rho_rcb = solve_Rho_rcb_and_R_rcb(T_eq, c_s_squared, KH_timescale_seconds, M_core_kg, R_core_meters, X, R_guess)
 
-
     if (R_rcb, Rho_rcb) == (0.0, 0.0):
         return 0.0
 
@@ -203,7 +301,7 @@ cpdef calculate_R_photosphere(double t, double M_star, double a, double M_core, 
     cdef double Rho_photosphere = P_photosphere * mu * m_H / (k_B * T_eq)
 
     # calculate photospheric radius
-    cdef double R_photosphere = R_rcb + H * np.log(Rho_rcb / Rho_photosphere)
+    cdef double R_photosphere = R_rcb + H * log(Rho_rcb / Rho_photosphere)
 
     return R_photosphere
 

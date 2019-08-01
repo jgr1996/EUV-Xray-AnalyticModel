@@ -1,6 +1,7 @@
 from __future__ import division
 import numpy as np
 
+
 ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
 
 def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):
@@ -108,6 +109,8 @@ def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
     step are returned.
     """
 
+    cdef float[3] err_return = [0.0, 0.0, 0.0]
+
     # calculate the derivatives
     dydx = dydx_functions(t, var_i, parameters)
 
@@ -123,7 +126,7 @@ def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
             dt = 0.01*dt
             continue
         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
-            return (None, None, None)
+            return err_return
         # find the maximum error of all ODEs, also scale to required tolerance
         err_max = abs(var_err/yscal) / accuracy
 
@@ -152,4 +155,4 @@ def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):
     else:
         dt_next = 0.9*(dt/err_max)**0.2
 
-    return (t+dt, var_new, dt_next)
+    return [t+dt, var_new, dt_next]

@@ -40,7 +40,7 @@ def bernstein_poly(x, order, coefficients):
 
 
 
-def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
+def make_planet(initial_X_coeffs, core_mass_coeffs, period_cdf):
 
     """
     This function takes parameters for planet distributions in order to randomly
@@ -50,50 +50,63 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
     observation.
     """
 
-    # random initial mass fraction according to log-normal distribution
-    X_min, X_max = -3.0, 0.0
-    X_poly_min, X_poly_max = bernstein_poly(0, 5, initial_X_coeffs), bernstein_poly(1, 5, initial_X_coeffs)
-    X_poly_norm = X_poly_max - X_poly_min
-    X_norm = X_max - X_min
-    U_X = rand.uniform()
-    X_initial = 10**(((X_norm/X_poly_norm) * ((bernstein_poly(U_X, 5, initial_X_coeffs)) - X_poly_min)) + X_min)
+    # # random initial mass fraction according to log-normal distribution
+    # X_min, X_max = -3.0, 0.0
+    # X_poly_min, X_poly_max = bernstein_poly(0, 5, initial_X_coeffs), bernstein_poly(1, 5, initial_X_coeffs)
+    # X_poly_norm = X_poly_max - X_poly_min
+    # X_norm = X_max - X_min
+    # U_X = rand.uniform()
+    # X_initial = 10**(((X_norm/X_poly_norm) * ((bernstein_poly(U_X, 5, initial_X_coeffs)) - X_poly_min)) + X_min)
+    #
+    # # random core mass according to Rayleigh
+    # M_min, M_max = 0.75, 10.0
+    # M_poly_min, M_poly_max = bernstein_poly(0, 5, core_mass_coeffs), bernstein_poly(1, 5, core_mass_coeffs)
+    # M_poly_norm = M_poly_max - M_poly_min
+    # M_norm = M_max - M_min
+    # U_M = rand.uniform()
+    # core_mass = ((M_norm/M_poly_norm) * ((bernstein_poly(U_M, 5, core_mass_coeffs)) - M_poly_min)) + M_min
+
+    # random period according to double power law
+    P = period_cdf(rand.uniform())
+
+    (X_mean, X_stdev) = initial_X_coeffs
+    X_initial = rand.lognormal(np.log(X_mean), X_stdev)
 
     # random core mass according to Rayleigh
-    M_min, M_max = 0.3, 10.0
-    M_poly_min, M_poly_max = bernstein_poly(0, 5, core_mass_coeffs), bernstein_poly(1, 5, core_mass_coeffs)
-    M_poly_norm = M_poly_max - M_poly_min
-    M_norm = M_max - M_min
-    U_M = rand.uniform()
-    core_mass = ((M_norm/M_poly_norm) * ((bernstein_poly(U_M, 5, core_mass_coeffs)) - M_poly_min)) + M_min
-
-    # random period according to CKS data fit
-    # (power, period_cutoff) = period_params
-    # period_bias_power = -2/3
-    # U_P = rand.random()
-    # if U_P <= 0.33:  #0.14
-    #     U_P = rand.random()
-    #     power = power + period_bias_power
-    #     c = period_cutoff**power / (power)
-    #     P = (power * U_P * c)**(1/power)
-    # else:
-    #     U_P = rand.random()
-    #     power = period_bias_power
-    #     c = period_cutoff**power / (power)
-    #     P = (power * U_P * c)**(1/power)
-
-    #random period according to CKS data fit
-    (power, period_cutoff) = period_params
-    U_P = rand.random()
-    if U_P <= 0.2:  #0.14
-        U_P = rand.random()
-        c = period_cutoff**power / (power)
-        P = (power * U_P * c)**(1/power)
-    else:
-        U_P = rand.random()
-        k_P = np.log(100/period_cutoff)
-        P = period_cutoff * np.exp(k_P * U_P)
+    (core_mass_mean, core_mass_stdev) = core_mass_coeffs
+    core_mass = rand.lognormal(np.log(core_mass_mean), core_mass_stdev)
 
     return X_initial, core_mass, P
+
+
+def period_distribution_CDF(power1, power2, cutoff):
+
+    P_range = np.logspace(0,2,100)
+    pdf = []
+
+    # create pdf using double power law
+    for i in range(len(P_range)):
+        if P_range[i] <= cutoff:
+            pdf_i = P_range[i] ** power1
+            pdf.append(pdf_i)
+        else:
+            pdf_i = (cutoff ** (power1-power2)) * (P_range[i] ** power2)
+            pdf.append(pdf_i)
+
+    # normalise pdf, calculate cdf
+    pdf = pdf / np.sum(pdf)
+    cdf = np.cumsum(pdf)
+    cdf[0] = 0.0
+    cdf[-1] = 1.0
+
+    # remove repeats
+    cdf, mask = np.unique(cdf, return_index=True)
+    P_mask = P_range[mask]
+
+    # interpolate
+    cdf_interp = interpolate.interp1d(cdf, P_range)
+
+    return cdf_interp
 
 # ////////////////////////// SNR INJECTION RECOVERY CHECK //////////////////// #
 
@@ -118,6 +131,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
     M = []
     X = []
     R_core = []
+    M_star = []
 
     # R_rejected = []
     # P_rejected = []
@@ -152,39 +166,47 @@ def CKS_synthetic_observation(N, distribution_parameters):
         R_star_list = []
         KH_timescale_cutoff_list = []
 
-        initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
-        core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
-        density_mean = distribution_parameters[-1]
+        density_mean = distribution_parameters[0]
+        period_coeffs = [distribution_parameters[i+1] for i in range(3)]
+        initial_X_coeffs = (distribution_parameters[4],distribution_parameters[5])
+        core_mass_coeffs = (distribution_parameters[6],distribution_parameters[7])
+
+        # initial_X_coeffs = [distribution_parameters[i] for i in range(6)]
+        # core_mass_coeffs = [distribution_parameters[i+6] for i in range(6)]
+        # period_coeffs = [distribution_parameters[i+12] for i in range(3)]
+        # density_mean = distribution_parameters[-1]
+
         KH_timescale = 100
+        period_cdf = period_distribution_CDF(period_coeffs[0],
+                                             period_coeffs[1],
+                                             period_coeffs[2])
 
         start_time = time.time()
         transit_number = 0
-        print "Here we go, Berstein parameters are"
-        print distribution_parameters
 
         while transit_number < N:
 
             if time.time() - start_time >= 300:
                 print "5 minutes exceeded, returning whatever has been done so far"
-                return R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
+                return R, P, M, X, R_core
 
             X_initial, M_core, period= make_planet(initial_X_coeffs=initial_X_coeffs,
                                                    core_mass_coeffs=core_mass_coeffs,
-                                                   period_params=(1.9, 7.6))
+                                                   period_cdf=period_cdf)
 
-            # # envelope mass fraction cannot be negative
-            # if X_initial < 0.0:
-            #     continue
-            # # model does not cover self-gravitating planets
-            # if X_initial >= 0.9:
-            #     continue
-            # if M_core >= 12.0:
-            #     continue
-            # # model does not consider dwarf planets
-            # if M_core <= 0.4:
-            #     continue
+            # envelope mass fraction cannot be negative
+            if X_initial < 1e-4:
+                continue
+            # model does not cover self-gravitating planets
+            if X_initial >= 1.0:
+                continue
+            if M_core >= 10.0:
+                continue
+            # model does not consider dwarf planets
+            if M_core <= 0.75:
+                continue
             # model breaks down for very small periods
-            if period <= 0.5:
+            if period <= 1.0:
                 continue
             # CKS data does not include P > 100
             if period > 100.0:
@@ -228,7 +250,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
                     comm.send(None, dest=source, tag=tags.EXIT)
             elif tag == tags.DONE:
                 results = data
-                if results[0] == None: # this will be due to a Brentq error
+                if np.all(results) == 0.0: # this will be due to a Brentq error
                     continue
                 if np.isnan(results).any():
                     continue
@@ -245,10 +267,11 @@ def CKS_synthetic_observation(N, distribution_parameters):
                     M.append(float(results[2]))
                     X.append(float(results[3]))
                     R_core.append(float(results[4]))
+                    M_star.append(float(results[6]))
             elif tag == tags.EXIT:
                 closed_workers += 1
 
-        return R, P, M, X, R_core#, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
+        return R, P, M, X, R_core, M_star
 
 
     else:
@@ -261,14 +284,17 @@ def CKS_synthetic_observation(N, distribution_parameters):
             tag = status.Get_tag()
 
             if tag == tags.START:
-                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver_cython.RK45_driver(1, 3000, 0.01, 1e-5, params)
-                comm.send((R_ph, P, M, X, R_core, R_star), dest=0, tag=tags.DONE)
+                [initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff] = params
+                R_ph, P, M, X, R_core, R_star = mass_fraction_evolver_cython.RK45_driver(1, 3000, 0.01, 1e-5, initial_X,
+                                                                                         core_density, M_core, period,
+                                                                                         M_star, R_star, KH_timescale_cutoff)
+                comm.send((R_ph, P, M, X, R_core, R_star, M_star), dest=0, tag=tags.DONE)
             elif tag == tags.EXIT:
                 break
 
         comm.send(None, dest=0, tag=tags.EXIT)
 
-    return None, None, None, None, None#, None, None, None, None, None
+    return None, None, None, None, None, None#, None, None, None, None, None
 
 
 # comm = MPI.COMM_WORLD   # get MPI communicator object
@@ -320,22 +346,26 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # core_mass_range = []
 # P_range = []
 # stellar_mass_range = []
+# period_cdf = period_distribution_CDF(1.7,-1.0,7.6)
 #
 # for i in range(10000):
-#     X_initial, core_mass, P = make_planet(initial_X_coeffs=[0.01, 0.2, 0.4, 0.6, 0.8, 1.0],
-#                                           core_mass_coeffs=[0.01, 0.2, 0.4, 0.6, 0.8, 1.0],
-#                                           period_params=(1.9, 7.6))
+#     X_initial, core_mass, P = make_planet(initial_X_coeffs=[0.0,0.2,0.4,0.6,0.8,1.0],
+#                                           core_mass_coeffs=[0.0,0.2,0.4,0.6,0.8,1.0],
+#                                           period_cdf=period_cdf)
 #
 #     # X_range.append(X_initial)
-#     # core_density_range.append(core_density)
-#     # core_mass_range.append(core_mass)
+#     # # core_density_range.append(core_density)
+#     # if core_mass <= 10.0 and core_mass >= 0.75:
+#     #     core_mass_range.append(core_mass)
 #     P_range.append(P)
 #     # stellar_mass_range.append(stellar_mass)
 #
 # # plt.figure(1)
 # # plt.hist(X_range, bins=np.logspace(-3,1))
-# # plt.xlabel('X')
+# # plt.xlabel('X',fontsize=12)
 # # plt.xscale('log')
+# # plt.xticks([0.01,0.1,1.0],[0.01,0.1,1.0],fontsize=12, fontname = "Courier New")
+#
 # #
 # # plt.figure(2)
 # # plt.hist(core_density_range, bins=50)
@@ -343,16 +373,15 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # #
 # # plt.figure(3)
 # # plt.hist(core_mass_range, bins=np.logspace(-1,2))
-# # plt.xlabel('core mass')
+# # plt.xlabel('core mass',fontsize=12)
 # # plt.xscale('log')
-#
+# # plt.xtick_ranges([0.1,1.0,10.0],[0.1,1.0,10.0],fontsize=12, fontname = "Courier New")
 #
 # plt.figure(4)
 # plt.hist(P_range, bins=np.logspace(0,2,30), histtype='step', color='black', linewidth=2)
-# plt.plot(np.logspace(0,np.log10(7.6),100),[10*x**1.9 for x in np.logspace(0,np.log10(7.6),100)])
+# # plt.plot(np.logspace(0,np.log10(7.6),100),[10*x**1.9 for x in np.logspace(0,np.log10(7.6),100)])
 # plt.xlabel('Period')
 # plt.xscale('log')
-# plt.yscale('log')
 #
 # # CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 # # P_data = CKS_array[3,:]

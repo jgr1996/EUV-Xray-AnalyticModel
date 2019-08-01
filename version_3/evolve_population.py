@@ -59,7 +59,7 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
     X_initial = 10**(((X_norm/X_poly_norm) * ((bernstein_poly(U_X, 5, initial_X_coeffs)) - X_poly_min)) + X_min)
 
     # random core mass according to Rayleigh
-    M_min, M_max = 0.5, 10.0
+    M_min, M_max = 0.3, 10.0
     M_poly_min, M_poly_max = bernstein_poly(0, 5, core_mass_coeffs), bernstein_poly(1, 5, core_mass_coeffs)
     M_poly_norm = M_poly_max - M_poly_min
     M_norm = M_max - M_min
@@ -67,19 +67,31 @@ def make_planet(initial_X_coeffs, core_mass_coeffs, period_params):
     core_mass = ((M_norm/M_poly_norm) * ((bernstein_poly(U_M, 5, core_mass_coeffs)) - M_poly_min)) + M_min
 
     # random period according to CKS data fit
+    # (power, period_cutoff) = period_params
+    # period_bias_power = -2/3
+    # U_P = rand.random()
+    # if U_P <= 0.33:  #0.14
+    #     U_P = rand.random()
+    #     power = power + period_bias_power
+    #     c = period_cutoff**power / (power)
+    #     P = (power * U_P * c)**(1/power)
+    # else:
+    #     U_P = rand.random()
+    #     power = period_bias_power
+    #     c = period_cutoff**power / (power)
+    #     P = (power * U_P * c)**(1/power)
+
+    #random period according to CKS data fit
     (power, period_cutoff) = period_params
-    period_bias_power = -2/3
     U_P = rand.random()
-    if U_P <= 0.33:  #0.14
+    if U_P <= 0.2:  #0.14
         U_P = rand.random()
-        power = power + period_bias_power
         c = period_cutoff**power / (power)
         P = (power * U_P * c)**(1/power)
     else:
         U_P = rand.random()
-        power = period_bias_power
-        c = period_cutoff**power / (power)
-        P = (power * U_P * c)**(1/power)
+        k_P = np.log(100/period_cutoff)
+        P = period_cutoff * np.exp(k_P * U_P)
 
     return X_initial, core_mass, P
 
@@ -107,11 +119,11 @@ def CKS_synthetic_observation(N, distribution_parameters):
     X = []
     R_core = []
 
-    R_rejected = []
-    P_rejected = []
-    M_rejected = []
-    X_rejected = []
-    R_core_rejected = []
+    # R_rejected = []
+    # P_rejected = []
+    # M_rejected = []
+    # X_rejected = []
+    # R_core_rejected = []
 
     # Define MPI message tags
     tags = enum('READY', 'DONE', 'EXIT', 'START')
@@ -147,6 +159,9 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
         start_time = time.time()
         transit_number = 0
+        print "Here we go, Berstein parameters are"
+        print distribution_parameters
+
         while transit_number < N:
 
             if time.time() - start_time >= 300:
@@ -186,6 +201,8 @@ def CKS_synthetic_observation(N, distribution_parameters):
             KH_timescale_cutoff_list.append(KH_timescale)
             transit_number = transit_number + 1
 
+
+
         tasks = range(N)
         task_index = 0
         num_workers = size - 1
@@ -203,22 +220,24 @@ def CKS_synthetic_observation(N, distribution_parameters):
                 # Worker is ready, so send it a task
                 if task_index < len(tasks):
                     params = [k[task_index] for k in [X_initial_list, core_density_list, M_core_list, period_list, M_star_list, R_star_list, KH_timescale_cutoff_list]]
+                    if params[0] > 1.0:
+                        print "I've just sent X={}... :(".format(params[0])
                     comm.send(params, dest=source, tag=tags.START)
                     task_index += 1
                 else:
                     comm.send(None, dest=source, tag=tags.EXIT)
             elif tag == tags.DONE:
                 results = data
-                if results[0] == None: # this will be due to a Brentq error or no injection recovery
+                if results[0] == None: # this will be due to a Brentq error
                     continue
                 if np.isnan(results).any():
                     continue
-                if results[0] < 0.1 or snr_recovery(results[0], results[1], results[5]) == False: # can't observe planet smaller than earth!
-                    R_rejected.append(float(results[0]))
-                    P_rejected.append(float(results[1]))
-                    M_rejected.append(float(results[2]))
-                    X_rejected.append(float(results[3]))
-                    R_core_rejected.append(float(results[4]))
+                if results[0] < 0.1: # can't observe planet smaller than earth!
+                    # R_rejected.append(float(results[0]))
+                    # P_rejected.append(float(results[1]))
+                    # M_rejected.append(float(results[2]))
+                    # X_rejected.append(float(results[3]))
+                    # R_core_rejected.append(float(results[4]))
                     continue
                 else:
                     R.append(float(results[0]))
@@ -229,7 +248,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
             elif tag == tags.EXIT:
                 closed_workers += 1
 
-        return R, P, M, X, R_core, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
+        return R, P, M, X, R_core#, R_rejected, P_rejected, M_rejected, X_rejected, R_core_rejected
 
 
     else:
@@ -249,7 +268,7 @@ def CKS_synthetic_observation(N, distribution_parameters):
 
         comm.send(None, dest=0, tag=tags.EXIT)
 
-    return None, None, None, None, None, None, None, None, None, None
+    return None, None, None, None, None#, None, None, None, None, None
 
 
 # comm = MPI.COMM_WORLD   # get MPI communicator object
@@ -302,48 +321,48 @@ def CKS_synthetic_observation(N, distribution_parameters):
 # P_range = []
 # stellar_mass_range = []
 #
-# for i in range(100000):
-#     X_initial, core_density, core_mass, P, stellar_mass, KH_timescale, CKS_index = make_planet(initial_X_params=(1, 0.37),
-#                                                                                                core_density_params=None,
-#                                                                                                core_mass_params=(7.0, 0.29),
-#                                                                                                period_params=(1.9,7.6),
-#                                                                                                KH_timescale_params=None)
+# for i in range(10000):
+#     X_initial, core_mass, P = make_planet(initial_X_coeffs=[0.01, 0.2, 0.4, 0.6, 0.8, 1.0],
+#                                           core_mass_coeffs=[0.01, 0.2, 0.4, 0.6, 0.8, 1.0],
+#                                           period_params=(1.9, 7.6))
 #
-#     X_range.append(X_initial)
-#     core_density_range.append(core_density)
-#     core_mass_range.append(core_mass)
+#     # X_range.append(X_initial)
+#     # core_density_range.append(core_density)
+#     # core_mass_range.append(core_mass)
 #     P_range.append(P)
-#     stellar_mass_range.append(stellar_mass)
+#     # stellar_mass_range.append(stellar_mass)
 #
-# plt.figure(1)
-# plt.hist(X_range, bins=np.logspace(-3,1))
-# plt.xlabel('X')
-# plt.xscale('log')
+# # plt.figure(1)
+# # plt.hist(X_range, bins=np.logspace(-3,1))
+# # plt.xlabel('X')
+# # plt.xscale('log')
+# #
+# # plt.figure(2)
+# # plt.hist(core_density_range, bins=50)
+# # plt.xlabel('core density g/cm^3')
+# #
+# # plt.figure(3)
+# # plt.hist(core_mass_range, bins=np.logspace(-1,2))
+# # plt.xlabel('core mass')
+# # plt.xscale('log')
 #
-# plt.figure(2)
-# plt.hist(core_density_range, bins=50)
-# plt.xlabel('core density g/cm^3')
-
-# plt.figure(3)
-# plt.hist(core_mass_range, bins=np.logspace(-1,2))
-# plt.xlabel('core mass')
-# plt.xscale('log')
-
-
+#
 # plt.figure(4)
 # plt.hist(P_range, bins=np.logspace(0,2,30), histtype='step', color='black', linewidth=2)
+# plt.plot(np.logspace(0,np.log10(7.6),100),[10*x**1.9 for x in np.logspace(0,np.log10(7.6),100)])
 # plt.xlabel('Period')
 # plt.xscale('log')
+# plt.yscale('log')
 #
-# CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-# P_data = CKS_array[3,:]
-# plt.hist(P_data, bins=np.logspace(0,2,30), color='r', histtype='step')
-
-
-# plt.figure(5)
-# plt.hist(stellar_mass_range, bins=50)
-# plt.xlabel('stellar mass')
-
+# # CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
+# # P_data = CKS_array[3,:]
+# # plt.hist(P_data, bins=np.logspace(0,2,30), color='r', histtype='step')
+#
+#
+# # plt.figure(5)
+# # plt.hist(stellar_mass_range, bins=50)
+# # plt.xlabel('stellar mass')
+#
 # plt.show()
 
 # //////////////////////////// RUN SINGLE POPULATION ///////////////////////// #

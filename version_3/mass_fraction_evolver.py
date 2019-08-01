@@ -174,13 +174,13 @@ def RK45_driver(t_start, t_stop, dt_try, accuracy, params):
 # plt.style.use('classic')
 # for i in X_range:
 #     print 'X = ',i
-#     params = [i, 5.5, 5.0, 10, 1.0, 1.0, 100]
+#     params = [i, 5.0, 0.75, 100, 1.0, 1.0, 100]
 #     observed_radius, period, M_core, X, R_core, R_star, t = RK45_driver(1, 3000, 0.01, 1e-6, params)
 #
 #     plt.loglog([i*1e6 for i in t],X, color='black', linewidth=1.0)
 #
-# plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
-# plt.loglog([i*1e6 for i in t_range], X_3over2_range, linewidth=1.7, linestyle='--', color='green')
+# # plt.loglog([i*1e6 for i in t_range], X_2_range, linewidth=1.7, linestyle='--', color='blue')
+# # plt.loglog([i*1e6 for i in t_range], X_3over2_range, linewidth=1.7, linestyle='--', color='green')
 # hfont = {'fontname':'Courier New'}
 # plt.ylabel(r'Envelope Mass Fraction (X)', fontsize=16, **hfont)
 # plt.xlabel(r'Time [yrs]', fontsize=16, **hfont)

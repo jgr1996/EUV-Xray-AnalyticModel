@@ -1,8 +1,10 @@
 from __future__ import division
 import numpy as np
-import matplotlib.pyplot as plt
-from numpy import random as rand
+from numpy import random as rand_py
 from scipy import stats
+
+from libc.stdlib cimport rand
+
 from constants import *
 import R_photosphere_cython
 import RKF45
@@ -110,7 +112,10 @@ cdef double dXdt_ODE(double t, double X, parameters):
 
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
-cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy, params):
+cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
+                  double initial_X, double core_density, double M_core,
+                  double period, double M_star, double R_star,
+                  double KH_timescale_cutoff):
 
     """
     This function controls the integration of the mass-loss ODE. It calls upon
@@ -118,9 +123,6 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
     as the "step_control" function in the RKF45 file to calculate the evolution
     of the mass fraction X.
     """
-
-    cdef double initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff
-    initial_X, core_density, M_core, period, M_star, R_star, KH_timescale_cutoff = params
 
     # core density to core radius (measure in Earth radii)
     cdef double density_norm = 1.7589 * core_density**(-0.3329)
@@ -130,53 +132,41 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
     cdef double a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU
 
     #calculate initial photospheric radius
-    R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,R_core, initial_X, KH_timescale_cutoff,R_guess=0.0)
+    cdef double R_ph_init = R_photosphere_cython.calculate_R_photosphere(t_start, M_star, a, M_core,R_core, initial_X, KH_timescale_cutoff,R_guess=0.0) / R_earth
 
-    # define arrays for storing t steps and variables
-    X_array = np.array([initial_X])
-    t_array = np.array([t_start])
-    R_ph_array = np.array([R_ph_init/R_earth])
-
-    # define first time and time step
-    t = t_array[0]
+    # define initial variables
+    cdef double X = initial_X
+    cdef double t = t_start
+    cdef double R_ph = R_ph_init
     cdef double dt = dt_try
+    cdef double R_ph_new, observed_radius, rad_err, X_new, t_new, dt_next
 
     # setup loop
     while t <= t_stop:
         #perform an adaptive RK45 step
-        (t_new, X_new, dt_next) = RKF45.step_control(t, X_array[-1], dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph_array[-1]])
+        [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])
 
-        if (t_new, X_new, dt_next) == (None, None, None):
-            return None, None, None, None, None, None
+        if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:
+            return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
         # calculate new R_ph
-        R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,
-                                                         R_core, X_new, KH_timescale_cutoff, 0.0)
+        R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,R_core, X_new, KH_timescale_cutoff, 0.0) / R_earth
 
 
         # if X becomes very small, we can assume all atmosphere is eroded
-        if X_new <= 1e-4 or R_ph_new/R_earth <= R_core:
-                # update new variables
-                X_array = np.append(X_array, 0.0)
-                # update new time
-                t_array = np.append(t_array, t_stop+1e-7)
-                # update new R_ph
-                R_ph_array = np.append(R_ph_array, R_core)
-
-                observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+        if X_new <= 1e-4 or R_ph_new <= R_core:
+                rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
+                observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
                 return observed_radius, period, M_core, initial_X, R_core, R_star
-        else:
-            # update new variables
-            X_array = np.append(X_array, X_new)
-            # update new time
-            t_array = np.append(t_array, t_new)
-            # update new R_ph
-            R_ph_array = np.append(R_ph_array, R_ph_new/R_earth)
 
         # update step size and t according to step-control
-        t = t_array[-1]
-        dt = dt_next
+        else:
+            t = t_new
+            dt = dt_next
+            X = X_new
+            R_ph = R_ph_new
 
-    observed_radius = R_ph_array[-1] + rand.choice([-1.0,1.0])*rand.uniform(0.08, 0.18)*R_ph_array[-1]
+    rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph
+    observed_radius = R_ph + rand_py.choice([-1.0,1.0])*rad_err
     return observed_radius, period, M_core, initial_X, R_core, R_star
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #

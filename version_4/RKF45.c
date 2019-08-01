@@ -778,6 +778,7 @@ static const char *__pyx_filename;
 
 static const char *__pyx_f[] = {
   "RKF45.pyx",
+  "stringsource",
 };
 
 /*--- Type declarations ---*/
@@ -890,6 +891,9 @@ static PyObject* __Pyx_PyFloat_EqObjC(PyObject *op1, PyObject *op2, double float
 #define __Pyx_PyFloat_EqObjC(op1, op2, floatval, inplace)\
     PyObject_RichCompare(op1, op2, Py_EQ)
     #endif
+
+/* IncludeStringH.proto */
+#include <string.h>
 
 /* PyFloatBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -1013,6 +1017,9 @@ static PyObject* __pyx_print_kwargs = 0;
 /* PrintOne.proto */
 static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
 
+/* CIntFromPy.proto */
+static CYTHON_INLINE size_t __Pyx_PyInt_As_size_t(PyObject *);
+
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
@@ -1043,11 +1050,14 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
 /* Module declarations from 'RKF45' */
+static CYTHON_INLINE PyObject *__Pyx_carray_to_py_float(float *, Py_ssize_t); /*proto*/
+static CYTHON_INLINE PyObject *__Pyx_carray_to_tuple_float(float *, Py_ssize_t); /*proto*/
 #define __Pyx_MODULE_NAME "RKF45"
 extern int __pyx_module_is_main_RKF45;
 int __pyx_module_is_main_RKF45 = 0;
 
 /* Implementation of 'RKF45' */
+static PyObject *__pyx_builtin_range;
 static const char __pyx_k_t[] = "t";
 static const char __pyx_k_dt[] = "dt";
 static const char __pyx_k_k1[] = "k1";
@@ -1071,6 +1081,7 @@ static const char __pyx_k_var5[] = "var5";
 static const char __pyx_k_RKF45[] = "RKF45";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_print[] = "print";
+static const char __pyx_k_range[] = "range";
 static const char __pyx_k_var_i[] = "var_i";
 static const char __pyx_k_yscal[] = "yscal";
 static const char __pyx_k_dt_new[] = "dt_new";
@@ -1086,6 +1097,7 @@ static const char __pyx_k_var_err[] = "var_err";
 static const char __pyx_k_var_new[] = "var_new";
 static const char __pyx_k_accuracy[] = "accuracy";
 static const char __pyx_k_RKF45_pyx[] = "RKF45.pyx";
+static const char __pyx_k_err_return[] = "err_return";
 static const char __pyx_k_parameters[] = "parameters";
 static const char __pyx_k_BRENTQ_ERROR[] = "BRENTQ ERROR";
 static const char __pyx_k_RKFehlberg12[] = "RKFehlberg12";
@@ -1115,6 +1127,7 @@ static PyObject *__pyx_n_s_dydx_functions;
 static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_err;
 static PyObject *__pyx_n_s_err_max;
+static PyObject *__pyx_n_s_err_return;
 static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_k1;
@@ -1128,6 +1141,7 @@ static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_parameters;
 static PyObject *__pyx_n_s_print;
+static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_step_control;
 static PyObject *__pyx_n_s_t;
 static PyObject *__pyx_n_s_test;
@@ -1173,15 +1187,14 @@ static PyObject *__pyx_tuple__13;
 static PyObject *__pyx_tuple__14;
 static PyObject *__pyx_tuple__15;
 static PyObject *__pyx_tuple__16;
-static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_tuple__19;
-static PyObject *__pyx_tuple__21;
-static PyObject *__pyx_codeobj__18;
-static PyObject *__pyx_codeobj__20;
-static PyObject *__pyx_codeobj__22;
+static PyObject *__pyx_tuple__18;
+static PyObject *__pyx_tuple__20;
+static PyObject *__pyx_codeobj__17;
+static PyObject *__pyx_codeobj__19;
+static PyObject *__pyx_codeobj__21;
 /* Late includes */
 
-/* "RKF45.pyx":6
+/* "RKF45.pyx":7
  * ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
  * 
  * def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
@@ -1231,29 +1244,29 @@ static PyObject *__pyx_pw_5RKF45_1RKCashKarp_Step45(PyObject *__pyx_self, PyObje
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_var_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 1); __PYX_ERR(0, 6, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 1); __PYX_ERR(0, 7, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dydx_functions)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 2); __PYX_ERR(0, 6, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 2); __PYX_ERR(0, 7, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dt)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 3); __PYX_ERR(0, 6, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 3); __PYX_ERR(0, 7, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_parameters)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 4); __PYX_ERR(0, 6, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, 4); __PYX_ERR(0, 7, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RKCashKarp_Step45") < 0)) __PYX_ERR(0, 6, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RKCashKarp_Step45") < 0)) __PYX_ERR(0, 7, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -1272,7 +1285,7 @@ static PyObject *__pyx_pw_5RKF45_1RKCashKarp_Step45(PyObject *__pyx_self, PyObje
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 6, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("RKCashKarp_Step45", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 7, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("RKF45.RKCashKarp_Step45", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1311,7 +1324,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("RKCashKarp_Step45", 0);
 
-  /* "RKF45.pyx":14
+  /* "RKF45.pyx":15
  * 
  *     # calculate the individual conributions to prediction
  *     k1 = dydx_functions(t, var_i, parameters)             # <<<<<<<<<<<<<<
@@ -1334,7 +1347,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -1342,13 +1355,13 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 14, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 15, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -1362,7 +1375,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_INCREF(__pyx_v_parameters);
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_parameters);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -1370,20 +1383,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k1 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":15
+  /* "RKF45.pyx":16
  *     # calculate the individual conributions to prediction
  *     k1 = dydx_functions(t, var_i, parameters)
  *     if k1 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k1 = k1*dt
  */
-  __pyx_t_1 = __Pyx_PyFloat_EqObjC(__pyx_v_k1, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyFloat_EqObjC(__pyx_v_k1, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":16
+    /* "RKF45.pyx":17
  *     k1 = dydx_functions(t, var_i, parameters)
  *     if k1 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -1395,7 +1408,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple_;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":15
+    /* "RKF45.pyx":16
  *     # calculate the individual conributions to prediction
  *     k1 = dydx_functions(t, var_i, parameters)
  *     if k1 == 0.0:             # <<<<<<<<<<<<<<
@@ -1404,46 +1417,46 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":17
+  /* "RKF45.pyx":18
  *     if k1 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k1 = k1*dt             # <<<<<<<<<<<<<<
  *     var1 = var_i + 0.2*k1
  *     if var1 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_v_k1, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_v_k1, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_k1, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":18
+  /* "RKF45.pyx":19
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k1 = k1*dt
  *     var1 = var_i + 0.2*k1             # <<<<<<<<<<<<<<
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_var1 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":19
+  /* "RKF45.pyx":20
  *     k1 = k1*dt
  *     var1 = var_i + 0.2*k1
  *     if var1 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_var1, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_var1, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":20
+    /* "RKF45.pyx":21
  *     var1 = var_i + 0.2*k1
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -1455,7 +1468,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__2;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":19
+    /* "RKF45.pyx":20
  *     k1 = k1*dt
  *     var1 = var_i + 0.2*k1
  *     if var1 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -1464,16 +1477,16 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":22
+  /* "RKF45.pyx":23
  *         return (None, None)
  * 
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)             # <<<<<<<<<<<<<<
  *     if k2 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_2, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_2, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyNumber_Add(__pyx_v_t, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_v_t, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_INCREF(__pyx_v_dydx_functions);
@@ -1492,7 +1505,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_5, __pyx_v_var1, __pyx_v_parameters};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -1501,14 +1514,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_5, __pyx_v_var1, __pyx_v_parameters};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 22, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -1522,7 +1535,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_5 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -1530,20 +1543,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k2 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":23
+  /* "RKF45.pyx":24
  * 
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
  *     if k2 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k2 = k2*dt
  */
-  __pyx_t_2 = __Pyx_PyFloat_EqObjC(__pyx_v_k2, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyFloat_EqObjC(__pyx_v_k2, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":24
+    /* "RKF45.pyx":25
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
  *     if k2 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -1555,7 +1568,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__3;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":23
+    /* "RKF45.pyx":24
  * 
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
  *     if k2 == 0.0:             # <<<<<<<<<<<<<<
@@ -1564,58 +1577,58 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":25
+  /* "RKF45.pyx":26
  *     if k2 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k2 = k2*dt             # <<<<<<<<<<<<<<
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_k2, __pyx_v_dt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_k2, __pyx_v_dt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF_SET(__pyx_v_k2, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":26
+  /* "RKF45.pyx":27
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k2 = k2*dt
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2             # <<<<<<<<<<<<<<
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_2 = PyFloat_FromDouble((3.0 / 40.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((3.0 / 40.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyFloat_FromDouble((9.0 / 40.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((9.0 / 40.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_var2 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":27
+  /* "RKF45.pyx":28
  *     k2 = k2*dt
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  *     if var2 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var2, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var2, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":28
+    /* "RKF45.pyx":29
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -1627,7 +1640,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__4;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":27
+    /* "RKF45.pyx":28
  *     k2 = k2*dt
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  *     if var2 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -1636,16 +1649,16 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":30
+  /* "RKF45.pyx":31
  *         return (None, None)
  * 
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)             # <<<<<<<<<<<<<<
  *     if k3 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  */
-  __pyx_t_7 = PyNumber_Multiply(__pyx_float_0_3, __pyx_v_dt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_float_0_3, __pyx_v_dt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = PyNumber_Add(__pyx_v_t, __pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_t, __pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_INCREF(__pyx_v_dydx_functions);
@@ -1664,7 +1677,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_2, __pyx_v_var2, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -1673,14 +1686,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_2, __pyx_v_var2, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -1694,7 +1707,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -1702,20 +1715,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k3 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":31
+  /* "RKF45.pyx":32
  * 
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
  *     if k3 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k3 = k3*dt
  */
-  __pyx_t_1 = __Pyx_PyFloat_EqObjC(__pyx_v_k3, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyFloat_EqObjC(__pyx_v_k3, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":32
+    /* "RKF45.pyx":33
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
  *     if k3 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -1727,7 +1740,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__5;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":31
+    /* "RKF45.pyx":32
  * 
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
  *     if k3 == 0.0:             # <<<<<<<<<<<<<<
@@ -1736,67 +1749,67 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":33
+  /* "RKF45.pyx":34
  *     if k3 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k3 = k3*dt             # <<<<<<<<<<<<<<
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  *     if var3 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_v_k3, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_v_k3, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_k3, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":34
+  /* "RKF45.pyx":35
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k3 = k3*dt
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3             # <<<<<<<<<<<<<<
  *     if var3 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_1 = PyFloat_FromDouble((3.0 / 10.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((3.0 / 10.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyFloat_FromDouble((9.0 / 10.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble((9.0 / 10.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((6.0 / 5.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((6.0 / 5.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_var3 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":35
+  /* "RKF45.pyx":36
  *     k3 = k3*dt
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  *     if var3 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_3 = PyObject_RichCompare(__pyx_v_var3, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_v_var3, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":36
+    /* "RKF45.pyx":37
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  *     if var3 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -1808,7 +1821,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__6;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":35
+    /* "RKF45.pyx":36
  *     k3 = k3*dt
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  *     if var3 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -1817,16 +1830,16 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":38
+  /* "RKF45.pyx":39
  *         return (None, None)
  * 
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)             # <<<<<<<<<<<<<<
  *     if k4 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_6, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_float_0_6, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_Add(__pyx_v_t, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Add(__pyx_v_t, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_INCREF(__pyx_v_dydx_functions);
@@ -1845,7 +1858,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_7, __pyx_v_var3, __pyx_v_parameters};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -1854,14 +1867,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_7, __pyx_v_var3, __pyx_v_parameters};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -1875,7 +1888,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -1883,20 +1896,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k4 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":39
+  /* "RKF45.pyx":40
  * 
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
  *     if k4 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k4 = k4*dt
  */
-  __pyx_t_3 = __Pyx_PyFloat_EqObjC(__pyx_v_k4, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyFloat_EqObjC(__pyx_v_k4, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":40
+    /* "RKF45.pyx":41
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
  *     if k4 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -1908,7 +1921,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__7;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":39
+    /* "RKF45.pyx":40
  * 
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
  *     if k4 == 0.0:             # <<<<<<<<<<<<<<
@@ -1917,76 +1930,76 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":41
+  /* "RKF45.pyx":42
  *     if k4 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k4 = k4*dt             # <<<<<<<<<<<<<<
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  *     if var4 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_k4, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_k4, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF_SET(__pyx_v_k4, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":42
+  /* "RKF45.pyx":43
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k4 = k4*dt
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4             # <<<<<<<<<<<<<<
  *     if var4 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_3 = PyFloat_FromDouble((11.0 / 54.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((11.0 / 54.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Subtract(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Subtract(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyFloat_FromDouble((5.0 / 2.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((5.0 / 2.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((70.0 / 27.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((70.0 / 27.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((35.0 / 27.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((35.0 / 27.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_var4 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":43
+  /* "RKF45.pyx":44
  *     k4 = k4*dt
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  *     if var4 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_3 = PyObject_RichCompare(__pyx_v_var4, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_v_var4, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":44
+    /* "RKF45.pyx":45
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  *     if var4 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -1998,7 +2011,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__8;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":43
+    /* "RKF45.pyx":44
  *     k4 = k4*dt
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  *     if var4 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -2007,14 +2020,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":46
+  /* "RKF45.pyx":47
  *         return (None, None)
  * 
  *     k5 = dydx_functions(t +       dt, var4, parameters)             # <<<<<<<<<<<<<<
  *     if k5 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  */
-  __pyx_t_1 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_dydx_functions);
   __pyx_t_5 = __pyx_v_dydx_functions; __pyx_t_7 = NULL;
@@ -2032,7 +2045,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_t_1, __pyx_v_var4, __pyx_v_parameters};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2041,14 +2054,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_t_1, __pyx_v_var4, __pyx_v_parameters};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else
   #endif
   {
-    __pyx_t_2 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -2062,7 +2075,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_1 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -2070,20 +2083,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k5 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":47
+  /* "RKF45.pyx":48
  * 
  *     k5 = dydx_functions(t +       dt, var4, parameters)
  *     if k5 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k5 = k5*dt
  */
-  __pyx_t_3 = __Pyx_PyFloat_EqObjC(__pyx_v_k5, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyFloat_EqObjC(__pyx_v_k5, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":48
+    /* "RKF45.pyx":49
  *     k5 = dydx_functions(t +       dt, var4, parameters)
  *     if k5 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -2095,7 +2108,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__9;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":47
+    /* "RKF45.pyx":48
  * 
  *     k5 = dydx_functions(t +       dt, var4, parameters)
  *     if k5 == 0.0:             # <<<<<<<<<<<<<<
@@ -2104,93 +2117,93 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":49
+  /* "RKF45.pyx":50
  *     if k5 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k5 = k5*dt             # <<<<<<<<<<<<<<
  *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
  *          + (44275/110592)*k4 + (253/4096)*k5
  */
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_k5, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_k5, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF_SET(__pyx_v_k5, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "RKF45.pyx":50
+  /* "RKF45.pyx":51
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k5 = k5*dt
  *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \             # <<<<<<<<<<<<<<
  *          + (44275/110592)*k4 + (253/4096)*k5
  *     if var5 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_3 = PyFloat_FromDouble((1631.0 / 55296.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((1631.0 / 55296.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_v_var_i, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_v_var_i, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((175.0 / 512.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((175.0 / 512.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyFloat_FromDouble((575.0 / 13824.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-
-  /* "RKF45.pyx":51
- *     k5 = k5*dt
- *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
- *          + (44275/110592)*k4 + (253/4096)*k5             # <<<<<<<<<<<<<<
- *     if var5 < 0: # a negative contribution should not be obtained
- *         return (None, None)
- */
-  __pyx_t_3 = PyFloat_FromDouble((44275.0 / 110592.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((253.0 / 4096.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = PyNumber_Add(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyFloat_FromDouble((575.0 / 13824.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyNumber_Add(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "RKF45.pyx":52
+ *     k5 = k5*dt
+ *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
+ *          + (44275/110592)*k4 + (253/4096)*k5             # <<<<<<<<<<<<<<
+ *     if var5 < 0: # a negative contribution should not be obtained
+ *         return (None, None)
+ */
+  __pyx_t_3 = PyFloat_FromDouble((44275.0 / 110592.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyFloat_FromDouble((253.0 / 4096.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyNumber_Add(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_var5 = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "RKF45.pyx":52
+  /* "RKF45.pyx":53
  *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
  *          + (44275/110592)*k4 + (253/4096)*k5
  *     if var5 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_5 = PyObject_RichCompare(__pyx_v_var5, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_5 = PyObject_RichCompare(__pyx_v_var5, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":53
+    /* "RKF45.pyx":54
  *          + (44275/110592)*k4 + (253/4096)*k5
  *     if var5 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -2202,7 +2215,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__10;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":52
+    /* "RKF45.pyx":53
  *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
  *          + (44275/110592)*k4 + (253/4096)*k5
  *     if var5 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -2211,19 +2224,19 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":55
+  /* "RKF45.pyx":56
  *         return (None, None)
  * 
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)             # <<<<<<<<<<<<<<
  *     if k6 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  */
-  __pyx_t_2 = PyFloat_FromDouble((7.0 / 8.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((7.0 / 8.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_v_t, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_t, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_INCREF(__pyx_v_dydx_functions);
@@ -2242,7 +2255,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_t_2, __pyx_v_var5, __pyx_v_parameters};
-    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2251,14 +2264,14 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_t_2, __pyx_v_var5, __pyx_v_parameters};
-    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_1) {
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -2272,7 +2285,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_2 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -2280,20 +2293,20 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_v_k6 = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "RKF45.pyx":56
+  /* "RKF45.pyx":57
  * 
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
  *     if k6 == 0.0:             # <<<<<<<<<<<<<<
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k6 = k6*dt
  */
-  __pyx_t_5 = __Pyx_PyFloat_EqObjC(__pyx_v_k6, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyFloat_EqObjC(__pyx_v_k6, __pyx_float_0_0, 0.0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":57
+    /* "RKF45.pyx":58
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
  *     if k6 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
@@ -2305,7 +2318,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
     __pyx_r = __pyx_tuple__11;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":56
+    /* "RKF45.pyx":57
  * 
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
  *     if k6 == 0.0:             # <<<<<<<<<<<<<<
@@ -2314,127 +2327,127 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "RKF45.pyx":58
+  /* "RKF45.pyx":59
  *     if k6 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")
  *     k6 = k6*dt             # <<<<<<<<<<<<<<
  * 
  *     # calculate the 5th order solution
  */
-  __pyx_t_5 = PyNumber_Multiply(__pyx_v_k6, __pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_v_k6, __pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF_SET(__pyx_v_k6, __pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "RKF45.pyx":61
+  /* "RKF45.pyx":62
  * 
  *     # calculate the 5th order solution
  *     RK5_sol = var_i + (37/378)*k1 + (250/621)*k3 + (125/594)*k4 + (512/1771)*k6             # <<<<<<<<<<<<<<
  *     # calculate the 4th order solution
  *     RK4_sol = var_i + (2825/27648)*k1 + (18575/48384)*k3 + (13525/55296)*k4 + (277/14336)*k5 + 0.25*k6
  */
-  __pyx_t_5 = PyFloat_FromDouble((37.0 / 378.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((37.0 / 378.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((250.0 / 621.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((250.0 / 621.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyFloat_FromDouble((125.0 / 594.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble((125.0 / 594.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((512.0 / 1771.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((512.0 / 1771.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_RK5_sol = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "RKF45.pyx":63
+  /* "RKF45.pyx":64
  *     RK5_sol = var_i + (37/378)*k1 + (250/621)*k3 + (125/594)*k4 + (512/1771)*k6
  *     # calculate the 4th order solution
  *     RK4_sol = var_i + (2825/27648)*k1 + (18575/48384)*k3 + (13525/55296)*k4 + (277/14336)*k5 + 0.25*k6             # <<<<<<<<<<<<<<
  * 
  *     # estimate the error, given by the difference between the 4th and 5th order solutions
  */
-  __pyx_t_5 = PyFloat_FromDouble((2825.0 / 27648.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((2825.0 / 27648.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((18575.0 / 48384.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((18575.0 / 48384.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyFloat_FromDouble((13525.0 / 55296.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble((13525.0 / 55296.0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_k4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((277.0 / 14336.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((277.0 / 14336.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_k5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_25, __pyx_v_k6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_25, __pyx_v_k6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_RK4_sol = __pyx_t_7;
   __pyx_t_7 = 0;
 
-  /* "RKF45.pyx":66
+  /* "RKF45.pyx":67
  * 
  *     # estimate the error, given by the difference between the 4th and 5th order solutions
  *     err = RK5_sol - RK4_sol             # <<<<<<<<<<<<<<
  * 
  *     return (RK5_sol, err)
  */
-  __pyx_t_7 = PyNumber_Subtract(__pyx_v_RK5_sol, __pyx_v_RK4_sol); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Subtract(__pyx_v_RK5_sol, __pyx_v_RK4_sol); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_v_err = __pyx_t_7;
   __pyx_t_7 = 0;
 
-  /* "RKF45.pyx":68
+  /* "RKF45.pyx":69
  *     err = RK5_sol - RK4_sol
  * 
  *     return (RK5_sol, err)             # <<<<<<<<<<<<<<
@@ -2442,7 +2455,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_INCREF(__pyx_v_RK5_sol);
   __Pyx_GIVEREF(__pyx_v_RK5_sol);
@@ -2454,7 +2467,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "RKF45.pyx":6
+  /* "RKF45.pyx":7
  * ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
  * 
  * def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
@@ -2491,7 +2504,7 @@ static PyObject *__pyx_pf_5RKF45_RKCashKarp_Step45(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "RKF45.pyx":71
+/* "RKF45.pyx":72
  * 
  * 
  * def RKFehlberg12(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
@@ -2541,29 +2554,29 @@ static PyObject *__pyx_pw_5RKF45_3RKFehlberg12(PyObject *__pyx_self, PyObject *_
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_var_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 1); __PYX_ERR(0, 71, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 1); __PYX_ERR(0, 72, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dydx_functions)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 2); __PYX_ERR(0, 71, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 2); __PYX_ERR(0, 72, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dt)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 3); __PYX_ERR(0, 71, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 3); __PYX_ERR(0, 72, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_parameters)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 4); __PYX_ERR(0, 71, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, 4); __PYX_ERR(0, 72, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RKFehlberg12") < 0)) __PYX_ERR(0, 71, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "RKFehlberg12") < 0)) __PYX_ERR(0, 72, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -2582,7 +2595,7 @@ static PyObject *__pyx_pw_5RKF45_3RKFehlberg12(PyObject *__pyx_self, PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 71, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("RKFehlberg12", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 72, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("RKF45.RKFehlberg12", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2615,7 +2628,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("RKFehlberg12", 0);
 
-  /* "RKF45.pyx":78
+  /* "RKF45.pyx":79
  *     """
  * 
  *     k1 = dt * dydx_functions(t, var_i, parameters)             # <<<<<<<<<<<<<<
@@ -2638,7 +2651,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -2646,13 +2659,13 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -2666,45 +2679,45 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
     __Pyx_INCREF(__pyx_v_parameters);
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_parameters);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_k1 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":79
+  /* "RKF45.pyx":80
  * 
  *     k1 = dt * dydx_functions(t, var_i, parameters)
  *     var1 = var_i + 0.5*k1             # <<<<<<<<<<<<<<
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_float_0_5, __pyx_v_k1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_float_0_5, __pyx_v_k1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_var1 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":80
+  /* "RKF45.pyx":81
  *     k1 = dt * dydx_functions(t, var_i, parameters)
  *     var1 = var_i + 0.5*k1
  *     if var1 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var1, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var1, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":81
+    /* "RKF45.pyx":82
  *     var1 = var_i + 0.5*k1
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -2716,7 +2729,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
     __pyx_r = __pyx_tuple__12;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":80
+    /* "RKF45.pyx":81
  *     k1 = dt * dydx_functions(t, var_i, parameters)
  *     var1 = var_i + 0.5*k1
  *     if var1 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -2725,16 +2738,16 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
  */
   }
 
-  /* "RKF45.pyx":83
+  /* "RKF45.pyx":84
  *         return (None, None)
  * 
  *     k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)             # <<<<<<<<<<<<<<
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_float_0_5, __pyx_v_dt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_float_0_5, __pyx_v_dt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyNumber_Add(__pyx_v_t, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_v_t, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_INCREF(__pyx_v_dydx_functions);
@@ -2753,7 +2766,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_5, __pyx_v_var1, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -2762,14 +2775,14 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_5, __pyx_v_var1, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -2783,57 +2796,57 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_5 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_k2 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":84
+  /* "RKF45.pyx":85
  * 
  *     k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2             # <<<<<<<<<<<<<<
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)
  */
-  __pyx_t_2 = PyFloat_FromDouble((1.0 / 256.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((1.0 / 256.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_var2 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":85
+  /* "RKF45.pyx":86
  *     k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2
  *     if var2 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
  *         return (None, None)
  * 
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var2, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_var2, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "RKF45.pyx":86
+    /* "RKF45.pyx":87
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
@@ -2845,7 +2858,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
     __pyx_r = __pyx_tuple__13;
     goto __pyx_L0;
 
-    /* "RKF45.pyx":85
+    /* "RKF45.pyx":86
  *     k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2
  *     if var2 < 0: # a negative contribution should not be obtained             # <<<<<<<<<<<<<<
@@ -2854,14 +2867,14 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
  */
   }
 
-  /* "RKF45.pyx":88
+  /* "RKF45.pyx":89
  *         return (None, None)
  * 
  *     k3 = dt * dydx_functions(t + dt, var2, parameters)             # <<<<<<<<<<<<<<
  * 
  *     # calculate the 1st order solution
  */
-  __pyx_t_7 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_INCREF(__pyx_v_dydx_functions);
   __pyx_t_2 = __pyx_v_dydx_functions; __pyx_t_5 = NULL;
@@ -2879,7 +2892,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_7, __pyx_v_var2, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -2888,14 +2901,14 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_7, __pyx_v_var2, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -2909,93 +2922,93 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
     __Pyx_GIVEREF(__pyx_v_parameters);
     PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_4, __pyx_v_parameters);
     __pyx_t_7 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dt, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_k3 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":91
+  /* "RKF45.pyx":92
  * 
  *     # calculate the 1st order solution
  *     RK1_sol = var_i + (1/256)*k1 + (255/256)*k2             # <<<<<<<<<<<<<<
  *     # calculate the 2nd order solution
  *     RK2_sol = var_i + (1/512)*k1 + (255/256)*k2 + (1/512)*k3
  */
-  __pyx_t_2 = PyFloat_FromDouble((1.0 / 256.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((1.0 / 256.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_v_var_i, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_RK1_sol = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":93
+  /* "RKF45.pyx":94
  *     RK1_sol = var_i + (1/256)*k1 + (255/256)*k2
  *     # calculate the 2nd order solution
  *     RK2_sol = var_i + (1/512)*k1 + (255/256)*k2 + (1/512)*k3             # <<<<<<<<<<<<<<
  * 
  *     # estimate the error, given by the difference between the 2nd and 1st order solutions
  */
-  __pyx_t_1 = PyFloat_FromDouble((1.0 / 512.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((1.0 / 512.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_v_k1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Add(__pyx_v_var_i, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((255.0 / 256.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_k2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyFloat_FromDouble((1.0 / 512.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((1.0 / 512.0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_v_k3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_RK2_sol = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":96
+  /* "RKF45.pyx":97
  * 
  *     # estimate the error, given by the difference between the 2nd and 1st order solutions
  *     err = RK2_sol - RK1_sol             # <<<<<<<<<<<<<<
  * 
  *     return (RK2_sol, err)
  */
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_RK2_sol, __pyx_v_RK1_sol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_RK2_sol, __pyx_v_RK1_sol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_err = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":98
+  /* "RKF45.pyx":99
  *     err = RK2_sol - RK1_sol
  * 
  *     return (RK2_sol, err)             # <<<<<<<<<<<<<<
@@ -3003,7 +3016,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_RK2_sol);
   __Pyx_GIVEREF(__pyx_v_RK2_sol);
@@ -3015,7 +3028,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "RKF45.pyx":71
+  /* "RKF45.pyx":72
  * 
  * 
  * def RKFehlberg12(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
@@ -3046,7 +3059,7 @@ static PyObject *__pyx_pf_5RKF45_2RKFehlberg12(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "RKF45.pyx":103
+/* "RKF45.pyx":104
  * 
  * ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
  * def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):             # <<<<<<<<<<<<<<
@@ -3099,35 +3112,35 @@ static PyObject *__pyx_pw_5RKF45_5step_control(PyObject *__pyx_self, PyObject *_
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_var_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 1); __PYX_ERR(0, 103, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 1); __PYX_ERR(0, 104, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dt_try)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 2); __PYX_ERR(0, 103, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 2); __PYX_ERR(0, 104, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dydx_functions)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 3); __PYX_ERR(0, 103, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 3); __PYX_ERR(0, 104, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_accuracy)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 4); __PYX_ERR(0, 103, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 4); __PYX_ERR(0, 104, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_parameters)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 5); __PYX_ERR(0, 103, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, 5); __PYX_ERR(0, 104, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "step_control") < 0)) __PYX_ERR(0, 103, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "step_control") < 0)) __PYX_ERR(0, 104, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -3148,7 +3161,7 @@ static PyObject *__pyx_pw_5RKF45_5step_control(PyObject *__pyx_self, PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 103, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("step_control", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 104, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("RKF45.step_control", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3162,6 +3175,7 @@ static PyObject *__pyx_pw_5RKF45_5step_control(PyObject *__pyx_self, PyObject *_
 }
 
 static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_t, PyObject *__pyx_v_var_i, PyObject *__pyx_v_dt_try, PyObject *__pyx_v_dydx_functions, PyObject *__pyx_v_accuracy, PyObject *__pyx_v_parameters) {
+  float __pyx_v_err_return[3];
   PyObject *__pyx_v_dydx = NULL;
   PyObject *__pyx_v_yscal = NULL;
   PyObject *__pyx_v_dt = NULL;
@@ -3172,16 +3186,29 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_v_dt_next = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  float __pyx_t_1[3];
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *(*__pyx_t_6)(PyObject *);
-  int __pyx_t_7;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *(*__pyx_t_7)(PyObject *);
+  int __pyx_t_8;
   __Pyx_RefNannySetupContext("step_control", 0);
 
   /* "RKF45.pyx":112
+ *     """
+ * 
+ *     cdef float[3] err_return = [0.0, 0.0, 0.0]             # <<<<<<<<<<<<<<
+ * 
+ *     # calculate the derivatives
+ */
+  __pyx_t_1[0] = 0.0;
+  __pyx_t_1[1] = 0.0;
+  __pyx_t_1[2] = 0.0;
+  memcpy(&(__pyx_v_err_return[0]), __pyx_t_1, sizeof(__pyx_v_err_return[0]) * (3));
+
+  /* "RKF45.pyx":115
  * 
  *     # calculate the derivatives
  *     dydx = dydx_functions(t, var_i, parameters)             # <<<<<<<<<<<<<<
@@ -3189,82 +3216,82 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  *     # the scaling factor is used to ensure the relative error is bounded
  */
   __Pyx_INCREF(__pyx_v_dydx_functions);
-  __pyx_t_2 = __pyx_v_dydx_functions; __pyx_t_3 = NULL;
-  __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_3 = __pyx_v_dydx_functions; __pyx_t_4 = NULL;
+  __pyx_t_5 = 0;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_4 = 1;
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+      __pyx_t_5 = 1;
     }
   }
   #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
+  if (PyFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_v_t, __pyx_v_var_i, __pyx_v_parameters};
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
+    __pyx_t_6 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__pyx_t_4) {
+      __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
     }
     __Pyx_INCREF(__pyx_v_t);
     __Pyx_GIVEREF(__pyx_v_t);
-    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_t);
+    PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_5, __pyx_v_t);
     __Pyx_INCREF(__pyx_v_var_i);
     __Pyx_GIVEREF(__pyx_v_var_i);
-    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_var_i);
+    PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_v_var_i);
     __Pyx_INCREF(__pyx_v_parameters);
     __Pyx_GIVEREF(__pyx_v_parameters);
-    PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_parameters);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    PyTuple_SET_ITEM(__pyx_t_6, 2+__pyx_t_5, __pyx_v_parameters);
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_dydx = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_dydx = __pyx_t_2;
+  __pyx_t_2 = 0;
 
-  /* "RKF45.pyx":115
+  /* "RKF45.pyx":118
  * 
  *     # the scaling factor is used to ensure the relative error is bounded
  *     yscal = abs(var_i) + abs(dydx * dt_try) + 1e-3             # <<<<<<<<<<<<<<
  * 
  *     # try a time step
  */
-  __pyx_t_1 = __Pyx_PyNumber_Absolute(__pyx_v_var_i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_dydx, __pyx_v_dt_try); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyNumber_Absolute(__pyx_v_var_i); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyNumber_Absolute(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_dydx, __pyx_v_dt_try); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_6 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyFloat_AddObjC(__pyx_t_2, __pyx_float_1eneg_3, 1e-3, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_yscal = __pyx_t_5;
-  __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyFloat_AddObjC(__pyx_t_3, __pyx_float_1eneg_3, 1e-3, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_yscal = __pyx_t_6;
+  __pyx_t_6 = 0;
 
-  /* "RKF45.pyx":118
+  /* "RKF45.pyx":121
  * 
  *     # try a time step
  *     dt = dt_try             # <<<<<<<<<<<<<<
@@ -3274,7 +3301,7 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
   __Pyx_INCREF(__pyx_v_dt_try);
   __pyx_v_dt = __pyx_v_dt_try;
 
-  /* "RKF45.pyx":119
+  /* "RKF45.pyx":122
  *     # try a time step
  *     dt = dt_try
  *     while True:             # <<<<<<<<<<<<<<
@@ -3283,163 +3310,163 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  */
   while (1) {
 
-    /* "RKF45.pyx":121
+    /* "RKF45.pyx":124
  *     while True:
  *         # take an RK45 step
  *         (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)             # <<<<<<<<<<<<<<
  *         if (var_new, var_err) == (None, None):
  *             dt = 0.01*dt
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_RKCashKarp_Step45); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = NULL;
-    __pyx_t_4 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_2);
-      if (likely(__pyx_t_1)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-        __Pyx_INCREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_RKCashKarp_Step45); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_2 = NULL;
+    __pyx_t_5 = 0;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_2, function);
-        __pyx_t_4 = 1;
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __pyx_t_5 = 1;
       }
     }
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[6] = {__pyx_t_1, __pyx_v_t, __pyx_v_var_i, __pyx_v_dydx_functions, __pyx_v_dt, __pyx_v_parameters};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 5+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_GOTREF(__pyx_t_5);
+    if (PyFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[6] = {__pyx_t_2, __pyx_v_t, __pyx_v_var_i, __pyx_v_dydx_functions, __pyx_v_dt, __pyx_v_parameters};
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 5+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-      PyObject *__pyx_temp[6] = {__pyx_t_1, __pyx_v_t, __pyx_v_var_i, __pyx_v_dydx_functions, __pyx_v_dt, __pyx_v_parameters};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 5+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[6] = {__pyx_t_2, __pyx_v_t, __pyx_v_var_i, __pyx_v_dydx_functions, __pyx_v_dt, __pyx_v_parameters};
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 5+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(5+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      if (__pyx_t_1) {
-        __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
+      __pyx_t_4 = PyTuple_New(5+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      if (__pyx_t_2) {
+        __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
       }
       __Pyx_INCREF(__pyx_v_t);
       __Pyx_GIVEREF(__pyx_v_t);
-      PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_4, __pyx_v_t);
+      PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_5, __pyx_v_t);
       __Pyx_INCREF(__pyx_v_var_i);
       __Pyx_GIVEREF(__pyx_v_var_i);
-      PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_v_var_i);
+      PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, __pyx_v_var_i);
       __Pyx_INCREF(__pyx_v_dydx_functions);
       __Pyx_GIVEREF(__pyx_v_dydx_functions);
-      PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_4, __pyx_v_dydx_functions);
+      PyTuple_SET_ITEM(__pyx_t_4, 2+__pyx_t_5, __pyx_v_dydx_functions);
       __Pyx_INCREF(__pyx_v_dt);
       __Pyx_GIVEREF(__pyx_v_dt);
-      PyTuple_SET_ITEM(__pyx_t_3, 3+__pyx_t_4, __pyx_v_dt);
+      PyTuple_SET_ITEM(__pyx_t_4, 3+__pyx_t_5, __pyx_v_dt);
       __Pyx_INCREF(__pyx_v_parameters);
       __Pyx_GIVEREF(__pyx_v_parameters);
-      PyTuple_SET_ITEM(__pyx_t_3, 4+__pyx_t_4, __pyx_v_parameters);
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      PyTuple_SET_ITEM(__pyx_t_4, 4+__pyx_t_5, __pyx_v_parameters);
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if ((likely(PyTuple_CheckExact(__pyx_t_5))) || (PyList_CheckExact(__pyx_t_5))) {
-      PyObject* sequence = __pyx_t_5;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if ((likely(PyTuple_CheckExact(__pyx_t_6))) || (PyList_CheckExact(__pyx_t_6))) {
+      PyObject* sequence = __pyx_t_6;
       Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 121, __pyx_L1_error)
+        __PYX_ERR(0, 124, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
-        __pyx_t_2 = PyTuple_GET_ITEM(sequence, 0); 
-        __pyx_t_3 = PyTuple_GET_ITEM(sequence, 1); 
+        __pyx_t_3 = PyTuple_GET_ITEM(sequence, 0); 
+        __pyx_t_4 = PyTuple_GET_ITEM(sequence, 1); 
       } else {
-        __pyx_t_2 = PyList_GET_ITEM(sequence, 0); 
-        __pyx_t_3 = PyList_GET_ITEM(sequence, 1); 
+        __pyx_t_3 = PyList_GET_ITEM(sequence, 0); 
+        __pyx_t_4 = PyList_GET_ITEM(sequence, 1); 
       }
-      __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
       #else
-      __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       #endif
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_1 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_6 = Py_TYPE(__pyx_t_1)->tp_iternext;
-      index = 0; __pyx_t_2 = __pyx_t_6(__pyx_t_1); if (unlikely(!__pyx_t_2)) goto __pyx_L5_unpacking_failed;
+      __pyx_t_2 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      index = 1; __pyx_t_3 = __pyx_t_6(__pyx_t_1); if (unlikely(!__pyx_t_3)) goto __pyx_L5_unpacking_failed;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_7 = Py_TYPE(__pyx_t_2)->tp_iternext;
+      index = 0; __pyx_t_3 = __pyx_t_7(__pyx_t_2); if (unlikely(!__pyx_t_3)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_3);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_1), 2) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
-      __pyx_t_6 = NULL;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      index = 1; __pyx_t_4 = __pyx_t_7(__pyx_t_2); if (unlikely(!__pyx_t_4)) goto __pyx_L5_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_4);
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_2), 2) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
+      __pyx_t_7 = NULL;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       goto __pyx_L6_unpacking_done;
       __pyx_L5_unpacking_failed:;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_6 = NULL;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_7 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 121, __pyx_L1_error)
+      __PYX_ERR(0, 124, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
-    __Pyx_XDECREF_SET(__pyx_v_var_new, __pyx_t_2);
-    __pyx_t_2 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_var_err, __pyx_t_3);
+    __Pyx_XDECREF_SET(__pyx_v_var_new, __pyx_t_3);
     __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_var_err, __pyx_t_4);
+    __pyx_t_4 = 0;
 
-    /* "RKF45.pyx":122
+    /* "RKF45.pyx":125
  *         # take an RK45 step
  *         (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)
  *         if (var_new, var_err) == (None, None):             # <<<<<<<<<<<<<<
  *             dt = 0.01*dt
  *             continue
  */
-    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 122, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_v_var_new);
     __Pyx_GIVEREF(__pyx_v_var_new);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_var_new);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_var_new);
     __Pyx_INCREF(__pyx_v_var_err);
     __Pyx_GIVEREF(__pyx_v_var_err);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_v_var_err);
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_5, __pyx_tuple__14, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (__pyx_t_7) {
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_var_err);
+    __pyx_t_4 = PyObject_RichCompare(__pyx_t_6, __pyx_tuple__14, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (__pyx_t_8) {
 
-      /* "RKF45.pyx":123
+      /* "RKF45.pyx":126
  *         (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)
  *         if (var_new, var_err) == (None, None):
  *             dt = 0.01*dt             # <<<<<<<<<<<<<<
  *             continue
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
  */
-      __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_01, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF_SET(__pyx_v_dt, __pyx_t_3);
-      __pyx_t_3 = 0;
+      __pyx_t_4 = PyNumber_Multiply(__pyx_float_0_01, __pyx_v_dt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF_SET(__pyx_v_dt, __pyx_t_4);
+      __pyx_t_4 = 0;
 
-      /* "RKF45.pyx":124
+      /* "RKF45.pyx":127
  *         if (var_new, var_err) == (None, None):
  *             dt = 0.01*dt
  *             continue             # <<<<<<<<<<<<<<
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
- *             return (None, None, None)
+ *             return err_return
  */
       goto __pyx_L3_continue;
 
-      /* "RKF45.pyx":122
+      /* "RKF45.pyx":125
  *         # take an RK45 step
  *         (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)
  *         if (var_new, var_err) == (None, None):             # <<<<<<<<<<<<<<
@@ -3448,79 +3475,81 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  */
     }
 
-    /* "RKF45.pyx":125
+    /* "RKF45.pyx":128
  *             dt = 0.01*dt
  *             continue
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):             # <<<<<<<<<<<<<<
- *             return (None, None, None)
+ *             return err_return
  *         # find the maximum error of all ODEs, also scale to required tolerance
  */
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_var_new);
     __Pyx_GIVEREF(__pyx_v_var_new);
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_var_new);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_var_new);
     __Pyx_INCREF(__pyx_v_var_err);
     __Pyx_GIVEREF(__pyx_v_var_err);
-    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_var_err);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_t_3, __pyx_tuple__15, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__pyx_t_7) {
+    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_var_err);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_t_4, __pyx_tuple__15, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 128, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 128, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__pyx_t_8) {
 
-      /* "RKF45.pyx":126
+      /* "RKF45.pyx":129
  *             continue
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
- *             return (None, None, None)             # <<<<<<<<<<<<<<
+ *             return err_return             # <<<<<<<<<<<<<<
  *         # find the maximum error of all ODEs, also scale to required tolerance
  *         err_max = abs(var_err/yscal) / accuracy
  */
       __Pyx_XDECREF(__pyx_r);
-      __Pyx_INCREF(__pyx_tuple__16);
-      __pyx_r = __pyx_tuple__16;
+      __pyx_t_6 = __Pyx_carray_to_py_float(__pyx_v_err_return, 3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_r = __pyx_t_6;
+      __pyx_t_6 = 0;
       goto __pyx_L0;
 
-      /* "RKF45.pyx":125
+      /* "RKF45.pyx":128
  *             dt = 0.01*dt
  *             continue
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):             # <<<<<<<<<<<<<<
- *             return (None, None, None)
+ *             return err_return
  *         # find the maximum error of all ODEs, also scale to required tolerance
  */
     }
 
-    /* "RKF45.pyx":128
- *             return (None, None, None)
+    /* "RKF45.pyx":131
+ *             return err_return
  *         # find the maximum error of all ODEs, also scale to required tolerance
  *         err_max = abs(var_err/yscal) / accuracy             # <<<<<<<<<<<<<<
  * 
  *         # step succeeded i.e. error <= required accuracy
  */
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_var_err, __pyx_v_yscal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 128, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_v_accuracy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 128, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_err_max, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_v_var_err, __pyx_v_yscal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_v_accuracy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_err_max, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "RKF45.pyx":131
+    /* "RKF45.pyx":134
  * 
  *         # step succeeded i.e. error <= required accuracy
  *         if err_max <= 1.0:             # <<<<<<<<<<<<<<
  *             break
  * 
  */
-    __pyx_t_5 = PyObject_RichCompare(__pyx_v_err_max, __pyx_float_1_0, Py_LE); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__pyx_t_7) {
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_err_max, __pyx_float_1_0, Py_LE); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__pyx_t_8) {
 
-      /* "RKF45.pyx":132
+      /* "RKF45.pyx":135
  *         # step succeeded i.e. error <= required accuracy
  *         if err_max <= 1.0:
  *             break             # <<<<<<<<<<<<<<
@@ -3529,7 +3558,7 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  */
       goto __pyx_L4_break;
 
-      /* "RKF45.pyx":131
+      /* "RKF45.pyx":134
  * 
  *         # step succeeded i.e. error <= required accuracy
  *         if err_max <= 1.0:             # <<<<<<<<<<<<<<
@@ -3538,58 +3567,58 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  */
     }
 
-    /* "RKF45.pyx":135
+    /* "RKF45.pyx":138
  * 
  *         # propose new stepsize; in this case truncation was too large so reduce dt
  *         dt_new = 0.9*dt/err_max**0.25             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_5 = PyNumber_Multiply(__pyx_float_0_9, __pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 135, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyNumber_Power(__pyx_v_err_max, __pyx_float_0_25, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Multiply(__pyx_float_0_9, __pyx_v_dt); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_4 = PyNumber_Power(__pyx_v_err_max, __pyx_float_0_25, Py_None); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 138, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 135, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_dt_new, __pyx_t_2);
-    __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_dt_new, __pyx_t_3);
+    __pyx_t_3 = 0;
 
-    /* "RKF45.pyx":139
+    /* "RKF45.pyx":142
  * 
  *         # if the stepsize reduced too much by above, only reduce by factor of 10 instead
  *         if abs(dt_new) < 0.1*abs(dt):             # <<<<<<<<<<<<<<
  *             dt_new = 0.1*dt
  * 
  */
-    __pyx_t_2 = __Pyx_PyNumber_Absolute(__pyx_v_dt_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_v_dt_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_float_0_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 139, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_v_dt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = PyNumber_Multiply(__pyx_float_0_1, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyObject_RichCompare(__pyx_t_3, __pyx_t_6, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_2, __pyx_t_5, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 139, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (__pyx_t_7) {
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (__pyx_t_8) {
 
-      /* "RKF45.pyx":140
+      /* "RKF45.pyx":143
  *         # if the stepsize reduced too much by above, only reduce by factor of 10 instead
  *         if abs(dt_new) < 0.1*abs(dt):
  *             dt_new = 0.1*dt             # <<<<<<<<<<<<<<
  * 
  *         # update dt
  */
-      __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_1, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 140, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF_SET(__pyx_v_dt_new, __pyx_t_3);
-      __pyx_t_3 = 0;
+      __pyx_t_4 = PyNumber_Multiply(__pyx_float_0_1, __pyx_v_dt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 143, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF_SET(__pyx_v_dt_new, __pyx_t_4);
+      __pyx_t_4 = 0;
 
-      /* "RKF45.pyx":139
+      /* "RKF45.pyx":142
  * 
  *         # if the stepsize reduced too much by above, only reduce by factor of 10 instead
  *         if abs(dt_new) < 0.1*abs(dt):             # <<<<<<<<<<<<<<
@@ -3598,7 +3627,7 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
  */
     }
 
-    /* "RKF45.pyx":143
+    /* "RKF45.pyx":146
  * 
  *         # update dt
  *         dt = dt_new             # <<<<<<<<<<<<<<
@@ -3608,31 +3637,31 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
     __Pyx_INCREF(__pyx_v_dt_new);
     __Pyx_DECREF_SET(__pyx_v_dt, __pyx_v_dt_new);
 
-    /* "RKF45.pyx":145
+    /* "RKF45.pyx":148
  *         dt = dt_new
  *         # error if there's been no update to variables
  *         if t+dt == t:             # <<<<<<<<<<<<<<
  *             print "ERROR: step size too small"
  * 
  */
-    __pyx_t_3 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_t_3, __pyx_v_t, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 145, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__pyx_t_7) {
+    __pyx_t_4 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_t_4, __pyx_v_t, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__pyx_t_8) {
 
-      /* "RKF45.pyx":146
+      /* "RKF45.pyx":149
  *         # error if there's been no update to variables
  *         if t+dt == t:
  *             print "ERROR: step size too small"             # <<<<<<<<<<<<<<
  * 
  *     # if the maximum error was far too small, increase by factor of 5
  */
-      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_step_size_too_small) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_kp_s_ERROR_step_size_too_small) < 0) __PYX_ERR(0, 149, __pyx_L1_error)
 
-      /* "RKF45.pyx":145
+      /* "RKF45.pyx":148
  *         dt = dt_new
  *         # error if there's been no update to variables
  *         if t+dt == t:             # <<<<<<<<<<<<<<
@@ -3644,32 +3673,32 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
   }
   __pyx_L4_break:;
 
-  /* "RKF45.pyx":149
+  /* "RKF45.pyx":152
  * 
  *     # if the maximum error was far too small, increase by factor of 5
  *     if err_max < 2e-4:             # <<<<<<<<<<<<<<
  *         dt_next = 5.0*dt
  *     # if step was too small, but in the right region - increase by **0.2 next step
  */
-  if (unlikely(!__pyx_v_err_max)) { __Pyx_RaiseUnboundLocalError("err_max"); __PYX_ERR(0, 149, __pyx_L1_error) }
-  __pyx_t_5 = PyObject_RichCompare(__pyx_v_err_max, __pyx_float_2eneg_4, Py_LT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 149, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (__pyx_t_7) {
+  if (unlikely(!__pyx_v_err_max)) { __Pyx_RaiseUnboundLocalError("err_max"); __PYX_ERR(0, 152, __pyx_L1_error) }
+  __pyx_t_6 = PyObject_RichCompare(__pyx_v_err_max, __pyx_float_2eneg_4, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (__pyx_t_8) {
 
-    /* "RKF45.pyx":150
+    /* "RKF45.pyx":153
  *     # if the maximum error was far too small, increase by factor of 5
  *     if err_max < 2e-4:
  *         dt_next = 5.0*dt             # <<<<<<<<<<<<<<
  *     # if step was too small, but in the right region - increase by **0.2 next step
  *     else:
  */
-    __pyx_t_5 = PyNumber_Multiply(__pyx_float_5_0, __pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_v_dt_next = __pyx_t_5;
-    __pyx_t_5 = 0;
+    __pyx_t_6 = PyNumber_Multiply(__pyx_float_5_0, __pyx_v_dt); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_v_dt_next = __pyx_t_6;
+    __pyx_t_6 = 0;
 
-    /* "RKF45.pyx":149
+    /* "RKF45.pyx":152
  * 
  *     # if the maximum error was far too small, increase by factor of 5
  *     if err_max < 2e-4:             # <<<<<<<<<<<<<<
@@ -3679,53 +3708,53 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
     goto __pyx_L12;
   }
 
-  /* "RKF45.pyx":153
+  /* "RKF45.pyx":156
  *     # if step was too small, but in the right region - increase by **0.2 next step
  *     else:
  *         dt_next = 0.9*(dt/err_max)**0.2             # <<<<<<<<<<<<<<
  * 
- *     return (t+dt, var_new, dt_next)
+ *     return [t+dt, var_new, dt_next]
  */
   /*else*/ {
-    if (unlikely(!__pyx_v_err_max)) { __Pyx_RaiseUnboundLocalError("err_max"); __PYX_ERR(0, 153, __pyx_L1_error) }
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_dt, __pyx_v_err_max); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyNumber_Power(__pyx_t_5, __pyx_float_0_2, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_float_0_9, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_dt_next = __pyx_t_5;
-    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_v_err_max)) { __Pyx_RaiseUnboundLocalError("err_max"); __PYX_ERR(0, 156, __pyx_L1_error) }
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_v_dt, __pyx_v_err_max); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_4 = PyNumber_Power(__pyx_t_6, __pyx_float_0_2, Py_None); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = PyNumber_Multiply(__pyx_float_0_9, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_v_dt_next = __pyx_t_6;
+    __pyx_t_6 = 0;
   }
   __pyx_L12:;
 
-  /* "RKF45.pyx":155
+  /* "RKF45.pyx":158
  *         dt_next = 0.9*(dt/err_max)**0.2
  * 
- *     return (t+dt, var_new, dt_next)             # <<<<<<<<<<<<<<
+ *     return [t+dt, var_new, dt_next]             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_5 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 155, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (unlikely(!__pyx_v_var_new)) { __Pyx_RaiseUnboundLocalError("var_new"); __PYX_ERR(0, 155, __pyx_L1_error) }
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 155, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  __pyx_t_6 = PyNumber_Add(__pyx_v_t, __pyx_v_dt); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (unlikely(!__pyx_v_var_new)) { __Pyx_RaiseUnboundLocalError("var_new"); __PYX_ERR(0, 158, __pyx_L1_error) }
+  __pyx_t_4 = PyList_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_6);
   __Pyx_INCREF(__pyx_v_var_new);
   __Pyx_GIVEREF(__pyx_v_var_new);
-  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_var_new);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_v_var_new);
   __Pyx_INCREF(__pyx_v_dt_next);
   __Pyx_GIVEREF(__pyx_v_dt_next);
-  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_v_dt_next);
-  __pyx_t_5 = 0;
-  __pyx_r = __pyx_t_3;
-  __pyx_t_3 = 0;
+  PyList_SET_ITEM(__pyx_t_4, 2, __pyx_v_dt_next);
+  __pyx_t_6 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "RKF45.pyx":103
+  /* "RKF45.pyx":104
  * 
  * ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
  * def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):             # <<<<<<<<<<<<<<
@@ -3735,10 +3764,10 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_AddTraceback("RKF45.step_control", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3750,6 +3779,219 @@ static PyObject *__pyx_pf_5RKF45_4step_control(CYTHON_UNUSED PyObject *__pyx_sel
   __Pyx_XDECREF(__pyx_v_err_max);
   __Pyx_XDECREF(__pyx_v_dt_new);
   __Pyx_XDECREF(__pyx_v_dt_next);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "carray.to_py":112
+ * 
+ * @cname("__Pyx_carray_to_py_float")
+ * cdef inline list __Pyx_carray_to_py_float(base_type *v, Py_ssize_t length):             # <<<<<<<<<<<<<<
+ *     cdef size_t i
+ *     cdef object value
+ */
+
+static CYTHON_INLINE PyObject *__Pyx_carray_to_py_float(float *__pyx_v_v, Py_ssize_t __pyx_v_length) {
+  size_t __pyx_v_i;
+  PyObject *__pyx_v_value = 0;
+  PyObject *__pyx_v_l = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  size_t __pyx_t_2;
+  size_t __pyx_t_3;
+  size_t __pyx_t_4;
+  __Pyx_RefNannySetupContext("__Pyx_carray_to_py_float", 0);
+
+  /* "carray.to_py":115
+ *     cdef size_t i
+ *     cdef object value
+ *     l = PyList_New(length)             # <<<<<<<<<<<<<<
+ *     for i in range(<size_t>length):
+ *         value = v[i]
+ */
+  __pyx_t_1 = PyList_New(__pyx_v_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_l = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "carray.to_py":116
+ *     cdef object value
+ *     l = PyList_New(length)
+ *     for i in range(<size_t>length):             # <<<<<<<<<<<<<<
+ *         value = v[i]
+ *         Py_INCREF(value)
+ */
+  __pyx_t_2 = ((size_t)__pyx_v_length);
+  __pyx_t_3 = __pyx_t_2;
+  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+    __pyx_v_i = __pyx_t_4;
+
+    /* "carray.to_py":117
+ *     l = PyList_New(length)
+ *     for i in range(<size_t>length):
+ *         value = v[i]             # <<<<<<<<<<<<<<
+ *         Py_INCREF(value)
+ *         PyList_SET_ITEM(l, i, value)
+ */
+    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_v[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 117, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_value, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "carray.to_py":118
+ *     for i in range(<size_t>length):
+ *         value = v[i]
+ *         Py_INCREF(value)             # <<<<<<<<<<<<<<
+ *         PyList_SET_ITEM(l, i, value)
+ *     return l
+ */
+    Py_INCREF(__pyx_v_value);
+
+    /* "carray.to_py":119
+ *         value = v[i]
+ *         Py_INCREF(value)
+ *         PyList_SET_ITEM(l, i, value)             # <<<<<<<<<<<<<<
+ *     return l
+ * 
+ */
+    PyList_SET_ITEM(__pyx_v_l, __pyx_v_i, __pyx_v_value);
+  }
+
+  /* "carray.to_py":120
+ *         Py_INCREF(value)
+ *         PyList_SET_ITEM(l, i, value)
+ *     return l             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_l);
+  __pyx_r = __pyx_v_l;
+  goto __pyx_L0;
+
+  /* "carray.to_py":112
+ * 
+ * @cname("__Pyx_carray_to_py_float")
+ * cdef inline list __Pyx_carray_to_py_float(base_type *v, Py_ssize_t length):             # <<<<<<<<<<<<<<
+ *     cdef size_t i
+ *     cdef object value
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("carray.to_py.__Pyx_carray_to_py_float", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_value);
+  __Pyx_XDECREF(__pyx_v_l);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "carray.to_py":124
+ * 
+ * @cname("__Pyx_carray_to_tuple_float")
+ * cdef inline tuple __Pyx_carray_to_tuple_float(base_type *v, Py_ssize_t length):             # <<<<<<<<<<<<<<
+ *     cdef size_t i
+ *     cdef object value
+ */
+
+static CYTHON_INLINE PyObject *__Pyx_carray_to_tuple_float(float *__pyx_v_v, Py_ssize_t __pyx_v_length) {
+  size_t __pyx_v_i;
+  PyObject *__pyx_v_value = 0;
+  PyObject *__pyx_v_t = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  size_t __pyx_t_2;
+  size_t __pyx_t_3;
+  size_t __pyx_t_4;
+  __Pyx_RefNannySetupContext("__Pyx_carray_to_tuple_float", 0);
+
+  /* "carray.to_py":127
+ *     cdef size_t i
+ *     cdef object value
+ *     t = PyTuple_New(length)             # <<<<<<<<<<<<<<
+ *     for i in range(<size_t>length):
+ *         value = v[i]
+ */
+  __pyx_t_1 = PyTuple_New(__pyx_v_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_t = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "carray.to_py":128
+ *     cdef object value
+ *     t = PyTuple_New(length)
+ *     for i in range(<size_t>length):             # <<<<<<<<<<<<<<
+ *         value = v[i]
+ *         Py_INCREF(value)
+ */
+  __pyx_t_2 = ((size_t)__pyx_v_length);
+  __pyx_t_3 = __pyx_t_2;
+  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+    __pyx_v_i = __pyx_t_4;
+
+    /* "carray.to_py":129
+ *     t = PyTuple_New(length)
+ *     for i in range(<size_t>length):
+ *         value = v[i]             # <<<<<<<<<<<<<<
+ *         Py_INCREF(value)
+ *         PyTuple_SET_ITEM(t, i, value)
+ */
+    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_v[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 129, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_value, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "carray.to_py":130
+ *     for i in range(<size_t>length):
+ *         value = v[i]
+ *         Py_INCREF(value)             # <<<<<<<<<<<<<<
+ *         PyTuple_SET_ITEM(t, i, value)
+ *     return t
+ */
+    Py_INCREF(__pyx_v_value);
+
+    /* "carray.to_py":131
+ *         value = v[i]
+ *         Py_INCREF(value)
+ *         PyTuple_SET_ITEM(t, i, value)             # <<<<<<<<<<<<<<
+ *     return t
+ */
+    PyTuple_SET_ITEM(__pyx_v_t, __pyx_v_i, __pyx_v_value);
+  }
+
+  /* "carray.to_py":132
+ *         Py_INCREF(value)
+ *         PyTuple_SET_ITEM(t, i, value)
+ *     return t             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_t);
+  __pyx_r = __pyx_v_t;
+  goto __pyx_L0;
+
+  /* "carray.to_py":124
+ * 
+ * @cname("__Pyx_carray_to_tuple_float")
+ * cdef inline tuple __Pyx_carray_to_tuple_float(base_type *v, Py_ssize_t length):             # <<<<<<<<<<<<<<
+ *     cdef size_t i
+ *     cdef object value
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("carray.to_py.__Pyx_carray_to_tuple_float", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_value);
+  __Pyx_XDECREF(__pyx_v_t);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3813,6 +4055,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_err, __pyx_k_err, sizeof(__pyx_k_err), 0, 0, 1, 1},
   {&__pyx_n_s_err_max, __pyx_k_err_max, sizeof(__pyx_k_err_max), 0, 0, 1, 1},
+  {&__pyx_n_s_err_return, __pyx_k_err_return, sizeof(__pyx_k_err_return), 0, 0, 1, 1},
   {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_k1, __pyx_k_k1, sizeof(__pyx_k_k1), 0, 0, 1, 1},
@@ -3826,6 +4069,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_parameters, __pyx_k_parameters, sizeof(__pyx_k_parameters), 0, 0, 1, 1},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
+  {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_step_control, __pyx_k_step_control, sizeof(__pyx_k_step_control), 0, 0, 1, 1},
   {&__pyx_n_s_t, __pyx_k_t, sizeof(__pyx_k_t), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -3841,224 +4085,216 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(1, 116, __pyx_L1_error)
   return 0;
+  __pyx_L1_error:;
+  return -1;
 }
 
 static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "RKF45.pyx":16
+  /* "RKF45.pyx":17
  *     k1 = dydx_functions(t, var_i, parameters)
  *     if k1 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k1 = k1*dt
  *     var1 = var_i + 0.2*k1
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "RKF45.pyx":20
+  /* "RKF45.pyx":21
  *     var1 = var_i + 0.2*k1
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
  */
-  __pyx_tuple__2 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "RKF45.pyx":24
+  /* "RKF45.pyx":25
  *     k2 = dydx_functions(t + 0.2 * dt, var1, parameters)
  *     if k2 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k2 = k2*dt
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "RKF45.pyx":28
+  /* "RKF45.pyx":29
  *     var2 = var_i + (3/40)*k1 + (9/40)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "RKF45.pyx":32
+  /* "RKF45.pyx":33
  *     k3 = dydx_functions(t + 0.3 * dt, var2, parameters)
  *     if k3 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k3 = k3*dt
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  */
-  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "RKF45.pyx":36
+  /* "RKF45.pyx":37
  *     var3 = var_i + (3/10)*k1 - (9/10)*k2 + (6/5)*k3
  *     if var3 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
  */
-  __pyx_tuple__6 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "RKF45.pyx":40
+  /* "RKF45.pyx":41
  *     k4 = dydx_functions(t + 0.6 * dt, var3, parameters)
  *     if k4 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k4 = k4*dt
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  */
-  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "RKF45.pyx":44
+  /* "RKF45.pyx":45
  *     var4 = var_i - (11/54)*k1 + (5/2)*k2 - (70/27)*k3 + (35/27)*k4
  *     if var4 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k5 = dydx_functions(t +       dt, var4, parameters)
  */
-  __pyx_tuple__8 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "RKF45.pyx":48
+  /* "RKF45.pyx":49
  *     k5 = dydx_functions(t +       dt, var4, parameters)
  *     if k5 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k5 = k5*dt
  *     var5 = var_i + (1631/55296)*k1 + (175/512)*k2 + (575/13824)*k3 \
  */
-  __pyx_tuple__9 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "RKF45.pyx":53
+  /* "RKF45.pyx":54
  *          + (44275/110592)*k4 + (253/4096)*k5
  *     if var5 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
  */
-  __pyx_tuple__10 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "RKF45.pyx":57
+  /* "RKF45.pyx":58
  *     k6 = dydx_functions(t + (7/8)*dt, var5, parameters)
  *     if k6 == 0.0:
  *         return ("BRENTQ ERROR", "BRENTQ ERROR")             # <<<<<<<<<<<<<<
  *     k6 = k6*dt
  * 
  */
-  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "RKF45.pyx":81
+  /* "RKF45.pyx":82
  *     var1 = var_i + 0.5*k1
  *     if var1 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k2 = dt * dydx_functions(t + 0.5 * dt, var1, parameters)
  */
-  __pyx_tuple__12 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "RKF45.pyx":86
+  /* "RKF45.pyx":87
  *     var2 = var_i + (1/256)*k1 + (255/256)*k2
  *     if var2 < 0: # a negative contribution should not be obtained
  *         return (None, None)             # <<<<<<<<<<<<<<
  * 
  *     k3 = dt * dydx_functions(t + dt, var2, parameters)
  */
-  __pyx_tuple__13 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "RKF45.pyx":122
+  /* "RKF45.pyx":125
  *         # take an RK45 step
  *         (var_new, var_err) = RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters)
  *         if (var_new, var_err) == (None, None):             # <<<<<<<<<<<<<<
  *             dt = 0.01*dt
  *             continue
  */
-  __pyx_tuple__14 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(2, Py_None, Py_None); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
 
-  /* "RKF45.pyx":125
+  /* "RKF45.pyx":128
  *             dt = 0.01*dt
  *             continue
  *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):             # <<<<<<<<<<<<<<
- *             return (None, None, None)
+ *             return err_return
  *         # find the maximum error of all ODEs, also scale to required tolerance
  */
-  __pyx_tuple__15 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_tuple__15 = PyTuple_Pack(2, __pyx_kp_s_BRENTQ_ERROR, __pyx_kp_s_BRENTQ_ERROR); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
 
-  /* "RKF45.pyx":126
- *             continue
- *         if (var_new, var_err) == ("BRENTQ ERROR", "BRENTQ ERROR"):
- *             return (None, None, None)             # <<<<<<<<<<<<<<
- *         # find the maximum error of all ODEs, also scale to required tolerance
- *         err_max = abs(var_err/yscal) / accuracy
- */
-  __pyx_tuple__16 = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
-
-  /* "RKF45.pyx":6
+  /* "RKF45.pyx":7
  * ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
  * 
  * def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
  *     """
  *     This function uses a Runge-Kutta 4th and 5th order scheme to calculate the
  */
-  __pyx_tuple__17 = PyTuple_Pack(19, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dydx_functions, __pyx_n_s_dt, __pyx_n_s_parameters, __pyx_n_s_k1, __pyx_n_s_var1, __pyx_n_s_k2, __pyx_n_s_var2, __pyx_n_s_k3, __pyx_n_s_var3, __pyx_n_s_k4, __pyx_n_s_var4, __pyx_n_s_k5, __pyx_n_s_var5, __pyx_n_s_k6, __pyx_n_s_RK5_sol, __pyx_n_s_RK4_sol, __pyx_n_s_err); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(5, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_RKCashKarp_Step45, 6, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(19, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dydx_functions, __pyx_n_s_dt, __pyx_n_s_parameters, __pyx_n_s_k1, __pyx_n_s_var1, __pyx_n_s_k2, __pyx_n_s_var2, __pyx_n_s_k3, __pyx_n_s_var3, __pyx_n_s_k4, __pyx_n_s_var4, __pyx_n_s_k5, __pyx_n_s_var5, __pyx_n_s_k6, __pyx_n_s_RK5_sol, __pyx_n_s_RK4_sol, __pyx_n_s_err); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(5, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_RKCashKarp_Step45, 7, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 7, __pyx_L1_error)
 
-  /* "RKF45.pyx":71
+  /* "RKF45.pyx":72
  * 
  * 
  * def RKFehlberg12(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
  *     """
  *     This function uses a Runge-Kutta 2nd and 1st order scheme to calculate the
  */
-  __pyx_tuple__19 = PyTuple_Pack(13, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dydx_functions, __pyx_n_s_dt, __pyx_n_s_parameters, __pyx_n_s_k1, __pyx_n_s_var1, __pyx_n_s_k2, __pyx_n_s_var2, __pyx_n_s_k3, __pyx_n_s_RK1_sol, __pyx_n_s_RK2_sol, __pyx_n_s_err); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(5, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_RKFehlberg12, 71, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_tuple__18 = PyTuple_Pack(13, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dydx_functions, __pyx_n_s_dt, __pyx_n_s_parameters, __pyx_n_s_k1, __pyx_n_s_var1, __pyx_n_s_k2, __pyx_n_s_var2, __pyx_n_s_k3, __pyx_n_s_RK1_sol, __pyx_n_s_RK2_sol, __pyx_n_s_err); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(5, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_RKFehlberg12, 72, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 72, __pyx_L1_error)
 
-  /* "RKF45.pyx":103
+  /* "RKF45.pyx":104
  * 
  * ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
  * def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):             # <<<<<<<<<<<<<<
  * 
  *     """
  */
-  __pyx_tuple__21 = PyTuple_Pack(14, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dt_try, __pyx_n_s_dydx_functions, __pyx_n_s_accuracy, __pyx_n_s_parameters, __pyx_n_s_dydx, __pyx_n_s_yscal, __pyx_n_s_dt, __pyx_n_s_var_new, __pyx_n_s_var_err, __pyx_n_s_err_max, __pyx_n_s_dt_new, __pyx_n_s_dt_next); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 103, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(6, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_step_control, 103, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(15, __pyx_n_s_t, __pyx_n_s_var_i, __pyx_n_s_dt_try, __pyx_n_s_dydx_functions, __pyx_n_s_accuracy, __pyx_n_s_parameters, __pyx_n_s_err_return, __pyx_n_s_dydx, __pyx_n_s_yscal, __pyx_n_s_dt, __pyx_n_s_var_new, __pyx_n_s_var_err, __pyx_n_s_err_max, __pyx_n_s_dt_new, __pyx_n_s_dt_next); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(6, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_RKF45_pyx, __pyx_n_s_step_control, 104, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4328,47 +4564,47 @@ if (!__Pyx_RefNanny) {
  * from __future__ import division
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
- * ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
+ * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":6
+  /* "RKF45.pyx":7
  * ####################### INDIVIDUAL RUNGE-KUTTA METHODS #########################
  * 
  * def RKCashKarp_Step45(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
  *     """
  *     This function uses a Runge-Kutta 4th and 5th order scheme to calculate the
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_1RKCashKarp_Step45, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_1RKCashKarp_Step45, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKCashKarp_Step45, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKCashKarp_Step45, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":71
+  /* "RKF45.pyx":72
  * 
  * 
  * def RKFehlberg12(t, var_i, dydx_functions, dt, parameters):             # <<<<<<<<<<<<<<
  *     """
  *     This function uses a Runge-Kutta 2nd and 1st order scheme to calculate the
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_3RKFehlberg12, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_3RKFehlberg12, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKFehlberg12, __pyx_t_1) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RKFehlberg12, __pyx_t_1) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "RKF45.pyx":103
+  /* "RKF45.pyx":104
  * 
  * ######################## CHOOSE THE APPROPRIATE STEPSIZE #######################
  * def step_control(t, var_i, dt_try, dydx_functions, accuracy, parameters):             # <<<<<<<<<<<<<<
  * 
  *     """
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_5step_control, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5RKF45_5step_control, NULL, __pyx_n_s_RKF45); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_step_control, __pyx_t_1) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_step_control, __pyx_t_1) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "RKF45.pyx":1
@@ -4380,6 +4616,14 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "carray.to_py":124
+ * 
+ * @cname("__Pyx_carray_to_tuple_float")
+ * cdef inline tuple __Pyx_carray_to_tuple_float(base_type *v, Py_ssize_t length):             # <<<<<<<<<<<<<<
+ *     cdef size_t i
+ *     cdef object value
+ */
 
   /*--- Wrapped vars code ---*/
 
@@ -5450,6 +5694,217 @@ static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
 }
 #endif
 
+/* CIntFromPyVerify */
+        #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
+
+/* CIntFromPy */
+        static CYTHON_INLINE size_t __Pyx_PyInt_As_size_t(PyObject *x) {
+    const size_t neg_one = (size_t) -1, const_zero = (size_t) 0;
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(size_t) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(size_t, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (size_t) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (size_t) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(size_t, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(size_t) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) >= 2 * PyLong_SHIFT) {
+                            return (size_t) (((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(size_t) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) >= 3 * PyLong_SHIFT) {
+                            return (size_t) (((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(size_t) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) >= 4 * PyLong_SHIFT) {
+                            return (size_t) (((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (size_t) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(size_t) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, unsigned long, PyLong_AsUnsignedLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(size_t) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+#endif
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (size_t) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(size_t, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(size_t,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(size_t) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                            return (size_t) (((size_t)-1)*(((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(size_t) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                            return (size_t) ((((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                            return (size_t) (((size_t)-1)*(((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(size_t) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                            return (size_t) ((((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 4 * PyLong_SHIFT) {
+                            return (size_t) (((size_t)-1)*(((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(size_t) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 4 * PyLong_SHIFT) {
+                            return (size_t) ((((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0])));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(size_t) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, long, PyLong_AsLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(size_t) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, PY_LONG_LONG, PyLong_AsLongLong(x))
+#endif
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            size_t val;
+            PyObject *v = __Pyx_PyNumber_IntOrLong(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (size_t) -1;
+        }
+    } else {
+        size_t val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (size_t) -1;
+        val = __Pyx_PyInt_As_size_t(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to size_t");
+    return (size_t) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to size_t");
+    return (size_t) -1;
+}
+
 /* CIntToPy */
         static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
     const long neg_one = (long) -1, const_zero = (long) 0;
@@ -5480,28 +5935,6 @@ static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
                                      little, !is_unsigned);
     }
 }
-
-/* CIntFromPyVerify */
-        #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
 
 /* CIntFromPy */
         static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
