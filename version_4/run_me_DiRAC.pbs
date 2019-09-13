@@ -1,7 +1,7 @@
-#PBS -N EUVPhotoEvap_v3
-#PBS -l walltime=2:00:00:00
+#PBS -N EUVPhotoEvap_v4
+#PBS -l walltime=1:00:00:00
 #PBS -m bea
-#PBS -l nodes=10:ppn=32
+#PBS -l nodes=20:ppn=32
 #PBS -M james.rogers14@imperial.ac.uk
 #PBS -A dp100
 

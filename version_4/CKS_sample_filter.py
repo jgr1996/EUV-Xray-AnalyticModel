@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 import pandas
-
+from scipy.stats import norm
 """
 This file takes the CKS data (available at https://california-planet-search.github.io/cks-website/)
 and applies the filters applied in Fulton et al. (2017) to form the CKS III sample of Kepler planets.
@@ -151,12 +151,12 @@ def planet_radius_err():
         ratio_i = mean_i / radii[i]
         mean_err.append(ratio_i)
 
-    plt.plot(radii, mean_err, '+', linestyle='None')
+    plt.hist(mean_err, bins=20)
     plt.show()
 
 def stellar_mass():
     M_star = list(useful_CKS[1,:])
-    plt.hist(M_star, bins=50, histtype='step', color='black', linewidth=2)
+    plt.hist(M_star, bins=10, histtype='step', color='black', linewidth=2)
     plt.show()
 
 def stellar_radius():
@@ -165,4 +165,22 @@ def stellar_radius():
     plt.show()
 
 
-stellar_radius()
+def fit_stellar_mass():
+
+    """
+    best for CKS-I is {'mu':1.04, 'std':0.15}
+    """
+
+    M_star = list(useful_CKS[1,:])
+    mu, std = norm.fit(M_star)
+
+    plt.hist(M_star, bins=10, density=True, alpha=0.6, color='g')
+
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = norm.pdf(x, mu, std)
+    plt.plot(x, p, 'k', linewidth=2)
+    title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
+    plt.title(title)
+
+    plt.show()

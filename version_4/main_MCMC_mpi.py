@@ -17,9 +17,12 @@ if __name__ == '__main__':
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
-    # initial guess [density, period_params, X_params, M_params]
-    theta = [4.0, 1.9, 0.01, 7.6, 0.01, 0.20, 0.4, 0.6, 0.8, 1.0, 0.01, 0.20, 0.4, 0.6, 0.8, 1.0]
-    # theta = [4.0,1.9,0.01,7.6,0.026,1.44,7.7,1.34]
+    density_guess = [5.0,1.0]                    # core density
+    X_guess = [0.01,0.2,0.4,0.6,0.8,1.0]         # env mass fraction mean and std
+    M_guess = [0.01,0.2,0.4,0.6,0.8,1.0]         # core mass bersntein polys
+
+
+    theta = density_guess + X_guess + M_guess
 
     ndim = len(theta)
     n_walkers = 100
@@ -29,7 +32,7 @@ if __name__ == '__main__':
     for i in range(n_walkers):
         theta_guesses.append([x + rand.uniform(0, 5e-2*x) for x in theta])
 
-    N = 5000
+    N = 1000
 
     if rank == 0:
         # use time as label for output directory
@@ -47,11 +50,11 @@ if __name__ == '__main__':
         file.write("Number of Walkers: {}\n".format(n_walkers))
         file.write("Number of iterations: {}\n".format(n_iterations))
         file.write("----------------------------------------------------\n")
-        file.write("Notes: Please Work...\n")
+        file.write("Notes: Please Just Work...\n")
         file.close()
 
     CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
-    CKS_completeness_array = np.loadtxt("survey_completeness.txt", delimiter=',')
+    CKS_completeness_array = np.loadtxt("survey_comp.csv", delimiter=',')
     # step_size = emcee.moves.GaussianMove(cov=step_size)
     sampler = emcee.EnsembleSampler(n_walkers,
                                     ndim,

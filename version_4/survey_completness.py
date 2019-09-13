@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from constants import *
 from matplotlib.colors import LogNorm
-import R_photosphere_cython
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ SIMPLE PROBLEM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #
 P_array = np.logspace(-1.0,2.5,150)
@@ -15,6 +14,7 @@ prob_of_detection = np.ndarray((len(P_array), len(Rpl_array)))
 prob_of_transit = np.ndarray((len(P_array), len(Rpl_array)))
 total_completness = np.ndarray((len(P_array), len(Rpl_array)))
 mean = 0
+
 for i in range(prob_of_detection.shape[0]):
     for j in range(prob_of_detection.shape[1]):
 
@@ -30,27 +30,43 @@ for i in range(prob_of_detection.shape[0]):
         mean =+ prob_of_detection[i,j]
 
         total_completness[i,j] = prob_of_transit[i,j]#*prob_of_detection[i,j]
-#print mean/(prob_of_detection.shape[0]*prob_of_detection.shape[1])
+
 np.savetxt("survey_completeness.txt", total_completness, delimiter=',')
 
+
+print total_completness.max()
 plt.figure(1)
 plt.xscale("log")
 plt.yscale("log")
 plt.contourf(P,R,prob_of_transit.T, cmap="Blues_r", linewidth=1)
+plt.title(r'p$_{transit}$', fontsize=16)
+plt.xticks([1,3,10,30,100,300],[1,3,10,30,100,300])
+plt.yticks([0.3,0.5,1,2,4,10],[0.3,0.5,1,2,4,10])
+plt.xlim([1,300])
+plt.ylim([0.3,10])
 plt.colorbar()
 
 plt.figure(2)
 plt.xscale("log")
 plt.yscale("log")
 plt.contourf(P,R,prob_of_detection.T, cmap="Blues_r", linewidth=1)
+plt.title(r'p$_{detection}$', fontsize=16)
+plt.xticks([1,3,10,30,100,300],[1,3,10,30,100,300])
+plt.yticks([0.3,0.5,1,2,4,10],[0.3,0.5,1,2,4,10])
+plt.xlim([1,300])
+plt.ylim([0.3,10])
 plt.colorbar()
 
 plt.figure(3)
 plt.xscale("log")
 plt.yscale("log")
 plt.contourf(P,R,total_completness.T, levels=[0.0, 1e-3, 1e-2, 2e-2, 5e-2, 0.1] , cmap="Blues_r")
+plt.title(r'p$_{transit}$ * p$_{detection}$', fontsize=16)
 plt.colorbar()
-
+plt.xticks([1,3,10,30,100,300],[1,3,10,30,100,300])
+plt.yticks([0.3,0.5,1,2,4,10],[0.3,0.5,1,2,4,10])
+plt.xlim([1,300])
+plt.ylim([0.3,10])
 plt.show()
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 5D PROBLEM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ #

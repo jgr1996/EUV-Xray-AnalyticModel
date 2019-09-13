@@ -114,8 +114,7 @@ cdef double dXdt_ODE(double t, double X, parameters):
 
 cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
                   double initial_X, double core_density, double M_core,
-                  double period, double M_star, double R_star,
-                  double KH_timescale_cutoff):
+                  double period, double M_star, double KH_timescale_cutoff):
 
     """
     This function controls the integration of the mass-loss ODE. It calls upon
@@ -147,7 +146,7 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
         [t_new, X_new, dt_next] = RKF45.step_control(t, X, dt, dXdt_ODE, accuracy, parameters=[M_core, M_star, a, R_core, KH_timescale_cutoff, R_ph])
 
         if [t_new, X_new, dt_next] == [0.0, 0.0, 0.0]:
-            return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            return 0.0, 0.0, 0.0, 0.0, 0.0
         # calculate new R_ph
         R_ph_new = R_photosphere_cython.calculate_R_photosphere(t_new, M_star, a, M_core,R_core, X_new, KH_timescale_cutoff, 0.0) / R_earth
 
@@ -156,7 +155,7 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
         if X_new <= 1e-4 or R_ph_new <= R_core:
                 rad_err = rand() % (0.18 - 0.08) + 0.08 * R_core
                 observed_radius = R_core + rand_py.choice([-1.0,1.0])*rad_err
-                return observed_radius, period, M_core, initial_X, R_core, R_star
+                return observed_radius, period, M_core, initial_X, R_core
 
         # update step size and t according to step-control
         else:
@@ -167,7 +166,7 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
 
     rad_err = rand() % (0.18 - 0.08) + 0.08 * R_ph
     observed_radius = R_ph + rand_py.choice([-1.0,1.0])*rad_err
-    return observed_radius, period, M_core, initial_X, R_core, R_star
+    return observed_radius, period, M_core, initial_X, R_core
 
 #////////////////////////////////// X vs t PLOT ////////////////////////////// #
 # def X_2(t, period, M_star, rho_core, M_core):
