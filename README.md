@@ -7,9 +7,9 @@ Script is parallelised using MPI and optimised using cython.
 # Versions
 
  - Gaussian 
-  * Fits the core composition between -1 (pure ice) and +1 (pure iron), as well as the core mass distribution and initial envelope mass fraction distributions as log-Gaussians.
+   * Fits the core composition between -1 (pure ice) and +1 (pure iron), as well as the core mass distribution and initial envelope mass fraction distributions as log-Gaussians.
  - Bernstein 
-  * Fits the core composition between -1 (pure ice) and +1 (pure iron), as well as the core mass distribution and initial envelope mass fraction distributions using Bernstein polynomials.
+   * Fits the core composition between -1 (pure ice) and +1 (pure iron), as well as the core mass distribution and initial envelope mass fraction distributions using Bernstein polynomials.
  
 
  
