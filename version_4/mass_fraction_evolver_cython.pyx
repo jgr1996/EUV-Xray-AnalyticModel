@@ -4,6 +4,8 @@ from numpy import random as rand_py
 from scipy import stats
 
 from libc.stdlib cimport rand
+from libc.math cimport log10
+
 
 from constants import *
 import R_photosphere_cython
@@ -39,6 +41,41 @@ cdef double t_sat = 100 * Myr
 cdef double a0 = 0.5
 cdef double b_cutoff = 0.7
 cdef double R_sun = 6.957e8
+
+
+# ////////////////////////// FORTNEY 2007 M-R RELATIONS ////////////////////// #
+
+cdef double R_imf(double imf, double M_core):
+
+    cdef double _R1, _R2, _R3
+    _R1 = (0.0912*imf + 0.1603) * (log10(M_core)*log10(M_core))
+    _R2 = (0.3330*imf + 0.7387) *  log10(M_core)
+    _R3 = (0.4639*imf + 1.1193)
+
+    return _R1 + _R2 + _R3
+
+cdef double R_rmf(double rmf, double M_core):
+
+    cdef double _R1, _R2, _R3
+    _R1 = (0.0592*rmf + 0.0975) * (log10(M_core)*log10(M_core))
+    _R2 = (0.2337*rmf + 0.4938) *  log10(M_core)
+    _R3 = (0.3102*rmf + 0.7932)
+
+    return _R1 + _R2 + _R3
+
+
+cdef double calculate_R_core(double composition, double M_core):
+
+    cdef double imf, rmf, R_core
+
+    if composition <= 0.0:
+        imf = -1.0 * composition
+        R_core = R_imf(imf, M_core)
+    if composition > 0.0:
+        rmf = 1.0 - composition
+        R_core = R_rmf(rmf, M_core)
+
+    return R_core
 
 
 # ///////////////////////// CALCULATE MASS-LOSS TIMESCALE //////////////////// #
@@ -113,7 +150,7 @@ cdef double dXdt_ODE(double t, double X, parameters):
 # /////////////////// EVOLVE MASS FRACTION ACCORDING TO ODE ////////////////// #
 
 cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
-                  double initial_X, double core_density, double M_core,
+                  double initial_X, double composition, double M_core,
                   double period, double M_star, double KH_timescale_cutoff):
 
     """
@@ -124,8 +161,9 @@ cpdef RK45_driver(double t_start, double t_stop, double dt_try, double accuracy,
     """
 
     # core density to core radius (measure in Earth radii)
-    cdef double density_norm = 1.7589 * core_density**(-0.3329)
-    cdef double R_core = density_norm * ((M_core)**0.25)
+    # cdef double density_norm = 1.7589 * core_density**(-0.3329)
+    # cdef double R_core = density_norm * ((M_core)**0.25)
+    cdef double R_core = calculate_R_core(composition, M_core)
 
     # orbital period to semi-major axis measured in AU
     cdef double a = (((period * 24 * 60 * 60)**2 * G * M_star * M_sun / (4 * pi * pi))**(1/3)) / AU

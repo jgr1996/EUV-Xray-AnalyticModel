@@ -1,7 +1,6 @@
 #PBS -l walltime=48:00:00
-#PBS -l select=15:ncpus=24:mem=32gb
-#PBS -M james.rogers14@imperial.ac.uk
-#PBS -N BHM-v4-density
+#PBS -l select=16:ncpus=24:mem=32gb
+#PBS -N BHM-v4
 
 
 module load mpi

@@ -17,9 +17,9 @@ if __name__ == '__main__':
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
-    density_guess = [5.0,1.0]                    # core density
-    X_guess = [0.01,0.2,0.4,0.6,0.8,1.0]         # env mass fraction mean and std
-    M_guess = [0.01,0.2,0.4,0.6,0.8,1.0]         # core mass bersntein polys
+    density_guess = [0.5]                        # core composition
+    X_guess = [0.1,13.0,0.1,15.79,14.5,20.63]    # env mass fraction mean and std
+    M_guess = [0.1,13.0,0.1,15.79,14.5,20.63]    # core mass bersntein polys
 
 
     theta = density_guess + X_guess + M_guess

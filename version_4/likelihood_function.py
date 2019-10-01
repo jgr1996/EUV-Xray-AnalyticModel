@@ -17,24 +17,30 @@ from evolve_population import bernstein_poly
 
 def likelihood(theta, N, data_array, completeness_array):
 
+
+
     comm = MPI.COMM_WORLD   # get MPI communicator object
     rank = comm.rank        # rank of this process
 
-    # bernstein coeffs cannot be less than 0.0
-    if any(n < 0.0 for n in theta[:]):
+    # composition must be between -1 and 1
+    if theta[0] < -1 or theta[0] > 1:
         return -np.inf
 
-    # max for bernstein coeffs
-    if any(n > 20.0 for n in theta[:]):
+    # bernstein coeffs cannot be less than 0.0
+    if any(n < 0.0 for n in theta[1:]):
         return -np.inf
+
+    # # max for bernstein coeffs
+    # if any(n > 50.0 for n in theta[1:]):
+    #     return -np.inf
 
 
     # ensure Bernstein CDFs are monotonically increasing
     a_range = np.arange(0.0, 1.0001, 0.0001)
 
-    initial_X_coeffs = theta[2:8]
+    initial_X_coeffs = theta[1:7]
     order_X = len(initial_X_coeffs) - 1
-    X_min, X_max = -3.0, 0.0
+    X_min, X_max = -4.0, 0.0
     X_poly_min, X_poly_max = bernstein_poly(0, order_X, initial_X_coeffs), bernstein_poly(1, order_X, initial_X_coeffs)
     X_poly_norm = X_poly_max - X_poly_min
     X_norm = X_max - X_min
@@ -44,9 +50,9 @@ def likelihood(theta, N, data_array, completeness_array):
             print "Not increasing CDF for X"
             return -np.inf
 
-    core_mass_coeffs = theta[8:]
+    core_mass_coeffs = theta[7:]
     order_M = len(core_mass_coeffs) - 1
-    M_min, M_max = 0.5, 15.0
+    M_min, M_max = 0.8, 15.0
     M_poly_min, M_poly_max = bernstein_poly(0, order_M, core_mass_coeffs), bernstein_poly(1, order_M, core_mass_coeffs)
     M_poly_norm = M_poly_max - M_poly_min
     M_norm = M_max - M_min
@@ -63,6 +69,9 @@ def likelihood(theta, N, data_array, completeness_array):
 
     if rank == 0:
 
+        R_min, R_max = 0.75, 8.0
+        P_min, P_max = 1.0, 100.0
+
         if len(R) == 0:
             return -np.inf
 
@@ -73,14 +82,24 @@ def likelihood(theta, N, data_array, completeness_array):
         X, Y = np.meshgrid(x, y)
         positions = np.vstack([X.ravel(), Y.ravel()])
         data = np.vstack([log10(P),log10(R)])
-        kernel = stats.gaussian_kde(data)#, bw_method=0.2)
+        kernel = stats.gaussian_kde(data, bw_method=0.25)
         Z = np.reshape(kernel(positions).T, X.shape)
         Z[Z==0] = 1e-299
         Z_biased = Z * completeness_array.T
+
+        norm = 0
+        for i in range(len(x)):
+            for j in range(len(y)):
+                if x[i] >= log10(P_min) and x[i] <= log10(P_max):
+                    if y[j] >= log10(R_min) and y[j] <= log10(R_max):
+                        norm = norm + Z_biased[i,j]
+        norm = 1.0 / ( log10(P_max/P_min) * log10(R_max/R_min) * norm )
+        Z_biased = norm * Z_biased
+
         KDE_interp = interpolate.RectBivariateSpline(y,x,Z_biased)
 
         data_CKS = np.vstack([log10(data_array[3,:]),log10(data_array[2,:])])
-        kernel_CKS = stats.gaussian_kde(data_CKS)#, bw_method=0.2)
+        kernel_CKS = stats.gaussian_kde(data_CKS, bw_method=0.25)
         Z_CKS = np.reshape(kernel_CKS(positions).T, X.shape)
 
         # np.savetxt("../../../Computing/IDL plots/Wu2018/comparison_bernstein/Z_synth.csv", Z_biased, delimiter=',')
@@ -92,9 +111,10 @@ def likelihood(theta, N, data_array, completeness_array):
         P_data = []
         R_data = []
         for i in range(len(data_array[3,:])):
-            if data_array[2,i] >= 0.7 and data_array[2,i] <= 6.0:
-                R_data.append(log10(data_array[2,i]))
-                P_data.append(log10(data_array[3,i]))
+            if data_array[2,i] >= R_min and data_array[2,i] <= R_max:
+                if data_array[3,i] >= P_min and data_array[3,i] <= P_max:
+                    R_data.append(log10(data_array[2,i]))
+                    P_data.append(log10(data_array[3,i]))
 
 
         logL = 0
@@ -112,7 +132,6 @@ def likelihood(theta, N, data_array, completeness_array):
         # plt.ylim([-0.3,1.1])
         # plt.xticks(log10([1,2,4,10,30,100]),[1,2,4,10,30,100])
         # plt.yticks(log10([0.5,1,2,4,10]),[0.5,1,2,4,10])
-        #
         #
         # plt.figure(3)
         # plt.contourf(x,y,Z_biased, cmap='Oranges')
@@ -133,7 +152,7 @@ def likelihood(theta, N, data_array, completeness_array):
         # plt.hist(data_array[2,:], bins=np.logspace(log10(0.5),log10(10),20))
         # plt.xscale('log')0
         # plt.legend()
-
+        #
         # plt.figure(3)
         # hist1, bins1 = np.histogram(R, bins=np.logspace(np.log10(0.5),np.log10(10),20))
         # hist2, bins2 = np.histogram(R_data, bins=np.logspace(np.log10(0.5),np.log10(10),20))
@@ -163,7 +182,8 @@ def likelihood(theta, N, data_array, completeness_array):
 # rank = comm.rank        # rank of this process
 # CKS_array = np.loadtxt("CKS_filtered.csv", delimiter=',')
 # CKS_completeness_array = np.loadtxt("survey_comp.csv", delimiter=',')
-# thetas = [[5.2,0.5,0.0,3.24,9.91,7.16,7.63,20.,0.0,3.33,0.0,0.0,8.25,20.0]]
+# thetas = [[-0.2,0.0,2.3,8.3,2.0,4.54,10.0,0.0,0.24,0.54,0.0,3.6,10.0]]
+# # thetas = [[0.71,0.0,13.0,0.0,15.79,14.5,20.63,35.0,0.0,0.0,2.37,43.0,32.15,50.0]]
 #
 # for i in range(len(thetas)):
 #     L = likelihood(thetas[i], 1000, CKS_array, CKS_completeness_array)
