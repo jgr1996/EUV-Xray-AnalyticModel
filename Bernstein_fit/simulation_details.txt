@@ -1,0 +1,9 @@
+----------------- MCMC Simulation ------------------
+Parameters estimated: [Initial X Bernstein Polynomial Coefficients, Core Mass Bernstein Polynomials Coefficients, Core Density]
+Initial guess localised to: [0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 0.01, 0.2, 0.4, 0.6, 0.8, 1.0, 6.5]
+Number of Walkers: 100
+Step size: 0.05
+Number of iterations: 10000
+Number of cores: 24
+----------------------------------------------------
+Notes: Please Work...

@@ -1,9 +1,0 @@
-#PBS -l walltime=24:00:00
-#PBS -l select=42:ncpus=24:mem=8gb
-
-module load mpi
-module load anaconda3/personal
-source activate py2
-
-cd $HOME/Projects/Owen_Wu_Analytic/version_2
-mpiexec python main_MCMC_mpi.py > output.txt
